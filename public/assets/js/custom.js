@@ -1,43 +1,3 @@
-
-
-// function getBrowser() { 
-//   if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ) {
-//     return 'Opera';
-//   }else if(navigator.userAgent.indexOf("Edg") != -1 ){
-//     return 'Edge';
-//   }else if(navigator.userAgent.indexOf("Chrome") != -1 ){
-//     return 'Chrome';
-//   }else if(navigator.userAgent.indexOf("Safari") != -1){
-//     return 'Safari';
-//   }else if(navigator.userAgent.indexOf("Firefox") != -1 ) {
-//     return 'Firefox';
-//   }else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )){
-//     return 'IE'; 
-//   }  else {
-//     return 'Otro';
-//   }
-// }
-
-
-
-// function getDevice(){
-//   const ua = navigator.userAgent;
-//     if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
-//         console.log("tablet") 
-//         return "Tablet"
-//     }
-//     else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
-//         console.log("mobile")
-//         return "Mobile"
-//     }else{
-//       console.log("desktop")
-//       return "Desktop"
-//     }
-    
-// }
-
-
-
 // next prev function
 $(document).ready(function() {
 
@@ -177,10 +137,6 @@ $(document).ready(function() {
       var semestre = $("input[name=semestre]:checked").val();
       var area = $("#area").val() 
       var sugerencia = $("#sugerencia").val()
-      
-      // var device = getDevice()
-      // var browser = getBrowser()
-
       var key = localStorage.getItem('key')
       var ip = localStorage.getItem('ip')
       var country = localStorage.getItem('country')
@@ -266,11 +222,27 @@ $(document).ready(function() {
   // btnSugerencia
 
 
-  // $(".prev").click(function() {
-  //     divs.eq(now).hide();
-  //     now = (now > 0) ? now - 1 : divs.length - 1;
-  //     divs.eq(now).show(); // show previous
-  // });
+  $("#prev-1").click(function() {
+    $("#step-1").hide();
+    $("#step-0").show()
+  });
+
+  $("#prev-2").click(function() {
+    $("#step-2").hide();
+    $("#step-1").show()
+  });
+
+  $("#prev-3").click(function() {
+    $("#step-3").hide();
+    $("#step-2").show()
+  });
+  
+  $("#prev-4").click(function() {
+    $("#step-4").hide();
+    $("#step-3").show()
+  });
+
+
 });
 
 // label active on input check

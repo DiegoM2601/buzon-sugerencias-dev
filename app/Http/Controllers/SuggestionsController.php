@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Area;
+use App\Models\Suggestion;
 use Illuminate\Support\Facades\Http;
 use Response;
 // use Request;
@@ -42,7 +43,12 @@ class SuggestionsController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
+        // return $request->all();
+
+        $movie = new Suggestion;
+        $movie->create($request->all());
+
+        return ["Success"];
     }
 
 

@@ -104,11 +104,21 @@
 @media only screen and (min-device-width: 320px) and (max-device-width: 576px)
 {
 
+
+    .title-ml h2{
+        font-size: 25px;
+    }
+    .title-ml p{
+        font-size: 16px!important;
+    }
+    .title-ml img{
+        width: 100px!important;
+    }
     
 
     .steps-inner
     {
-        margin-top: 100px;
+        margin-top: 50px;
     }
     .wrapper
     {
@@ -135,7 +145,7 @@
         width: 25px;
         height: 25px;
 
-        /* margin-right: 5px; */
+        margin-right: 15px;
     }
     .form-input input:checked::after
     {
@@ -149,8 +159,8 @@
     .form-buttons button
     {
         font-size: 12px;
-        height: 55px;
-        width: 100%;
+        height: 45px;
+        width: 40%;
         margin-top: 10px;
     }
     .form-buttons button i

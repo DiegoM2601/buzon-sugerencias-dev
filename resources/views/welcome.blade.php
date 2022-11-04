@@ -62,7 +62,7 @@
 
                     <section class="steps-inner" id="step-1">
 						<div class="wrapper">
-							<div class="step-heading mb-5">
+							<div class="step-heading mb-5 title-ml">
 								<div class="row">
                                     <div class="col-6">
                                         <h2>UNIFRANZ</h2>
@@ -108,7 +108,7 @@
 
 								<!-- next-prev-btn -->
 								<div class="form-buttons">
-                                    <button type="button" class="prev"><i class="fa-solid fa-arrow-left"></i>Regresar</button>
+                                    <button type="button" class="prev" id="prev-1"><i class="fa-solid fa-arrow-left"></i>Regresar</button>
 									<button type="button" class="next" id="btnSede">Siguiente<i class="fa-solid fa-arrow-right"></i></button>
 								</div>
 						</div>
@@ -117,7 +117,7 @@
 					<!-- step-2 -->
 					<section class="steps-inner"  id="step-2">
 						<div class="wrapper">
-							<div class="step-heading mb-5">
+							<div class="step-heading mb-5 title-ml">
 								<div class="row">
                                     <div class="col-6">
                                         <h2>UNIFRANZ</h2>
@@ -228,7 +228,7 @@
 
 								<!-- next-prev-btn -->
 								<div class="form-buttons">
-									<button type="button" class="prev"><i class="fa-solid fa-arrow-left"></i>Regresar</button>
+									<button type="button" class="prev" id="prev-2"><i class="fa-solid fa-arrow-left"></i>Regresar</button>
 									<button type="button" class="next" id="btnCarrera">Siguiente<i class="fa-solid fa-arrow-right"></i></button>
 								</div>
 						</div>
@@ -237,7 +237,7 @@
 					<!-- step-3 -->
 					<section class="steps-inner" id="step-3">
 						<div class="wrapper">
-							<div class="step-heading mb-5">
+							<div class="step-heading mb-5 title-ml">
 								<div class="row">
                                     <div class="col-6">
                                         <h2>UNIFRANZ</h2>
@@ -323,7 +323,7 @@
 
 								<!-- next-prev-btn -->
 								<div class="form-buttons">
-									<button type="button" class="prev"><i class="fa-solid fa-arrow-left"></i>Regresar</button>
+									<button type="button" class="prev" id="prev-3"><i class="fa-solid fa-arrow-left"></i>Regresar</button>
 									<button type="button" class="next" id="btnSemestre" >Siguiente<i class="fa-solid fa-arrow-right"></i></button>
 								</div>
 						</div>
@@ -332,7 +332,7 @@
 					<!-- step-4 -->
 					<section class="steps-inner" id="step-4">
 						<div class="wrapper">
-							<div class="step-heading mb-5">
+							<div class="step-heading mb-5 title-ml">
 								<div class="row">
                                     <div class="col-6">
                                         <h2>UNIFRANZ</h2>
@@ -379,7 +379,7 @@
                                 </div>
                                 
 								<div class="form-buttons">
-									<button type="button" class="prev"><i class="fa-solid fa-arrow-left"></i>Regresar</button>
+									<button type="button" class="prev" id="prev-4"><i class="fa-solid fa-arrow-left"></i>Regresar</button>
 									<button type="button" class="next" id="btnSugerencia">Finalizar<i class="phone-ring fa-solid fa-thumbs-up"></i></button>
 								</div>
 						</div>
@@ -387,7 +387,7 @@
 
                     <section class="steps-inner" id="step-5">
 						<div class="wrapper">
-							<div class="step-heading mb-5">
+							<div class="step-heading mb-5 title-ml">
 								<div class="row">
                                     <div class="col-6">
                                         <h2>UNIFRANZ</h2>
