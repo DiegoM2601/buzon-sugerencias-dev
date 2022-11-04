@@ -1,5 +1,64 @@
+
+
+// function getBrowser() { 
+//   if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ) {
+//     return 'Opera';
+//   }else if(navigator.userAgent.indexOf("Edg") != -1 ){
+//     return 'Edge';
+//   }else if(navigator.userAgent.indexOf("Chrome") != -1 ){
+//     return 'Chrome';
+//   }else if(navigator.userAgent.indexOf("Safari") != -1){
+//     return 'Safari';
+//   }else if(navigator.userAgent.indexOf("Firefox") != -1 ) {
+//     return 'Firefox';
+//   }else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )){
+//     return 'IE'; 
+//   }  else {
+//     return 'Otro';
+//   }
+// }
+
+
+
+// function getDevice(){
+//   const ua = navigator.userAgent;
+//     if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+//         console.log("tablet") 
+//         return "Tablet"
+//     }
+//     else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+//         console.log("mobile")
+//         return "Mobile"
+//     }else{
+//       console.log("desktop")
+//       return "Desktop"
+//     }
+    
+// }
+
+
+
 // next prev function
 $(document).ready(function() {
+
+  // Save key
+
+  if(!localStorage.getItem('key')){
+    localStorage.setItem('key', makeid(20));
+  }
+
+  $.getJSON('https://api.ipregistry.co/?key=omopvam94r2w1h1p', function(data) {
+  localStorage.setItem('ip', JSON.stringify(data.ip).replace(/['"]+/g, ''));
+  localStorage.setItem('country', JSON.stringify(data.location.country.name).replace(/['"]+/g, ''));
+  localStorage.setItem('latitude', JSON.stringify(data.location.latitude).replace(/['"]+/g, ''));
+  localStorage.setItem('longitude', JSON.stringify(data.location.longitude).replace(/['"]+/g, ''));
+  localStorage.setItem('browser', JSON.stringify(data.user_agent.name).replace(/['"]+/g, ''));
+  localStorage.setItem('device', JSON.stringify(data.user_agent.device.type).replace(/['"]+/g, ''));
+  localStorage.setItem('os', JSON.stringify(data.user_agent.os.name).replace(/['"]+/g, ''));
+});
+
+  
+
   var divs = $('.show-section>.steps-inner');
   var now = 0; // currently shown div
   divs.hide().first().show(); // hide all divs except first
@@ -118,15 +177,22 @@ $(document).ready(function() {
       var semestre = $("input[name=semestre]:checked").val();
       var area = $("#area").val() 
       var sugerencia = $("#sugerencia").val()
+      
+      // var device = getDevice()
+      // var browser = getBrowser()
 
-      // console.log(sede)
-      // console.log(carrera)
-      // console.log(semestre)
-      // console.log(area)
-      // console.log(sugerencia)
+      var key = localStorage.getItem('key')
+      var ip = localStorage.getItem('ip')
+      var country = localStorage.getItem('country')
+      var latitude = localStorage.getItem('latitude')
+      var longitude = localStorage.getItem('longitude')
+      var browser = localStorage.getItem('browser')
+      var device = localStorage.getItem('device')
+      var os = localStorage.getItem('os')
 
       $("#btnSugerencia").attr("disabled", true);
       $("#btnSugerencia").text("Cargando...")
+
 
       $.ajax({
         type:'POST',
@@ -136,7 +202,15 @@ $(document).ready(function() {
           carrera:carrera,
           semestre: semestre,
           area: area,
-          sugerencia: sugerencia
+          sugerencia: sugerencia,
+          key: key,
+          device: device,
+          browser: browser,
+          ip: ip,
+          country: country,
+          latitude: latitude,
+          longitude: longitude,
+          os: os
         },
         success:function(data){
 
@@ -185,6 +259,10 @@ $(document).ready(function() {
 
 
 
+
+  $("#btnHome").click(function(){
+    location.reload();
+  })
   // btnSugerencia
 
 
@@ -205,3 +283,15 @@ $(document).ready(function()
           $(this).parent().addClass("active-input");
   })
 })
+
+
+
+function makeid(length) {
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}

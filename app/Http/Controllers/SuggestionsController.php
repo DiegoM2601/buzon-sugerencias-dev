@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Area;
+use Illuminate\Support\Facades\Http;
+use Response;
+// use Request;
 
 class SuggestionsController extends Controller
 {
@@ -19,9 +22,6 @@ class SuggestionsController extends Controller
             'areas' => $areas
         ]);
 
-        // return view('welcome');
-
-        // return Area::all();
     }
 
     /**
@@ -44,6 +44,7 @@ class SuggestionsController extends Controller
     {
         return $request->all();
     }
+
 
     /**
      * Display the specified resource.

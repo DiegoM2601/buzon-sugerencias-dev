@@ -403,15 +403,15 @@
                                     <div class="done-tick"></div>
                                     <i class="fa-solid fa-check"></i>
                                 </div>
-                                <h2 class="mt-4">Enviado correctamente</h2>
+                                <h2 class="mt-4 pop-slide">Enviado correctamente</h2>
 
-                                <p>
+                                <p class="pop-slide">
                                     ¡Gracias por ayudarnos a mejorar!
                                 </p>
 
 								<!-- next-prev-btn -->
 								<div class="form-buttons-center-ml text-center">
-									<button type="button" class="next" id="btnSugerencia">Regresar al inicio</i></button>
+									<button type="button" class="next" id="btnHome">Regresar al inicio</i></button>
 								</div>
 							</div>
 						</div>
@@ -440,6 +440,7 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+
 
 
 </script>

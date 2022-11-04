@@ -19,7 +19,7 @@ p,h1,h2,h3,h4,h5,h6
     display: grid;
     place-items: center;
     position: relative;
-    background-image: url(../images/bg.jpg);
+    /* background-image: url(../images/bg.jpg); */
     
 }
 
