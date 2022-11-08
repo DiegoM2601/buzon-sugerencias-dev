@@ -27,4 +27,5 @@ Route::post('suggestion-store', [App\Http\Controllers\SuggestionsController::cla
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/export', [App\Http\Controllers\HomeController::class, 'export'])->name('export');

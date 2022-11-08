@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Suggestion;
+use App\Exports\SuggestionExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        // return view('home');
+
+        $suggestions = Suggestion::orderBy('id', 'DESC')->paginate(15);
+        return view('home', [
+            'suggestions' => $suggestions
+        ]);
+    }
+
+    public function export(){
+
+        return Excel::download(new SuggestionExport, 'reporte-buzon-sugerencias_'.date('Ymd').'.xlsx');
     }
 }
