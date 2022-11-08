@@ -18,10 +18,13 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-Route::get('/', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');
+Route::get('/cochabamba', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');
+Route::get('/el-alto', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');
+Route::get('/la-paz', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');
+Route::get('/santa-cruz', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');
 
 Route::post('suggestion-store', [App\Http\Controllers\SuggestionsController::class, 'store'])->name('store');
 
 Auth::routes();
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

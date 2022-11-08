@@ -17,6 +17,24 @@ $(document).ready(function() {
   localStorage.setItem('os', JSON.stringify(data.user_agent.os.name).replace(/['"]+/g, ''));
 });
 
+
+
+
+
+function getSede(){
+  var Str = window.location.pathname
+  var sede = Str.replace('/','')
+  if(sede == 'cochabamba'){
+    return 'CBB'
+  }else if(sede == 'el-alto'){
+    return 'EAT'
+  }else if(sede == 'la-paz'){
+    return 'LPZ'
+  }else{
+    return 'SCZ'
+  }
+}
+// console.log(sede)
   
 
   var divs = $('.show-section>.steps-inner');
@@ -25,24 +43,24 @@ $(document).ready(function() {
 
   $("#btnContinuar").click(function(){
     $("#step-0").hide();
-    $("#step-1").show()
+    $("#step-2").show()
   })
 
-  $("#btnSede").click(function(){
-    var isValid = $("input[name=sede]").is(":checked");
-    // console.log(isValid)
-    if(isValid){
-      $("#step-1").hide();
-      $("#step-2").show()
-    }else{
-      // console.log("Error")
-      $("#errorSede").show();
-    }
-  })
+  // $("#btnSede").click(function(){
+  //   var isValid = $("input[name=sede]").is(":checked");
+  //   // console.log(isValid)
+  //   if(isValid){
+  //     $("#step-1").hide();
+  //     $("#step-2").show()
+  //   }else{
+  //     // console.log("Error")
+  //     $("#errorSede").show();
+  //   }
+  // })
 
-  $(document).on('change', 'input[type=radio][name=sede]', function (event) {
-    $("#errorSede").hide();
-  });
+  // $(document).on('change', 'input[type=radio][name=sede]', function (event) {
+  //   $("#errorSede").hide();
+  // });
 
 
   $("#btnCarrera").click(function(){
@@ -62,7 +80,7 @@ $(document).ready(function() {
 
     // Validacion para CCBA
 
-    var sede = $('input:radio[name=sede]:checked').val()
+    // var sede = $('input:radio[name=sede]:checked').val()
 
     var cbb = ['ADM', 'BYF', 'DER', 'DGP',  'ICO', 'IEF', 'MED', 'ODO', 'PSI', 'PYM', 'SIS']
     var eat = ['ADM', 'AHT', 'BYF', 'CPU', 'DER', 'DGP', 'ENF', 'ICO', 'MED', 'ODO', 'PSI', 'SIS']
@@ -72,7 +90,7 @@ $(document).ready(function() {
     var value = $(this).val()
     const isInArray = cbb.includes(value)
 
-    if((!cbb.includes(value) && sede == 'CBB') || (!eat.includes(value) && sede == 'EAT') || (!lpz.includes(value) && sede == 'LPZ') || (!scz.includes(value) && sede == 'SCZ')){
+    if((!cbb.includes(value) && getSede() == 'CBB') || (!eat.includes(value) && getSede() == 'EAT') || (!lpz.includes(value) && getSede() == 'LPZ') || (!scz.includes(value) && getSede() == 'SCZ')){
       $("#btnCarrera").attr("disabled", true);
       $("#errorSedeCarrera").show();
       $("#errorCarrera").hide();
@@ -132,7 +150,7 @@ $(document).ready(function() {
 
       // ajax!!
 
-      var sede = $("input[name=sede]:checked").val();
+      var sede = getSede();
       var carrera = $("input[name=carrera]:checked").val();
       var semestre = $("input[name=semestre]:checked").val();
       var area = $("#area").val() 
@@ -222,14 +240,14 @@ $(document).ready(function() {
   // btnSugerencia
 
 
-  $("#prev-1").click(function() {
-    $("#step-1").hide();
-    $("#step-0").show()
-  });
+  // $("#prev-1").click(function() {
+  //   $("#step-1").hide();
+  //   $("#step-0").show()
+  // });
 
   $("#prev-2").click(function() {
     $("#step-2").hide();
-    $("#step-1").show()
+    $("#step-0").show()
   });
 
   $("#prev-3").click(function() {

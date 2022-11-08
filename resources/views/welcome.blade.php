@@ -60,7 +60,7 @@
 						</div>
 					</section>
 
-                    <section class="steps-inner" id="step-1">
+                    {{-- <section class="steps-inner" id="step-1">
 						<div class="wrapper">
 							<div class="step-heading mb-5 title-ml">
 								<div class="row">
@@ -112,7 +112,7 @@
 									<button type="button" class="next" id="btnSede">Siguiente<i class="fa-solid fa-arrow-right"></i></button>
 								</div>
 						</div>
-					</section>
+					</section> --}}
 
 					<!-- step-2 -->
 					<section class="steps-inner"  id="step-2">
