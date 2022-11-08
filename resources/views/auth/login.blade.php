@@ -3,17 +3,15 @@
 <html lang="es">
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
-		<title>Ingresar al Sistema - Transferencias Bancarias CNF</title>
+		<title>Buzón de Sugerencias | UNIFRANZ</title>
 		<meta charset="utf-8" />
-		<meta name="description" content="Transferencias Bancarias CNF - UNIFRANZ" />
+		<meta name="description" content="Buzón de Sugerencias | UNIFRANZ" />
 		<meta name="keywords" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta property="og:locale" content="en_ES" />
-		<meta property="og:title" content="Ingresar al Sistema - Transferencias Bancarias CNF" />
-		<meta property="og:url" content="https://transferencias-bancarias-cnf.unifranz.edu.bo" />
-		<meta property="og:site_name" content="Transferencias Bancarias CNF" />
+		<meta property="og:title" content="Buzón de Sugerencias | UNIFRANZ" />
 		<link rel="canonical" href="https://preview.keenthemes.com/ceres-html-pro" />
-		<link rel="shortcut icon" href="assets/media/logos/icon.png" />
+		{{-- <link rel="shortcut icon" href="assets/media/logos/icon.png" /> --}}
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
@@ -36,10 +34,10 @@
 						</form> --}}
                         <div class="text-center mb-10">
                             <!--begin::Title-->
-                            <h1 class="text-dark mb-3">Ingresar al Sistema</h1>
+                            <h1 class="text-dark mb-3">Buzón de Sugerencias</h1>
                             <!--end::Title-->
                             <!--begin::Link-->
-                            <div class="text-gray-400 fw-semibold fs-4">Buzón de Sugerencias</div>
+                            <div class="text-gray-400 fw-semibold fs-4">Solo Administradores</div>
                             <!--end::Link-->
                         </div>
 

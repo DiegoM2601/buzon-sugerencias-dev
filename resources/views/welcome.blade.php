@@ -14,9 +14,9 @@
 	<link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css">
 
 	<!-- custom styles -->
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css?ver=1.0">
-	<link rel="stylesheet" type="text/css" href="assets/css/responsive.css?ver=1.0">
-	<link rel="stylesheet" type="text/css" href="assets/css/animation.css?ver=1.0">
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css?ver=1.0.1">
+	<link rel="stylesheet" type="text/css" href="assets/css/responsive.css?ver=1.0.1">
+	<link rel="stylesheet" type="text/css" href="assets/css/animation.css?ver=1.0.1">
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
@@ -431,7 +431,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- custom JS -->
-<script type="text/javascript" src="assets/js/custom.js?ver=1.0"></script>
+<script type="text/javascript" src="assets/js/custom.js?ver=1.0.1"></script>
 
 <script>
 
