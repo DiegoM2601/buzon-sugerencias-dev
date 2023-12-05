@@ -144,17 +144,6 @@
                   </div>
               </div>
             </div>
-            <div class="row mt-4">
-                <div class="card card-bordered">
-                    <div class="card-body">
-                        <div class="card-header">
-                          <h4 class="card-title">Sugerencias de nuevas áreas</h4>
-                        </div>
-                          <div id="chartNewArea" style="height: 350px;"></div>
-                    </div>
-                </div>
-              </div>
-            
         </div>
   </div>
 </body>
@@ -526,60 +515,5 @@
         chart.render();
     </script>
 @endif
-
-<script>
-    var sugerenciasDeNuevasAreas = @json($sugerenciasDeNuevasAreas);
-    
-    // Filtrar valores null o N/A
-    sugerenciasDeNuevasAreas = sugerenciasDeNuevasAreas.filter(function(item) {
-      return item.newarea !== null && item.newarea !== 'N/A';
-    });
-    
-    var options = {
-      series: [
-        {
-          name: "Sugerencias de Nuevas Áreas",
-          data: sugerenciasDeNuevasAreas.map(function(item) {
-            return item.total;
-          }),
-        },
-      ],
-      chart: {
-        type: 'bar',
-        height: 350,
-      },
-      plotOptions: {
-        bar: {
-          borderRadius: 0,
-          horizontal: true,
-          barHeight: '80%',
-        },
-      },
-      dataLabels: {
-        enabled: true,
-        formatter: function (val, opt) {
-          return opt.w.globals.labels[opt.dataPointIndex] + ':  ' + val
-        },
-        dropShadow: {
-          enabled: true,
-        },
-      },
-      title: {
-        text: 'Sugerencias de Nuevas Áreas',
-        align: 'middle',
-      },
-      xaxis: {
-        categories: sugerenciasDeNuevasAreas.map(function(item) {
-          return item.newarea;
-        }),
-      },
-      legend: {
-        show: false,
-      },
-    };
-    
-    var chart = new ApexCharts(document.querySelector("#chartNewArea"), options);
-    chart.render();
-</script>
 
 @endsection

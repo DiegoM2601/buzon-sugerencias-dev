@@ -134,25 +134,21 @@ class HomeController extends Controller
                 ->groupBy('area')
                 ->orderByDesc('total')
                 ->get();
-            $sugerenciasPorCarrera = Suggestion::select(\DB::raw('COALESCE(carrera, "Sin carrera") as carrera'),\DB::raw('count(*) as total'))
+            $sugerenciasPorCarrera = Suggestion::select(\DB::raw('COALESCE(carrera, "Docente") as carrera'),\DB::raw('count(*) as total'))
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) { return $query->where('categoria', $searchCategoria);})
                 ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) { return $query->where('by_', $searchBy);})
                 ->groupBy('carrera')
                 ->orderBy('total')
                 ->get();
-            $sugerenciasPorSemestre = Suggestion::select(\DB::raw('COALESCE(semestre, "Sin semestre") as semestre'),\DB::raw('count(*) as total'))
+            $sugerenciasPorSemestre = Suggestion::select(\DB::raw('COALESCE(semestre, "Docente") as semestre'),\DB::raw('count(*) as total'))
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) { return $query->where('categoria', $searchCategoria);})
                 ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) { return $query->where('by_', $searchBy);})
                 ->groupBy('semestre')
                 ->orderBy('total')
                 ->get();
-            $sugerenciasDeNuevasAreas = Suggestion::select(\DB::raw('COALESCE(newarea,"N/A") as newarea'),\DB::raw('count(*) as total'))
-                ->whereBetween('created_at', [$startDate, $endDate])
-                ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) { return $query->where('categoria', $searchCategoria);})
-                ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) { return $query->where('by_', $searchBy);})
-                ->groupBy('newarea')->orderByDesc('total')->get(); 
+            
         } else {
             if ($searchCategoria && $searchCategoria !== '0') {
                 $query->where('categoria', $searchCategoria);
@@ -172,18 +168,15 @@ class HomeController extends Controller
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) { return $query->where('categoria', $searchCategoria);})
                 ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) { return $query->where('by_', $searchBy);})
                 ->groupBy('area')->orderByDesc('total')->get();
-            $sugerenciasPorCarrera = Suggestion::select(\DB::raw('COALESCE(carrera, "Sin carrera") as carrera'),\DB::raw('count(*) as total'))
+            $sugerenciasPorCarrera = Suggestion::select(\DB::raw('COALESCE(carrera, "Docente") as carrera'),\DB::raw('count(*) as total'))
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) { return $query->where('categoria', $searchCategoria);})
                 ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) { return $query->where('by_', $searchBy);})
                 ->groupBy('carrera')->orderBy('total')->get();
-            $sugerenciasPorSemestre = Suggestion::select(\DB::raw('COALESCE(semestre, "Sin semestre") as semestre'),\DB::raw('count(*) as total'))
+            $sugerenciasPorSemestre = Suggestion::select(\DB::raw('COALESCE(semestre, "Docente") as semestre'),\DB::raw('count(*) as total'))
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) { return $query->where('categoria', $searchCategoria);})
                 ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) { return $query->where('by_', $searchBy);})
                 ->groupBy('semestre')->orderBy('total')->get();
-            $sugerenciasDeNuevasAreas = Suggestion::select(\DB::raw('COALESCE(newarea, "N/A") as newarea'),\DB::raw('count(*) as total'))
-                ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) { return $query->where('categoria', $searchCategoria);})
-                ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) { return $query->where('by_', $searchBy);})
-                ->groupBy('newarea')->orderByDesc('total')->get();    
+               
         }
         return view('dashboard', [
             'suggestionCount' => $suggestionCount,
@@ -194,7 +187,6 @@ class HomeController extends Controller
             'sugerenciasPorFecha' => $sugerenciasPorFecha,
             'sugerenciasPorCarrera' => $sugerenciasPorCarrera,
             'sugerenciasPorSemestre' => $sugerenciasPorSemestre,
-            'sugerenciasDeNuevasAreas' => $sugerenciasDeNuevasAreas,
             
         ]);
     }
