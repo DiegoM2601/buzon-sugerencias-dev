@@ -1,11 +1,19 @@
 @extends('template.app')
 @section('show-1', 'show')
+<<<<<<< HEAD
 @section('title-content', 'Sugerencias')
+=======
+@section('title-content', 'Inicio')
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 
 @section('breadcrumb')
 <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
 	<li class="breadcrumb-item text-white opacity-75">
+<<<<<<< HEAD
 		<a href="{{url('/')}}" class="text-white text-hover-primary">Sugerencias</a>
+=======
+		<a href="{{url('/')}}" class="text-white text-hover-primary">Inicio</a>
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 	</li>
 	<li class="breadcrumb-item">
 		<span class="bullet bg-white opacity-75 w-5px h-2px"></span>
@@ -26,9 +34,14 @@
                                 <span class="card-label fw-bold text-dark">Registros</span>
                                 <span class="text-muted mt-1 fw-semibold fs-7">Resumen Nacional</span>
                             </h3>
+<<<<<<< HEAD
 
                             <div class="card-toolbar">
                                 <button href="{{ url('export')}}" type="button" class="btn btn-sm btn-success" id="button_download" name="button_download">
+=======
+                            <div class="card-toolbar">
+                                <a href="{{ url('export')}}" type="button" class="btn btn-sm btn-success">
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
                                 <span class="svg-icon svg-icon-3">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path opacity="0.3" d="M19 15C20.7 15 22 13.7 22 12C22 10.3 20.7 9 19 9C18.9 9 18.9 9 18.8 9C18.9 8.7 19 8.3 19 8C19 6.3 17.7 5 16 5C15.4 5 14.8 5.2 14.3 5.5C13.4 4 11.8 3 10 3C7.2 3 5 5.2 5 8C5 8.3 5 8.7 5.1 9H5C3.3 9 2 10.3 2 12C2 13.7 3.3 15 5 15H19Z" fill="currentColor"></path>
@@ -36,6 +49,7 @@
                                         <path opacity="0.3" d="M8 17.4H16L12.7 20.7C12.3 21.1 11.7 21.1 11.3 20.7L8 17.4Z" fill="currentColor"></path>
                                     </svg>
                                 </span>
+<<<<<<< HEAD
                                 <!--end::Svg Icon-->Download Report</button>
                             </div>
                         </div>
@@ -119,6 +133,11 @@
                             </div>
                         </form>
                         
+=======
+                                <!--end::Svg Icon-->Download Report</a>
+                            </div>
+                        </div>
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
                         <div class="card-body pt-1">
                             <div id="kt_permissions_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                                 <div class="table-responsive">
@@ -126,8 +145,11 @@
                                       <thead>
                                          <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                             <th>Sede</th>
+<<<<<<< HEAD
                                             <th>categoria</th>
                                             <th>Participante</th>
+=======
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
                                             <th>Carrera</th>
                                             <th>Semestre</th>
                                             <th>Área</th>
@@ -137,24 +159,40 @@
                                       </thead>
                                       <tbody class="fw-semibold text-gray-600">
                                         
+<<<<<<< HEAD
                                         @foreach ($suggestions as $s)
                                             <tr>
                                                 <td>{{ $s->sede }}</td>
                                                 <td>{{ $s->categoria }}</td>
                                                 <td>{{ $s->by_ }}</td>
+=======
+                                            @foreach ($suggestions as $s)
+                                            <tr>
+                                                <td>{{ $s->sede }}</td>
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
                                                 <td>{{ $s->carrera }}</td>
                                                 <td>{{ $s->semestre }}</td>
                                                 <td>{{ $s->area }}</td>
                                                 <td>{{ $s->sugerencia }}</td>
                                                 <td>{{ $s->created_at }}</td>
                                             </tr>
+<<<<<<< HEAD
                                         @endforeach
+=======
+                                            @endforeach
+                                            
+                                         
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
                                       </tbody>
                                    </table>
                                    
                                 </div>
                                 <div class="mt-5">
+<<<<<<< HEAD
                                     {{ $suggestions->appends(request()->query())->links() }}
+=======
+                                {{ $suggestions->links() }}
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
                                 </div>
                              </div>
                         </div>
@@ -164,6 +202,7 @@
         </div>
     </div>
 </div>
+<<<<<<< HEAD
 <script src="https://cdn.jsdelivr.net/npm/js-cookie"></script>
 @endsection
 
@@ -233,3 +272,9 @@
     });
 </script>
 @endsection
+=======
+@endsection
+
+@section('script')
+@endsection
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df

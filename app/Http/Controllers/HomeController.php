@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Suggestion;
 use App\Exports\SuggestionExport;
+<<<<<<< HEAD
 use App\Models\Area;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+=======
+use Maatwebsite\Excel\Facades\Excel;
+
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 class HomeController extends Controller
 {
     /**
@@ -26,6 +31,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+<<<<<<< HEAD
     public function index(Request $request)
     {
         $areas = Area::orderBy('id', 'ASC')->get();
@@ -189,5 +195,20 @@ class HomeController extends Controller
             'sugerenciasPorSemestre' => $sugerenciasPorSemestre,
             
         ]);
+=======
+    public function index()
+    {
+        // return view('home');
+
+        $suggestions = Suggestion::orderBy('id', 'DESC')->paginate(15);
+        return view('home', [
+            'suggestions' => $suggestions
+        ]);
+    }
+
+    public function export(){
+
+        return Excel::download(new SuggestionExport, 'reporte-buzon-sugerencias_'.date('Ymd').'.xlsx');
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
     }
 }

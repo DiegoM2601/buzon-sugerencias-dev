@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< HEAD
 use App\Models\Area as ModelsArea;
 use Illuminate\Http\Request;
 use App\Models\Suggestion;
+=======
+use Illuminate\Http\Request;
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 use Models\Area;
 class AreasController extends Controller
 {
@@ -15,9 +19,13 @@ class AreasController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         
         $areas=ModelsArea::all();
         return view('areas',compact('areas'));
+=======
+        // return Area::all();
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
     }
 
     /**
@@ -39,10 +47,13 @@ class AreasController extends Controller
     public function store(Request $request)
     {
         //
+<<<<<<< HEAD
         $areas=new ModelsArea();
         $areas->area=$request->input('area');
         $areas->save();
         return redirect()->back();
+=======
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
     }
 
     /**
@@ -54,8 +65,11 @@ class AreasController extends Controller
     public function show($id)
     {
         //
+<<<<<<< HEAD
         $areas=ModelsArea::find($id);
         return view('areas.area',compact('areas.area'));
+=======
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
     }
 
     /**
@@ -79,10 +93,13 @@ class AreasController extends Controller
     public function update(Request $request, $id)
     {
         //
+<<<<<<< HEAD
         $areas=ModelsArea::find($id);
         $areas->area=$request->input('area');
         $areas->update();
         return redirect()->back();
+=======
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
     }
 
     /**
@@ -94,8 +111,11 @@ class AreasController extends Controller
     public function destroy($id)
     {
         //
+<<<<<<< HEAD
         $areas=ModelsArea::find($id);
         $areas->delete();
         return redirect()->back();
+=======
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
     }
 }

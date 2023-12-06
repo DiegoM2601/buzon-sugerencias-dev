@@ -46,6 +46,7 @@ class SuggestionsController extends Controller
         // return $request->all();
 
         $movie = new Suggestion;
+<<<<<<< HEAD
         //$movie->create($request->all());
         $movie->sede=$request->sede;
         $movie->carrera=$request->carrera;
@@ -74,6 +75,9 @@ class SuggestionsController extends Controller
         $movie->save();
         
 
+=======
+        $movie->create($request->all());
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 
         return ["Success"];
     }

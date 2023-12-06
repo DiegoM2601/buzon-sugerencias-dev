@@ -19,8 +19,11 @@
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.32.11",
         "sass-loader": "^11.0.1"
+<<<<<<< HEAD
     },
     "dependencies": {
         "apexcharts": "^3.44.0"
+=======
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
     }
 }

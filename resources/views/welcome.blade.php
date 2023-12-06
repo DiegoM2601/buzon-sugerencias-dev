@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 <!DOCTYPE html>
 <html> 
 <head>   
@@ -53,7 +58,11 @@
                                         </div>
                                       </div>
                                     </div>
+<<<<<<< HEAD
                                 </div>
+=======
+                                  </div>
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 								<!-- next-prev-btn -->
 						</div>
 					</section>
@@ -111,6 +120,7 @@
 								</div>
 						</div>
 					</section> --}}
+<<<<<<< HEAD
                     <section class="steps-inner"  id="step-1">
 						<div class="wrapper">
                             <div class="step-heading mb-5 title-ml">
@@ -161,6 +171,9 @@
 
                         </div>
                     </section>
+=======
+
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 					<!-- step-2 -->
 					<section class="steps-inner"  id="step-2">
 						<div class="wrapper">
@@ -177,7 +190,11 @@
 							</div>
 							<div class="step-bar">
 								<span class="step-counter">
+<<<<<<< HEAD
 									Pregunta 3 / 5
+=======
+									Pregunta 2 / 4
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 								</span>
 								<div class="step-bar-inner">
 									<div class="step-bar-move step-move m50"></div>
@@ -189,7 +206,10 @@
 								<div class="form-inner pop-slide">
 									<div class="row">
                                         <div class="col-4">
+<<<<<<< HEAD
                                             
+=======
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
                                             <label class="form-input" for="carrera">
                                                 <input type="radio" name="carrera" id="" value="ADM">
                                                 ADM
@@ -298,7 +318,11 @@
 							</div>
 							<div class="step-bar">
 								<span class="step-counter">
+<<<<<<< HEAD
 									Pregunta 4 / 5
+=======
+									Pregunta 3 / 4
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 								</span>
 								<div class="step-bar-inner">
 									<div class="step-bar-move step-move m75"></div>
@@ -310,7 +334,10 @@
 								<div class="form-inner pop-slide">
 									<div class="row">
                                         <div class="col-4">
+<<<<<<< HEAD
                                             
+=======
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
                                             <label class="form-input" for="semestre">
                                                 <input type="radio" name="semestre" value="1">
                                                 1
@@ -394,12 +421,17 @@
 							</div>
 							<div class="step-bar">
 								<span class="step-counter">
+<<<<<<< HEAD
 									Pregunta 5 / 5
+=======
+									Pregunta 4 / 4
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 								</span>
 								<div class="step-bar-inner">
 									<div class="step-bar-move step-move m100"></div>
 								</div>
 							</div>
+<<<<<<< HEAD
                             <div class="form-heading">
                                 Selecciona una opción:
                             </div>
@@ -424,19 +456,30 @@
                             </div>
 								<div class="form-heading">
 									Escoge al área al que va dirigida tu(s) sugerencia(s):
+=======
+								<div class="form-heading">
+									Escoge al área al que va dirigida tu(s) sugerencia(s)
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 								</div>
 								<div class="form-inner pop-slide">
                                     <select class="form-select" name="area" id="area">
                                         <option selected disabled>Seleccionar Área</option>
                                         @foreach ($areas as $area)
+<<<<<<< HEAD
                                             <option value="{{ $area->area }}">{{ $area->area }}</option>
                                         @endforeach
                                         <option value="OTROS">OTRO</option>
                                     </select>
+=======
+                                        <option value="{{ $area->area }}">{{ $area->area }}</option>
+                                        @endforeach
+                                      </select>
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 								</div>
                                 <div class="alert alert-danger mt-3 pop-slide" role="alert" id="errorArea" style="display: none">
                                     Por favor, selecciona un área.
                                 </div>
+<<<<<<< HEAD
                                 <div class="form-inner">
                                     <input class="form-control" name="newarea" id="newarea" style="display:none; line-height: 2.7" placeholder="Ingrese el nombre del área">
                                 </div>
@@ -446,6 +489,10 @@
                                 
                                 <div class="form-heading mt-4">
 									Por favor, escribe tu(s) sugerencia(s):
+=======
+                                <div class="form-heading mt-4">
+									Por favor, escribe tu(s) sugerencia(s)
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 								</div>
                                 <div class="form-inner pop-slide">
                                     <div class="form-floating">
@@ -513,14 +560,26 @@
 <script type="text/javascript" src="assets/js/custom.js?ver=1.0.1"></script>
 
 <script>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+<<<<<<< HEAD
 </script>
 <script>
     
 </script>   
+=======
+
+
+
+</script>
+
+>>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 </body>
 </html>
