@@ -6,22 +6,15 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
-<<<<<<< HEAD
         "arielmejiadev/larapex-charts": "^6.0",
-=======
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
-<<<<<<< HEAD
         "maatwebsite/excel": "^3.1",
         "nesbot/carbon": "^2.71"
-=======
-        "maatwebsite/excel": "^3.1"
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
     },
     "require-dev": {
         "facade/ignition": "^2.5",

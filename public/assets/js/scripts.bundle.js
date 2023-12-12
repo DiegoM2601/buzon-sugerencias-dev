@@ -7444,10 +7444,6 @@ KTUtil.onDOMContentLoaded(function() {
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = KTLayoutHeader;
-<<<<<<< HEAD
 }
 
 
-=======
-}
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df

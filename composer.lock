@@ -4,7 +4,6 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
     "content-hash": "63740922f5925260fe2505e6e50d9698",
     "packages": [
         {
@@ -72,11 +71,6 @@
             "time": "2023-06-16T02:34:05+00:00"
         },
         {
-=======
-    "content-hash": "1359cbf6f4d4019153e23a47f23e2912",
-    "packages": [
-        {
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
             "name": "asm89/stack-cors",
             "version": "v2.1.1",
             "source": {
@@ -2287,7 +2281,6 @@
         },
         {
             "name": "nesbot/carbon",
-<<<<<<< HEAD
             "version": "2.71.0",
             "source": {
                 "type": "git",
@@ -2298,41 +2291,21 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/98276233188583f2ff845a0f992a235472d9466a",
                 "reference": "98276233188583f2ff845a0f992a235472d9466a",
-=======
-            "version": "2.62.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "01bc4cdefe98ef58d1f9cb31bdbbddddf2a88f7a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/01bc4cdefe98ef58d1f9cb31bdbbddddf2a88f7a",
-                "reference": "01bc4cdefe98ef58d1f9cb31bdbbddddf2a88f7a",
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "php": "^7.1.8 || ^8.0",
-<<<<<<< HEAD
                 "psr/clock": "^1.0",
-=======
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
                 "symfony/polyfill-mbstring": "^1.0",
                 "symfony/polyfill-php80": "^1.16",
                 "symfony/translation": "^3.4 || ^4.0 || ^5.0 || ^6.0"
             },
-<<<<<<< HEAD
             "provide": {
                 "psr/clock-implementation": "1.0"
             },
             "require-dev": {
                 "doctrine/dbal": "^2.0 || ^3.1.4",
-=======
-            "require-dev": {
-                "doctrine/dbal": "^2.0 || ^3.0",
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
                 "doctrine/orm": "^2.7",
                 "friendsofphp/php-cs-fixer": "^3.0",
                 "kylekatarnls/multi-tester": "^2.0",
@@ -2410,11 +2383,7 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
             "time": "2023-09-25T11:31:05+00:00"
-=======
-            "time": "2022-09-02T07:48:13+00:00"
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
         },
         {
             "name": "nette/schema",
@@ -2865,7 +2834,6 @@
             "time": "2022-07-30T15:51:26+00:00"
         },
         {
-<<<<<<< HEAD
             "name": "psr/clock",
             "version": "1.0.0",
             "source": {
@@ -2914,8 +2882,6 @@
             "time": "2022-11-25T14:36:26+00:00"
         },
         {
-=======
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
             "name": "psr/container",
             "version": "1.1.2",
             "source": {

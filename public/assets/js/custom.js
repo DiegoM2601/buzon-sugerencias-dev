@@ -18,12 +18,6 @@ $(document).ready(function() {
 });
 
 
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 function getSede(){
   var Str = window.location.pathname
   var sede = Str.replace('/','')
@@ -46,7 +40,6 @@ function getSede(){
 
   $("#btnContinuar").click(function(){
     $("#step-0").hide();
-<<<<<<< HEAD
     $("#step-1").show()
   })
 
@@ -65,22 +58,6 @@ function getSede(){
         $("#errorBy").show();
     }
   })
-=======
-    $("#step-2").show()
-  })
-
-  // $("#btnSede").click(function(){
-  //   var isValid = $("input[name=sede]").is(":checked");
-  //   // console.log(isValid)
-  //   if(isValid){
-  //     $("#step-1").hide();
-  //     $("#step-2").show()
-  //   }else{
-  //     // console.log("Error")
-  //     $("#errorSede").show();
-  //   }
-  // })
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 
   // $(document).on('change', 'input[type=radio][name=sede]', function (event) {
   //   $("#errorSede").hide();
@@ -137,18 +114,8 @@ function getSede(){
     // }
     // $("#errorCarrera").hide();
 
-<<<<<<< HEAD
   });
 
-=======
-
-
-
-  });
-
-  
-
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
   $("#btnSemestre").click(function(){
     var isValid = $("input[name=semestre]").is(":checked");
     // console.log(isValid)
@@ -172,15 +139,12 @@ function getSede(){
     // console.log($("#area").val())
     if($("#area").val() == null){
       $("#errorArea").show();
-<<<<<<< HEAD
     }else if ($("#newarea").val() == null || $("#newarea").val() == ''){
       $("#ErrorNewArea").show();  
     } else if ($("input[name=categoria]:checked").length === 0) {
       $("#errorCategoria").show();
     } else if ($("input[name=by_]:checked").length === 0) {
       $("#errorBy").show();
-=======
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
     }else if ($("#sugerencia").val() == null || $("#sugerencia").val() == ''){
       $("#errorSugerencia").show();
     }else{
@@ -191,14 +155,10 @@ function getSede(){
       var sede = getSede();
       var carrera = $("input[name=carrera]:checked").val();
       var semestre = $("input[name=semestre]:checked").val();
-<<<<<<< HEAD
       var area = $("#area").val()
       var newarea = $("#newarea").val()
       var categoria = $("input[name=categoria]:checked").val();
       var by_ = $("input[name=by_]:checked").val();
-=======
-      var area = $("#area").val() 
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
       var sugerencia = $("#sugerencia").val()
       var key = localStorage.getItem('key')
       var ip = localStorage.getItem('ip')
@@ -221,12 +181,9 @@ function getSede(){
           carrera:carrera,
           semestre: semestre,
           area: area,
-<<<<<<< HEAD
           newarea:newarea,
           by_: by_,
           categoria: categoria,
-=======
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
           sugerencia: sugerencia,
           key: key,
           device: device,
@@ -270,7 +227,6 @@ function getSede(){
   })
 
 
-<<<<<<< HEAD
   $(document).ready(function() {
     $('#area').on('change', function() {
         var selectedArea = $(this).val();    
@@ -285,13 +241,10 @@ function getSede(){
         }
     });
   });
-=======
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 
   $("#area").on('change', function() {
     $("#errorArea").hide()
   });
-<<<<<<< HEAD
   
 
   $(document).on('change', 'input[type=radio][name=categoria]', function (event) {
@@ -313,8 +266,6 @@ function getSede(){
           $("#errorBy").hide();
       }
   });
-=======
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 
   $("#sugerencia").keyup(function() {
     var value = $(this);
@@ -332,7 +283,6 @@ function getSede(){
   // btnSugerencia
 
 
-<<<<<<< HEAD
   $("#prev-1").click(function() {
      $("#step-1").hide();
      $("#step-0").show()
@@ -341,16 +291,6 @@ function getSede(){
   $("#prev-2").click(function() {
     $("#step-2").hide();
     $("#step-1").show()
-=======
-  // $("#prev-1").click(function() {
-  //   $("#step-1").hide();
-  //   $("#step-0").show()
-  // });
-
-  $("#prev-2").click(function() {
-    $("#step-2").hide();
-    $("#step-0").show()
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
   });
 
   $("#prev-3").click(function() {
@@ -359,7 +299,6 @@ function getSede(){
   });
   
   $("#prev-4").click(function() {
-<<<<<<< HEAD
     var selectedBy = $("input[name=by_]:checked").val();
     if (selectedBy === "Docente") {
         $("#step-4").hide();
@@ -369,11 +308,6 @@ function getSede(){
         $("#step-3").show()
     }
 });
-=======
-    $("#step-4").hide();
-    $("#step-3").show()
-  });
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 
 
 });

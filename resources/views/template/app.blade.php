@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 <!DOCTYPE html>
 <html lang="es">
 	<head>
@@ -19,7 +15,6 @@
 		<link href="{{url('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
 		<link href="{{url('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<<<<<<< HEAD
 
 		<!-- iconic by fontawasome -->
 		<script src="https://kit.fontawesome.com/5ff3d2d8e3.js" crossorigin="anonymous"></script>
@@ -28,8 +23,6 @@
 		
 
 	
-=======
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 	</head>
 	<body style="background-image: url({{url('assets/media/patterns/header-bg.png')}})" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled">
 
@@ -46,13 +39,9 @@
 						</div>
 					</div>
 					<div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
-<<<<<<< HEAD
 						
 						@yield('content-main')
 						
-=======
-						@yield('content-main')
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 					</div>
 					@include('template.footer')
 				</div>
@@ -66,13 +55,9 @@
 		<script src="{{url('assets/js/custom/widgets.js')}}"></script>
 		<script src="{{url('assets/js/custom/apps/chat/chat.js')}}"></script>
 		<script src="{{url('assets/js/custom/intro.js')}}"></script>
-<<<<<<< HEAD
 		
 		
 		@yield('script')
 		
-=======
-		@yield('script')
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
 	</body>
 </html>

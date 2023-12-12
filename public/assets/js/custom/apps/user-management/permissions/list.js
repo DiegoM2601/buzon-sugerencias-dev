@@ -114,9 +114,5 @@ var KTUsersPermissionsList = function () {
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
     KTUsersPermissionsList.init();
-<<<<<<< HEAD
 });
 
-=======
-});
->>>>>>> 3377b0de0ed0ee5f2e66fa75a283794659d776df
