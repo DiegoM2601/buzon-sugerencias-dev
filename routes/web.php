@@ -24,17 +24,17 @@ Route::middleware(['check-ip'])->group(function () {
     Route::get('/la-paz', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');
     Route::get('/santa-cruz', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');
 
-    Route::post('suggestion-store', [App\Http\Controllers\SuggestionsController::class, 'store'])->name('store');
-    Route::resource('areas', App\Http\Controllers\AreasController::class);
-
-
-    Auth::routes();
-
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
-    Route::get('/export', [App\Http\Controllers\HomeController::class, 'export'])->name('export');
-    Route::get('/area', [App\Http\Controllers\HomeController::class, 'area'])->name('area');
+    
 });
+Auth::routes();
+
+Route::post('suggestion-store', [App\Http\Controllers\SuggestionsController::class, 'store'])->name('store');
+Route::resource('areas', App\Http\Controllers\AreasController::class);
+
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
+Route::get('/export', [App\Http\Controllers\HomeController::class, 'export'])->name('export');
+Route::get('/area', [App\Http\Controllers\HomeController::class, 'area'])->name('area');
 
 Route::get('/acceso-restringido', function () {
     return view('acceso-restringido');
