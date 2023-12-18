@@ -99,10 +99,10 @@
     @media (max-width: 768px) {
       .error-content {
         text-align: center;
-        order: 2; /* El texto ahora será el segundo en móviles */
+        order: 2; 
       }
       .error-image-container {
-        order: 1; /* La imagen ahora será la primera en móviles */
+        order: 1;
       }
     }
   </style>
@@ -120,7 +120,7 @@
             <p>de la universidad para utilizar</p>
             <p>esta plataforma.</p>
           </div>
-          <button class="btn btn-primary">Intentar nuevamente</button>
+          <a href="aqui-la-ruta-anterior" class="btn btn-primary">Intentar nuevamente</a>
         </div>
       </div>
     </div>

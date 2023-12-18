@@ -52,6 +52,8 @@ class HomeController extends Controller
             }
         }
         $suggestions = $query->paginate(15);
+        
+
         return view('home', compact('suggestions', 'searchParams','areas'));
     }
 

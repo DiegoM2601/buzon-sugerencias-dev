@@ -19,8 +19,14 @@ class SuggestionsController extends Controller
     public function index()
     {
         $areas = Area::where('state', 1)->get();
+
+        $accessGranted = session('access_granted', false);
+
+        // return $accessGranted
+
         return view('welcome', [
-            'areas' => $areas
+            'areas' => $areas,
+            'accessGranted' => $accessGranted,
         ]);
 
     }
