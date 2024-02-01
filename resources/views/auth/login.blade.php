@@ -10,7 +10,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta property="og:locale" content="en_ES" />
 		<meta property="og:title" content="Buzón de Sugerencias | UNIFRANZ" />
-		<link rel="canonical" href="https://preview.keenthemes.com/ceres-html-pro" />
 		{{-- <link rel="shortcut icon" href="assets/media/logos/icon.png" /> --}}
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
@@ -41,7 +40,20 @@
                             <!--end::Link-->
                         </div>
 
-                        <form method="POST" action="{{ route('login') }}">
+                        <a href="{{ route('google.redirect') }}" class="btn btn-flex flex-center btn-light btn-lg w-100 mb-5">
+                            <img alt="Logo" src="../../assets/media/svg/brand-logos/google-icon.svg" class="h-20px me-3">   
+                            Ingresar con Google
+                        </a>
+
+                        @if(session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                                {{ session('error') }}
+                            </div>
+                            
+                        @endif
+
+
+                        {{-- <form method="POST" action="{{ route('login') }}">
                             @csrf
     
                             <div class="row mb-3">
@@ -80,7 +92,7 @@
 
                                 </div>
                             </div>
-                        </form>
+                        </form> --}}
 
 					</div>
 				</div>

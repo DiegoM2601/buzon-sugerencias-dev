@@ -38,3 +38,6 @@ Route::get('/area', [App\Http\Controllers\HomeController::class, 'area'])->name(
 Route::get('/acceso-restringido', function () {
     return view('acceso-restringido');
 });
+
+Route::get('/google/redirect', [App\Http\Controllers\GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('/google/callback', [App\Http\Controllers\GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');

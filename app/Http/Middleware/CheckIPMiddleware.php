@@ -38,6 +38,8 @@ class CheckIPMiddleware
         $customRanges = [
             '186.121.254.57/62', // SCZ
             '186.121.246.153/158', // CBB
+            '186.121.247.162/166', // EAT
+            '186.121.247.154/158', // LPZ
         ];
 
         $allowedIps = array_merge($allowedSpecificIps, $this->expandCustomRanges($customRanges));
