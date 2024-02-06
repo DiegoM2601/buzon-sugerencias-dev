@@ -450,7 +450,7 @@
                                         <input class="form-control" name="newarea" id="newarea" style="display:none; line-height: 2.7" placeholder="Ingrese el nombre del área">
                                     </div>
                                     <div class="alert alert-danger mt-3 pop-slide" role="alert" id="ErrorNewArea" style="display: none">
-                                        Por favor, escribe la nueva área.
+                                        Por favor, escribe el área.
                                     </div>
                                     
                                     <div class="form-heading mt-4">

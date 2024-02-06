@@ -136,10 +136,10 @@ function getSede(){
   
 
   $("#btnSugerencia").click(function(){
-    // console.log($("#area").val())
+
     if($("#area").val() == null){
       $("#errorArea").show();
-    }else if ($("#newarea").val() == null || $("#newarea").val() == ''){
+    } else if (($("#newarea").val() == null || $("#newarea").val() == '') && $("#area").val() == "OTROS"){
       $("#ErrorNewArea").show();  
     } else if ($("input[name=categoria]:checked").length === 0) {
       $("#errorCategoria").show();
@@ -229,6 +229,7 @@ function getSede(){
 
   $(document).ready(function() {
     $('#area').on('change', function() {
+      console.log($(this).val())
         var selectedArea = $(this).val();    
         var opcionEspecifica = "OTROS";
         if (selectedArea === opcionEspecifica) {

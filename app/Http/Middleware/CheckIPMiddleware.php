@@ -32,6 +32,7 @@ class CheckIPMiddleware
         // Lista de IPs específicas
         $allowedSpecificIps = [
             // '127.0.0.1',
+            '181.115.171.148',
         ];
 
         // Lista de rangos de IPs 
