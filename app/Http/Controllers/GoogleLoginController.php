@@ -27,19 +27,19 @@ class GoogleLoginController extends Controller
         $allowedDomain = 'unifranz.edu.bo'; // Dominio permitido sin "@"
         $email = $googleUser->email;
 
-        $nameBranches = array("cbbe", "scze", "eate", "lpze", "doc");
+        $nameBranches = array("cbbe", "scze", "eate", "doc");
+        // $nameBranches = array("cbbe", "scze", "eate", "lpze", "doc");
 
         $initialEmail = explode('.', $googleUser->getEmail());
 
-        if(in_array($initialEmail[0], $nameBranches)){
-            return redirect()->route('login')->with('error','Usuario no autorizado');
+        if (in_array($initialEmail[0], $nameBranches)) {
+            return redirect()->route('login')->with('error', 'Usuario no autorizado');
         }
 
         $user = User::where('email', $googleUser->email)->first();
 
-        if(!$user)
-        {
-            $user = User::create(['name' => $googleUser->name, 'email' => $googleUser->email, 'password' => \Hash::make(rand(100000,999999))]);
+        if (!$user) {
+            $user = User::create(['name' => $googleUser->name, 'email' => $googleUser->email, 'password' => \Hash::make(rand(100000, 999999))]);
         }
 
         Auth::login($user);

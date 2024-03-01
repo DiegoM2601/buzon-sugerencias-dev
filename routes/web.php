@@ -22,7 +22,7 @@ Route::middleware(['check-ip'])->group(function () {
     Route::get('/cochabamba', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');
     Route::get('/el-alto', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');
     Route::get('/la-paz', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');
-    Route::get('/santa-cruz', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');   
+    Route::get('/santa-cruz', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');
 });
 
 Auth::routes();
@@ -41,3 +41,8 @@ Route::get('/acceso-restringido', function () {
 
 Route::get('/google/redirect', [App\Http\Controllers\GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('/google/callback', [App\Http\Controllers\GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
+
+
+Route::get('/registro', function () {
+    return view('auth.register');
+});
