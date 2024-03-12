@@ -144,7 +144,7 @@
                                                 <th>
                                                     Participantes
                                                     <select type="search" name="search_by" id="search_by"
-                                                        class="form-select" data-control="select2" data-placeholder="Todas">
+                                                        class="form-select" data-control="select2">
                                                         <option value="0">Todos</option>
                                                         <option value="Estudiante"
                                                             {{ old('search_by', $searchParams['by_']) == 'Estudiante' ? 'selected' : '' }}>
@@ -189,10 +189,10 @@
                                                     <th>Área</th>
                                                     <th>Sugerencia</th>
                                                     <th>Fecha</th>
+                                                    <th>Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="fw-semibold text-gray-600">
-
                                                 @foreach ($suggestions as $s)
                                                     <tr>
                                                         <td>{{ $s->sede }}</td>
@@ -203,10 +203,241 @@
                                                         <td>{{ $s->area }}</td>
                                                         <td>{{ $s->sugerencia }}</td>
                                                         <td>{{ $s->created_at }}</td>
+                                                        <td>
+                                                            {{-- <button class="btn btn-warning" data-bs-toggle="modal"
+                                                                data-bs-target="#modalUpdateSuggestion"><i
+                                                                    class="fa-solid fa-pen-to-square"></i></button> --}}
+                                                            <button class="btn btn-warning updateRegisterBtn"><i
+                                                                    class="fa-solid fa-pen-to-square"></i></button>
+                                                            <button class="btn btn-danger" data-bs-toggle="modal"
+                                                                data-bs-target="#modalDeleteSuggestion"><i
+                                                                    class="fa-solid fa-trash"></i></button>
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
+
+                                        {{-- Modal Actualizar --}}
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="modalUpdateSuggestion" data-bs-backdrop="static"
+                                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Actualizar
+                                                            Registro
+                                                        </h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body"
+                                                        style = "display: flex; justify-content: center">
+                                                        <input type="hidden" id = "pruebaVariable">
+                                                        <div style = "width: 100%; padding: 1em;">
+                                                            <div class="mb-3">
+                                                                {{-- <label>Sede</label>
+                                                                <select class="form-select" data-control="select2">
+                                                                    <option value="LPZ">
+                                                                        La Paz</option>
+                                                                    <option value="SCZ">
+                                                                        Santa Cruz</option>
+                                                                    <option value="CBB">
+                                                                        Cochabamba</option>
+                                                                    <option value="EAT">
+                                                                        El Alto</option>
+                                                                </select> --}}
+                                                                {{-- <select class="form-select form-select-solid"
+                                                                    data-control="select2"
+                                                                    data-placeholder="Select an option"
+                                                                    data-hide-search="true" id = "ejemploEjemplo">
+                                                                    <option></option>
+                                                                    <option value="1">Option 1</option>
+                                                                    <option value="2">Option 2</option>
+                                                                    <option value="3">Option 3</option>
+                                                                    <option value="4">Option 4</option>
+                                                                    <option value="5">Option 5</option>
+                                                                </select> --}}
+                                                                <label>Sede</label>
+                                                                <select class="form-select">
+                                                                    <option value="LPZ">
+                                                                        La Paz</option>
+                                                                    <option value="SCZ">
+                                                                        Santa Cruz</option>
+                                                                    <option value="CBB">
+                                                                        Cochabamba</option>
+                                                                    <option value="EAT">
+                                                                        El Alto</option>
+                                                                </select>
+
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label>Categoría</label>
+                                                                <select class="form-select">
+                                                                    <option value="Sugerencia">
+                                                                        Sugerencia</option>
+                                                                    <option value="Reclamo">
+                                                                        Reclamo</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label>Participante</label>
+                                                                <select class="form-select">
+                                                                    <option value="Estudiante">
+                                                                        Estudiante</option>
+                                                                    <option value="Docente">
+                                                                        Docente</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label>Carrera</label>
+                                                                <select class="form-select">
+                                                                    <option value = "ADM">ADM</option>
+                                                                    <option value = "AHT">AHT</option>
+                                                                    <option value = "ARQ">ARQ</option>
+                                                                    <option value = "BYF">BYF</option>
+                                                                    <option value = "CPU">CPU</option>
+                                                                    <option value = "DER">DER</option>
+                                                                    <option value = "DGP">DGP</option>
+                                                                    <option value = "ENF">ENF</option>
+                                                                    <option value = "ICO">ICO</option>
+                                                                    <option value = "IEC">IEC</option>
+                                                                    <option value = "IEF">IEF</option>
+                                                                    <option value = "MED">MED</option>
+                                                                    <option value = "ODO">ODO</option>
+                                                                    <option value = "PER">PER</option>
+                                                                    <option value = "PSI">PSI</option>
+                                                                    <option value = "PYM">PYM</option>
+                                                                    <option value = "SIS">SIS</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label>Semestre</label>
+                                                                <select class="form-select">
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="5">5</option>
+                                                                    <option value="6">6</option>
+                                                                    <option value="7">7</option>
+                                                                    <option value="8">8</option>
+                                                                    <option value="9">9</option>
+                                                                    <option value="10">10</option>
+                                                                    <option value="11">11</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label">Área</label>
+                                                                    <select class="form-select">
+                                                                        @foreach ($areas as $area)
+                                                                            <option value="{{ $area->area }}">
+                                                                                {{ $area->area }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                            </div>
+                                                            {{-- <div
+                                                            style = "background: green; padding: 2em; width: 100px; flex-grow: 1.5;">
+                                                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                                                                Placeat
+                                                                accusantium quos tempora sint a delectus officia voluptates
+                                                                aliquid, itaque ut ducimus maxime, facilis molestias ad
+                                                                incidunt
+                                                                soluta tenetur dolores fugit.</p>
+                                                        </div>
+                                                        <div
+                                                            style = "background: red; padding: 2em; width: 100px; flex-grow: 1;">
+                                                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                                                                Placeat
+                                                                accusantium quos tempora sint a delectus officia voluptates
+                                                                aliquid, itaque ut ducimus maxime, facilis molestias ad
+                                                                incidunt
+                                                                soluta tenetur dolores fugit.</p>
+                                                        </div> --}}
+                                                        </div>
+                                                        <div style = "width: 100%; padding: 1em;">
+                                                            <div class="mb-3">
+                                                                <label for="suggestionTextarea" class="form-label">Fecha
+                                                                    de Publicación</label>
+                                                                <div class="input-group" id="datepicker1"
+                                                                    data-td-target-input="nearest"
+                                                                    data-td-target-toggle="nearest">
+                                                                    <input id="kt_td_picker_basic_input" type="text"
+                                                                        class="form-control"
+                                                                        data-td-target="#kt_td_picker_basic" readonly />
+                                                                    <span class="input-group-text"
+                                                                        data-td-target="#kt_td_picker_basic"
+                                                                        data-td-toggle="datetimepicker">
+                                                                        <i class="fas fa-calendar-week fs-2"><span
+                                                                                class="path1"></span><span
+                                                                                class="path2"></span></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-3"
+                                                                sytle = " width: 100%;
+                                                            height: 100%; ">
+                                                                <label for="suggestionTextarea"
+                                                                    class="form-label">Comentario</label>
+                                                                <textarea
+                                                                    sytle = " width: 100%;
+                                                                height: 100%; 
+                                                                box-sizing: border-box;"
+                                                                    class="form-control" id="suggestionTextarea"></textarea>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    id = "restoreSuggestionBtn">Reestablecer</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        {{-- <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Reestablecer</button> --}}
+                                                        <button type="button" class="btn btn-primary"
+                                                            id = "updateSuggestionBtn">ACTUALIZAR</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {{-- Modal Eliminar --}}
+                                        <div class="modal fade" tabindex="-1" id="modalDeleteSuggestion">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title">Eliminar área</h3>
+
+                                                        <!--begin::Close-->
+                                                        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
+                                                            data-bs-dismiss="modal" aria-label="Close">
+                                                            <i class="ki-duotone ki-cross fs-1"><span
+                                                                    class="path1"></span><span class="path2"></span></i>
+                                                        </div>
+                                                        <!--end::Close-->
+                                                    </div>
+
+                                                    <div class="modal-body">
+                                                        <form action="#" method="post">
+                                                            <div class="mb-10">
+                                                                <label for="exampleFormControlInput1"
+                                                                    class="form-label">Estás seguro de eliminar
+                                                                    <strong></strong></label>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-light"
+                                                                    data-bs-dismiss="modal">Cerrar</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-primary">Eliminar</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
 
                                     </div>
                                     <div class="mt-5">
@@ -224,8 +455,6 @@
 @endsection
 
 @section('script')
-
-
     <script type="text/javascript">
         $(function() {
             var savedStartDate = Cookies.get('savedStartDate');
@@ -267,6 +496,48 @@
                 Cookies.remove('savedStartDate');
                 Cookies.remove('savedEndDate');
             });
+
+
+            // date picker
+            // new tempusDominus.TempusDominus(document.getElementById("datepicker1"), {
+            //     display: {
+            //         viewMode: "calendar",
+            //         components: {
+            //             decades: true,
+            //             year: true,
+            //             month: true,
+            //             date: true,
+            //             hours: false,
+            //             minutes: false,
+            //             seconds: false
+            //         }
+            //     }
+            // });
+
+            // ! Datepicker 
+            new tempusDominus.TempusDominus(document.getElementById("datepicker1"), {
+                // defaultDate: "01/11/2013 18:14",
+                defaultDate: "2023-02-23 09:53:52",
+                localization: {
+                    locale: 'es',
+                    // format: 'dd/MM/yyyy',
+                    // format: 'dd/MM/yyyy HH:mm:ss'
+                    format: 'yyyy-MM-dd HH:mm:ss'
+                },
+                display: {
+                    viewMode: "calendar",
+                    components: {
+                        decades: true,
+                        year: true,
+                        month: true,
+                        date: true,
+                        hours: true,
+                        minutes: true,
+                        seconds: true
+                    },
+                    theme: 'light'
+                }
+            });
         });
     </script>
 
@@ -289,4 +560,6 @@
             window.location.href = url;
         });
     </script>
+
+    <script src="{{ asset('js/modalUpdateSuggestion.js') }}"></script>
 @endsection
