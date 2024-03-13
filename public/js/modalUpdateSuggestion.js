@@ -1,5 +1,14 @@
+const _token = document.querySelector("input[name=_token]").value;
 let btnpulsado;
 let idSuggestion;
+let valoresSubida;
+
+// let updateSuggestionToast = new bootstrap.Toast(
+//     document.getElementById("updateSuggestionToast")
+// );
+const toast = bootstrap.Toast.getOrCreateInstance(
+    document.getElementById("updateSuggestionToast")
+);
 
 const prepararModal = (e) => {
     let values = [];
@@ -56,14 +65,13 @@ const prepararModal = (e) => {
 
 const actualizarRegistros = () => {
     let valoresActualizados = [];
+    valoresSubida = [];
     document
         .querySelector(
             "#modalUpdateSuggestion .modal-dialog .modal-content .modal-body div"
         )
         .querySelectorAll("select")
         .forEach((select) => valoresActualizados.push(select.value));
-
-    console.log(valoresActualizados);
 
     valoresActualizados.push(
         document.getElementById("suggestionTextarea").value
@@ -78,8 +86,42 @@ const actualizarRegistros = () => {
             td.innerText = valoresActualizados[i];
         });
 
+    console.log(valoresActualizados);
+    // [ "LPZ", "Sugerencia", "Docente", "", "", "Anfitriones/Tutores/Ayudantes/Hnos Mayores", "mejorar", "2024-03-07 15:36:09" ]
+
+    valoresSubida = valoresActualizados.map((v) => (v === "" ? null : v));
+    console.log(valoresSubida);
+
     $("#modalUpdateSuggestion").modal("hide");
+    $("#modalUpdateSuggestion2").modal("show");
+
+    axios
+        .post("https://buzon-sugerencias.bo/update-suggestion", {
+            idSuggestion,
+            valoresSubida,
+            _token,
+        })
+        .then((response) => {
+            // Maneja la respuesta si la solicitud fue exitosa
+            console.log("Respuesta del servidor:", response.data);
+            toast.show();
+        })
+        .catch((error) => {
+            // Maneja el error si la solicitud falla
+            console.error("Error al realizar la solicitud:", error);
+        });
+
+    // $("#modalUpdateSuggestion").modal("hide");
 };
+
+document.getElementById("confirmUpdate").addEventListener("click", () => {
+    actualizarRegistros();
+    $("#modalUpdateSuggestion2").modal("hide");
+});
+
+document.getElementById("dismissUpdate").addEventListener("click", () => {
+    $("#modalUpdateSuggestion2").modal("hide");
+});
 
 document
     .getElementById("restoreSuggestionBtn")
@@ -91,51 +133,22 @@ document
 document
     .getElementById("updateSuggestionBtn")
     .addEventListener("click", (e) => {
-        actualizarRegistros();
-
-        const _token = document.querySelector("input[name=_token]").value;
+        $("#modalUpdateSuggestion").modal("hide");
+        $("#modalUpdateSuggestion2").modal("show");
 
         // axios
-        //     .get("https://buzon-sugerencias.bo/pruebaget/" + idSuggestion)
-        //     .then(function (res) {
-        //         // handle success
-        //         console.log(res.data);
-        //     })
-        //     .catch(function (error) {
-        //         // handle error
-        //         console.log(error);
-        //     });
-
-        // FIXME: La solicitud esta fallando
-        axios
-            .post("https://buzon-sugerencias.bo/update-suggestion", {
-                num: 45,
-                _token,
-            })
-            .then((response) => {
-                // Maneja la respuesta si la solicitud fue exitosa
-                console.log("Respuesta del servidor:", response.data);
-            })
-            .catch((error) => {
-                // Maneja el error si la solicitud falla
-                console.error("Error al realizar la solicitud:", error);
-            });
-
-        // $.ajax({
-        //     url: "https://buzon-sugerencias.bo/update",
-        //     dataType: "json",
-        //     method: "post",
-        //     data: {
-        //         _token,
+        //     .post("https://buzon-sugerencias.bo/update-suggestion", {
         //         num: 45,
-        //     },
-        //     success: (res) => {
-        //         console.log(res);
-        //     },
-        //     error: (err) => {
-        //         console.log(err.responseJSON);
-        //     },
-        // });
+        //         _token,
+        //     })
+        //     .then((response) => {
+        //         // Maneja la respuesta si la solicitud fue exitosa
+        //         console.log("Respuesta del servidor:", response.data);
+        //     })
+        //     .catch((error) => {
+        //         // Maneja el error si la solicitud falla
+        //         console.error("Error al realizar la solicitud:", error);
+        //     });
     });
 
 document

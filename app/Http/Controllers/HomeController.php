@@ -116,8 +116,20 @@ class HomeController extends Controller
 
     public function updateSuggestion(Request $request)
     {
-        $resultado = $request->num * 100;
-        return response()->json(['resultado' => $resultado]);
+        $sugerencia = Suggestion::find($request->idSuggestion);
+
+        $sugerencia->sede = $request->valoresSubida[0];
+        $sugerencia->categoria = $request->valoresSubida[1];
+        $sugerencia->by_ = $request->valoresSubida[2];
+        $sugerencia->carrera = $request->valoresSubida[3];
+        $sugerencia->semestre = $request->valoresSubida[4];
+        $sugerencia->area = $request->valoresSubida[5];
+        $sugerencia->sugerencia = $request->valoresSubida[6];
+        $sugerencia->created_at = Carbon::create($request->valoresSubida[7]);
+
+        $sugerencia->save();
+
+        return response()->json($request);
     }
 
 

@@ -403,6 +403,56 @@
                                             </div>
                                         </div>
 
+                                        <div class="modal fade" id="modalUpdateSuggestion2" aria-hidden="true"
+                                            data-bs-backdrop="static" data-bs-keyboard="false"
+                                            aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalToggleLabel2">CONFIRMACIÓN
+                                                        </h5>
+                                                    </div>
+                                                    <div class="modal-body fs-5">
+                                                        ¿Estás seguro de modificar el registro?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-danger"id="confirmUpdate">SÍ
+                                                        </button>
+                                                        <button class="btn btn-primary" id="dismissUpdate">NO</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {{-- <div class="position-fixed bottom-0 end-0 p-3">
+                                            <div id="updateSuggestionToast"
+                                                class="toast hide align-items-center text-white bg-primary border-0"
+                                                role="alert" aria-live="assertive" aria-atomic="true">
+                                                <div class="d-flex">
+                                                    <div class="toast-body">
+                                                        Registro actualizado correctamente.
+                                                    </div>
+                                                    <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                                        data-bs-dismiss="toast" aria-label="Close"></button>
+                                                </div>
+                                            </div>
+                                        </div> --}}
+
+                                        <div class="position-fixed bottom-0 end-0 p-3" style="z-index:99999;">
+                                            <div class="toast align-items-center text-white bg-primary border-0 p-3 fs-5"
+                                                id = "updateSuggestionToast" role="alert" aria-live="assertive"
+                                                aria-atomic="true">
+                                                <div class="d-flex">
+                                                    <div class="toast-body">
+                                                        Actualizado correctamente.
+                                                    </div>
+                                                    <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                                        data-bs-dismiss="toast" aria-label="Close"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                         {{-- Modal Eliminar --}}
                                         <div class="modal fade" tabindex="-1" id="modalDeleteSuggestion">
                                             <div class="modal-dialog">
@@ -423,7 +473,8 @@
                                                         <form action="#" method="post">
                                                             <div class="mb-10">
                                                                 <label for="exampleFormControlInput1"
-                                                                    class="form-label">Estás seguro de eliminar
+                                                                    class="form-label">Estás
+                                                                    seguro de eliminar
                                                                     <strong></strong></label>
 
                                                             </div>
