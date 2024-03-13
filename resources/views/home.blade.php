@@ -207,7 +207,8 @@
                                                             {{-- <button class="btn btn-warning" data-bs-toggle="modal"
                                                                 data-bs-target="#modalUpdateSuggestion"><i
                                                                     class="fa-solid fa-pen-to-square"></i></button> --}}
-                                                            <button class="btn btn-warning updateRegisterBtn"><i
+                                                            <button class="btn btn-warning updateRegisterBtn"
+                                                                id-suggestion = "{{ $s->id }}"><i
                                                                     class="fa-solid fa-pen-to-square"></i></button>
                                                             <button class="btn btn-danger" data-bs-toggle="modal"
                                                                 data-bs-target="#modalDeleteSuggestion"><i

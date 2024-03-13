@@ -1,6 +1,5 @@
-// const tempusDominus = document.getElementById("kt_td_picker_basic_input");
-
 let btnpulsado;
+let idSuggestion;
 
 const prepararModal = (e) => {
     let values = [];
@@ -39,6 +38,7 @@ const prepararModal = (e) => {
     console.log(elementosSelect);
 
     btnpulsado = e;
+    idSuggestion = e.getAttribute("id-suggestion");
 
     document.getElementById("kt_td_picker_basic_input").value =
         values[values.length - 1];
@@ -92,6 +92,50 @@ document
     .getElementById("updateSuggestionBtn")
     .addEventListener("click", (e) => {
         actualizarRegistros();
+
+        const _token = document.querySelector("input[name=_token]").value;
+
+        // axios
+        //     .get("https://buzon-sugerencias.bo/pruebaget/" + idSuggestion)
+        //     .then(function (res) {
+        //         // handle success
+        //         console.log(res.data);
+        //     })
+        //     .catch(function (error) {
+        //         // handle error
+        //         console.log(error);
+        //     });
+
+        // FIXME: La solicitud esta fallando
+        axios
+            .post("https://buzon-sugerencias.bo/update-suggestion", {
+                num: 45,
+                _token,
+            })
+            .then((response) => {
+                // Maneja la respuesta si la solicitud fue exitosa
+                console.log("Respuesta del servidor:", response.data);
+            })
+            .catch((error) => {
+                // Maneja el error si la solicitud falla
+                console.error("Error al realizar la solicitud:", error);
+            });
+
+        // $.ajax({
+        //     url: "https://buzon-sugerencias.bo/update",
+        //     dataType: "json",
+        //     method: "post",
+        //     data: {
+        //         _token,
+        //         num: 45,
+        //     },
+        //     success: (res) => {
+        //         console.log(res);
+        //     },
+        //     error: (err) => {
+        //         console.log(err.responseJSON);
+        //     },
+        // });
     });
 
 document

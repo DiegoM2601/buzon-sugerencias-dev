@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +44,12 @@ Route::get('/acceso-restringido', function () {
 Route::get('/google/redirect', [App\Http\Controllers\GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('/google/callback', [App\Http\Controllers\GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
 
+//actualizar registros
+Route::get("/pruebaget/{idRegistro}", [App\Http\Controllers\HomeController::class, 'prueba'])->name('pruebaget');
+// Route::post("/update", function (Request $request) {
+//     return response()->json(["resultado" => $request->num]);
+// });
+Route::post('/update-suggestion', [App\Http\Controllers\HomeController::class, 'updateSuggestion'])->name("updateSuggestion");
 
 Route::get('/registro', function () {
     return view('auth.register');
