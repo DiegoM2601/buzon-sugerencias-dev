@@ -165,6 +165,8 @@
                                                 <th>
                                                     <button id="searchButton" class="btn btn-primary" type="submit"><i
                                                             class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+
+                                                    <button id="buscarBtn" class="btn btn-danger">Buscar</button>
                                                 </th>
                                             </tr>
                                         </thead>

@@ -51,6 +51,8 @@ Route::get("/pruebaget/{idRegistro}", [App\Http\Controllers\HomeController::clas
 // });
 Route::post('/update-suggestion', [App\Http\Controllers\HomeController::class, 'updateSuggestion'])->name("updateSuggestion");
 
+Route::post('/prueba-filtros', [App\Http\Controllers\HomeController::class, 'index2']);
+
 Route::get('/registro', function () {
     return view('auth.register');
 });

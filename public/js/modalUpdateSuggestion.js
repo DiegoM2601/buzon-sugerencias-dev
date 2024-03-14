@@ -168,3 +168,30 @@ document
             // $("#modalUpdateSuggestion").modal("show");
         }
     });
+
+// ! ******************************************************************
+
+document.getElementById("buscarBtn").addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const consulta = {
+        sede: "SCZ",
+        semestre: "2",
+        area: "Anfitriones/Tutores/Ayudantes/Hnos Mayores",
+        by_: "Estudiante",
+        categoria: "Sugerencia",
+        datefilter: "01/02/2024 - 13/03/2024",
+    };
+
+    axios
+        .post("https://buzon-sugerencias.bo/prueba-filtros", {
+            consulta,
+            _token,
+        })
+        .then((response) => {
+            console.log("Respuesta del servidor:", response.data);
+        })
+        .catch((error) => {
+            console.error("Error al realizar la solicitud:", error);
+        });
+});
