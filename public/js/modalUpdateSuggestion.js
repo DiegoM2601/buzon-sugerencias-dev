@@ -174,17 +174,25 @@ document
 document.getElementById("buscarBtn").addEventListener("click", (e) => {
     e.preventDefault();
 
+    const elementosFormulario = Array.from(
+        document.querySelectorAll("#searchForm select")
+    );
+    elementosFormulario.push(document.getElementById("datefilter"));
+    const valores = elementosFormulario.map((e) =>
+        e.value === "0" ? null : e.value
+    );
+
     const consulta = {
-        sede: "SCZ",
-        semestre: "2",
-        area: "Anfitriones/Tutores/Ayudantes/Hnos Mayores",
-        by_: "Estudiante",
-        categoria: "Sugerencia",
-        datefilter: "01/02/2024 - 13/03/2024",
+        sede: valores[0],
+        semestre: valores[1],
+        area: valores[2],
+        by_: valores[3],
+        categoria: valores[4],
+        datefilter: valores[5],
     };
 
     axios
-        .post("https://buzon-sugerencias.bo/prueba-filtros", {
+        .post("https://buzon-sugerencias.bo/search-parameters", {
             consulta,
             _token,
         })

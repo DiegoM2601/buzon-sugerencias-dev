@@ -47,7 +47,7 @@
                                 </div>
                             </div>
 
-                            <form href="" method="get">
+                            <form href="" method="get" id = "searchForm">
                                 @csrf
                                 <div class="table-responsive">
                                     <table class="table gs-7 gy-7 gx-7">

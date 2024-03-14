@@ -58,7 +58,7 @@ class HomeController extends Controller
         return view('home', compact('suggestions', 'searchParams', 'areas'));
     }
 
-    public function index2(Request $request)
+    public function searchParameters(Request $request)
     {
         $query = Suggestion::orderBy('id', 'DESC');
 
@@ -70,26 +70,11 @@ class HomeController extends Controller
             $query->whereBetween('created_at', [$startDate, $endDate]);
         }
 
-        // $parametros = [
-        //     'sede' => "SCZ",
-        //     'semestre' => "2",
-        //     'area' => "Anfitriones/Tutores/Ayudantes/Hnos Mayores",
-        //     'by_' => "Estudiante",
-        //     'categoria' => "Sugerencia",
-        // ];
         foreach ($request->consulta as $key => $value) {
             if ($value && $key != "datefilter") {
                 $query->where($key, 'like', '%' . $value . '%');
             }
         }
-
-        // $algo = array_pop($request['datefilter']);
-
-        // ? ***************
-        //FIXME: por que no funciona unset ????
-        // $x = $request['consulta'];
-        // $algo = unset($x['datefilter']);
-        // ? ***************
 
         return response()->json($query->get());
     }
