@@ -186,20 +186,88 @@ document.getElementById("buscarBtn").addEventListener("click", (e) => {
         sede: valores[0],
         semestre: valores[1],
         area: valores[2],
-        by_: valores[3],
-        categoria: valores[4],
+        categoria: valores[3],
+        by_: valores[4],
         datefilter: valores[5],
     };
+
+    // const consulta = {
+    //     sede: "SCZ",
+    //     semestre: "2",
+    //     area: "Anfitriones/Tutores/Ayudantes/Hnos Mayores",
+    //     by_: "Estudiante",
+    //     categoria: "Sugerencia",
+    //     datefilter: "01/02/2024 - 13/03/2024",
+    // };
+
+    console.log(consulta);
 
     axios
         .post("https://buzon-sugerencias.bo/search-parameters", {
             consulta,
             _token,
         })
-        .then((response) => {
-            console.log("Respuesta del servidor:", response.data);
+        .then((res) => {
+            // console.log(res.data);
+            let td = res.data.map((suggestion) => {
+                //prettier-ignore
+                return `<tr>
+                            <td>${suggestion.sede}</td>
+                            <td>${suggestion.categoria}</td>
+                            <td>${suggestion.by_}</td>
+                            <td>${suggestion.carrera === null ? "" : suggestion.carrera}</td>
+                            <td>${suggestion.semestre === null ? "" : suggestion.semestre}</td>
+                            <td>${suggestion.area}</td>
+                            <td>${suggestion.sugerencia}</td>
+                            <td>${fechaLegible(suggestion.created_at)}</td>
+                            <td>
+                                <button class="btn btn-warning updateRegisterBtn"
+                                    id-suggestion = "${suggestion.id}"><i
+                                        class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#modalDeleteSuggestion"><i
+                                        class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>`;
+            });
+            let suggestions = td.join("");
+            console.log(suggestions);
+
+            document.querySelector("#kt_permissions_table tbody").innerHTML =
+                "";
+            document.querySelector("#kt_permissions_table tbody").innerHTML =
+                suggestions;
+
+            // remover la paginacion de bootstrap que permanece estatica despues de concretar la busqueda
+            document.querySelector(
+                "#kt_permissions_table"
+            ).nextElementSibling.innerHTML = "";
         })
         .catch((error) => {
             console.error("Error al realizar la solicitud:", error);
         });
 });
+
+function fechaLegible(fecha) {
+    let f = new Date(fecha);
+    let anio = f.getFullYear();
+    var mes =
+        f.getMonth() + 1 < 10 ? "0" + (f.getMonth() + 1) : f.getMonth() + 1;
+    var dia = f.getDate() < 10 ? "0" + f.getDate() : f.getDate();
+    let formato1 = `${anio}-${mes}-${dia}`;
+
+    //! establecer zona horaria
+    f.setUTCHours(f.getUTCHours() - 4);
+
+    var hora = f.getUTCHours();
+    var minuto = f.getUTCMinutes();
+    var segundo = f.getUTCSeconds();
+    var formato2 =
+        hora.toString().padStart(2, "0") +
+        ":" +
+        minuto.toString().padStart(2, "0") +
+        ":" +
+        segundo.toString().padStart(2, "0");
+
+    return `${formato1} ${formato2}`;
+}

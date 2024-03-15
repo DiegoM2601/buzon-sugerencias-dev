@@ -220,6 +220,9 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                        <div class="mt-5">
+                                            {{ $suggestions->appends(request()->query())->links() }}
+                                        </div>
 
                                         {{-- Modal Actualizar --}}
                                         <!-- Modal -->
@@ -494,9 +497,7 @@
 
 
                                     </div>
-                                    <div class="mt-5">
-                                        {{ $suggestions->appends(request()->query())->links() }}
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
