@@ -48,6 +48,8 @@ Route::post('/update-suggestion', [App\Http\Controllers\HomeController::class, '
 
 Route::post('/search-parameters', [App\Http\Controllers\HomeController::class, 'searchParameters']);
 
+Route::get("/pruebagetsearch", [App\Http\Controllers\HomeController::class, 'pruebaGetSearch']);
+
 Route::get('/registro', function () {
     return view('auth.register');
 });

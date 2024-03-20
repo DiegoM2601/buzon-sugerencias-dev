@@ -52,10 +52,75 @@ class HomeController extends Controller
                 $query->where($key, 'like', '%' . $value . '%');
             }
         }
-        $suggestions = $query->paginate(15);
+        $suggestions = $query->paginate(5);
 
+        if ($request->hasHeader("AXIOS")) {
+            return view('table-home', compact('suggestions'));
+        }
 
         return view('home', compact('suggestions', 'searchParams', 'areas'));
+    }
+
+    // public function pruebaGetSearch(Request $request)
+    // {
+    //     $searchParams = [
+    //         'sede' => $request->get('search_sede'),
+    //         'semestre' => $request->get('search_semestre'),
+    //         'area' => $request->get('search_area'),
+    //         'by_' => $request->get('search_by'),
+    //         'categoria' => $request->get('search_categoria'),
+    //     ];
+    //     $query = Suggestion::orderBy('id', 'DESC');
+
+    //     $dateRange = $request->input('datefilter');
+    //     $dates = explode(' - ', $dateRange);
+    //     if ($dateRange) {
+    //         $startDate = Carbon::createFromFormat('d/m/Y', $dates[0])->startOfDay();
+    //         $endDate = Carbon::createFromFormat('d/m/Y', $dates[1])->endOfDay();
+    //         $query->whereBetween('created_at', [$startDate, $endDate]);
+    //     }
+
+    //     foreach ($searchParams as $key => $value) {
+    //         if ($value) {
+    //             $query->where($key, 'like', '%' . $value . '%');
+    //         }
+    //     }
+
+    //     if ($request->hasHeader("AXIOS")) {
+    //         return view('table', compact('records'))->render();
+    //     }
+
+    //     return response()->json($query->get());
+    // }
+
+    public function pruebaGetSearch(Request $request)
+    {
+        $searchParams = [
+            'sede' => $request->get('search_sede'),
+            'semestre' => $request->get('search_semestre'),
+            'area' => $request->get('search_area'),
+            'by_' => $request->get('search_by'),
+            'categoria' => $request->get('search_categoria'),
+        ];
+        $query = Suggestion::orderBy('id', 'DESC');
+
+        $dateRange = $request->input('datefilter');
+        $dates = explode(' - ', $dateRange);
+        if ($dateRange) {
+            $startDate = Carbon::createFromFormat('d/m/Y', $dates[0])->startOfDay();
+            $endDate = Carbon::createFromFormat('d/m/Y', $dates[1])->endOfDay();
+            $query->whereBetween('created_at', [$startDate, $endDate]);
+        }
+
+        foreach ($searchParams as $key => $value) {
+            if ($value) {
+                $query->where($key, 'like', '%' . $value . '%');
+            }
+        }
+
+        $suggestions = $query->paginate(5);
+
+        return view('table-home', compact('suggestions'));
     }
 
     public function searchParameters(Request $request)

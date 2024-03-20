@@ -177,73 +177,26 @@
 
                             <div class="card-body pt-1">
                                 <div id="kt_permissions_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                                    <div class="table-responsive">
-                                        <table
-                                            class="table align-middle table-row-dashed fs-6 gy-5 mb-0 dataTable no-footer"
-                                            id="kt_permissions_table">
-                                            <thead>
-                                                <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                                                    <th>Sede</th>
-                                                    <th>categoria</th>
-                                                    <th>Participante</th>
-                                                    <th>Carrera</th>
-                                                    <th>Semestre</th>
-                                                    <th>Área</th>
-                                                    <th>Sugerencia</th>
-                                                    <th>Fecha</th>
-                                                    <th>Acciones</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="fw-semibold text-gray-600">
-                                                @foreach ($suggestions as $s)
-                                                    <tr>
-                                                        <td>{{ $s->sede }}</td>
-                                                        <td>{{ $s->categoria }}</td>
-                                                        <td>{{ $s->by_ }}</td>
-                                                        <td>{{ $s->carrera }}</td>
-                                                        <td>{{ $s->semestre }}</td>
-                                                        <td>{{ $s->area }}</td>
-                                                        <td>{{ $s->sugerencia }}</td>
-                                                        <td>{{ $s->created_at }}</td>
-                                                        <td>
-                                                            {{-- <button class="btn btn-warning" data-bs-toggle="modal"
-                                                                data-bs-target="#modalUpdateSuggestion"><i
-                                                                    class="fa-solid fa-pen-to-square"></i></button> --}}
-                                                            <button class="btn btn-warning updateRegisterBtn"
-                                                                id-suggestion = "{{ $s->id }}"><i
-                                                                    class="fa-solid fa-pen-to-square"></i></button>
-                                                            <button class="btn btn-danger" data-bs-toggle="modal"
-                                                                data-bs-target="#modalDeleteSuggestion"><i
-                                                                    class="fa-solid fa-trash"></i></button>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        <div class="mt-5">
-                                            {{ $suggestions->appends(request()->query())->links() }}
-                                        </div>
-
-                                        {{-- Modal Actualizar --}}
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="modalUpdateSuggestion" data-bs-backdrop="static"
-                                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                            aria-hidden="true">
-                                            <div class="modal-dialog modal-xl">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Actualizar
-                                                            Registro
-                                                        </h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body"
-                                                        style = "display: flex; justify-content: center">
-                                                        <input type="hidden" id = "pruebaVariable">
-                                                        <div style = "width: 100%; padding: 1em;">
-                                                            <div class="mb-3">
-                                                                {{-- <label>Sede</label>
+                                    @include('table-home')
+                                    {{-- Modal Actualizar --}}
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="modalUpdateSuggestion" data-bs-backdrop="static"
+                                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-xl">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Actualizar
+                                                        Registro
+                                                    </h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body" style = "display: flex; justify-content: center">
+                                                    <input type="hidden" id = "pruebaVariable">
+                                                    <div style = "width: 100%; padding: 1em;">
+                                                        <div class="mb-3">
+                                                            {{-- <label>Sede</label>
                                                                 <select class="form-select" data-control="select2">
                                                                     <option value="LPZ">
                                                                         La Paz</option>
@@ -254,7 +207,7 @@
                                                                     <option value="EAT">
                                                                         El Alto</option>
                                                                 </select> --}}
-                                                                {{-- <select class="form-select form-select-solid"
+                                                            {{-- <select class="form-select form-select-solid"
                                                                     data-control="select2"
                                                                     data-placeholder="Select an option"
                                                                     data-hide-search="true" id = "ejemploEjemplo">
@@ -265,85 +218,85 @@
                                                                     <option value="4">Option 4</option>
                                                                     <option value="5">Option 5</option>
                                                                 </select> --}}
-                                                                <label>Sede</label>
-                                                                <select class="form-select">
-                                                                    <option value="LPZ">
-                                                                        La Paz</option>
-                                                                    <option value="SCZ">
-                                                                        Santa Cruz</option>
-                                                                    <option value="CBB">
-                                                                        Cochabamba</option>
-                                                                    <option value="EAT">
-                                                                        El Alto</option>
-                                                                </select>
+                                                            <label>Sede</label>
+                                                            <select class="form-select">
+                                                                <option value="LPZ">
+                                                                    La Paz</option>
+                                                                <option value="SCZ">
+                                                                    Santa Cruz</option>
+                                                                <option value="CBB">
+                                                                    Cochabamba</option>
+                                                                <option value="EAT">
+                                                                    El Alto</option>
+                                                            </select>
 
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label>Categoría</label>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label>Categoría</label>
+                                                            <select class="form-select">
+                                                                <option value="Sugerencia">
+                                                                    Sugerencia</option>
+                                                                <option value="Reclamo">
+                                                                    Reclamo</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label>Participante</label>
+                                                            <select class="form-select">
+                                                                <option value="Estudiante">
+                                                                    Estudiante</option>
+                                                                <option value="Docente">
+                                                                    Docente</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label>Carrera</label>
+                                                            <select class="form-select">
+                                                                <option value = "ADM">ADM</option>
+                                                                <option value = "AHT">AHT</option>
+                                                                <option value = "ARQ">ARQ</option>
+                                                                <option value = "BYF">BYF</option>
+                                                                <option value = "CPU">CPU</option>
+                                                                <option value = "DER">DER</option>
+                                                                <option value = "DGP">DGP</option>
+                                                                <option value = "ENF">ENF</option>
+                                                                <option value = "ICO">ICO</option>
+                                                                <option value = "IEC">IEC</option>
+                                                                <option value = "IEF">IEF</option>
+                                                                <option value = "MED">MED</option>
+                                                                <option value = "ODO">ODO</option>
+                                                                <option value = "PER">PER</option>
+                                                                <option value = "PSI">PSI</option>
+                                                                <option value = "PYM">PYM</option>
+                                                                <option value = "SIS">SIS</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label>Semestre</label>
+                                                            <select class="form-select">
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                                <option value="4">4</option>
+                                                                <option value="5">5</option>
+                                                                <option value="6">6</option>
+                                                                <option value="7">7</option>
+                                                                <option value="8">8</option>
+                                                                <option value="9">9</option>
+                                                                <option value="10">10</option>
+                                                                <option value="11">11</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label">Área</label>
                                                                 <select class="form-select">
-                                                                    <option value="Sugerencia">
-                                                                        Sugerencia</option>
-                                                                    <option value="Reclamo">
-                                                                        Reclamo</option>
+                                                                    @foreach ($areas as $area)
+                                                                        <option value="{{ $area->area }}">
+                                                                            {{ $area->area }}</option>
+                                                                    @endforeach
                                                                 </select>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label>Participante</label>
-                                                                <select class="form-select">
-                                                                    <option value="Estudiante">
-                                                                        Estudiante</option>
-                                                                    <option value="Docente">
-                                                                        Docente</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label>Carrera</label>
-                                                                <select class="form-select">
-                                                                    <option value = "ADM">ADM</option>
-                                                                    <option value = "AHT">AHT</option>
-                                                                    <option value = "ARQ">ARQ</option>
-                                                                    <option value = "BYF">BYF</option>
-                                                                    <option value = "CPU">CPU</option>
-                                                                    <option value = "DER">DER</option>
-                                                                    <option value = "DGP">DGP</option>
-                                                                    <option value = "ENF">ENF</option>
-                                                                    <option value = "ICO">ICO</option>
-                                                                    <option value = "IEC">IEC</option>
-                                                                    <option value = "IEF">IEF</option>
-                                                                    <option value = "MED">MED</option>
-                                                                    <option value = "ODO">ODO</option>
-                                                                    <option value = "PER">PER</option>
-                                                                    <option value = "PSI">PSI</option>
-                                                                    <option value = "PYM">PYM</option>
-                                                                    <option value = "SIS">SIS</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label>Semestre</label>
-                                                                <select class="form-select">
-                                                                    <option value="1">1</option>
-                                                                    <option value="2">2</option>
-                                                                    <option value="3">3</option>
-                                                                    <option value="4">4</option>
-                                                                    <option value="5">5</option>
-                                                                    <option value="6">6</option>
-                                                                    <option value="7">7</option>
-                                                                    <option value="8">8</option>
-                                                                    <option value="9">9</option>
-                                                                    <option value="10">10</option>
-                                                                    <option value="11">11</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label">Área</label>
-                                                                    <select class="form-select">
-                                                                        @foreach ($areas as $area)
-                                                                            <option value="{{ $area->area }}">
-                                                                                {{ $area->area }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                            </div>
-                                                            {{-- <div
+                                                        </div>
+                                                        {{-- <div
                                                             style = "background: green; padding: 2em; width: 100px; flex-grow: 1.5;">
                                                             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                                                                 Placeat
@@ -361,75 +314,75 @@
                                                                 incidunt
                                                                 soluta tenetur dolores fugit.</p>
                                                         </div> --}}
-                                                        </div>
-                                                        <div style = "width: 100%; padding: 1em;">
-                                                            <div class="mb-3">
-                                                                <label for="suggestionTextarea" class="form-label">Fecha
-                                                                    de Publicación</label>
-                                                                <div class="input-group" id="datepicker1"
-                                                                    data-td-target-input="nearest"
-                                                                    data-td-target-toggle="nearest">
-                                                                    <input id="kt_td_picker_basic_input" type="text"
-                                                                        class="form-control"
-                                                                        data-td-target="#kt_td_picker_basic" readonly />
-                                                                    <span class="input-group-text"
-                                                                        data-td-target="#kt_td_picker_basic"
-                                                                        data-td-toggle="datetimepicker">
-                                                                        <i class="fas fa-calendar-week fs-2"><span
-                                                                                class="path1"></span><span
-                                                                                class="path2"></span></i>
-                                                                    </span>
-                                                                </div>
+                                                    </div>
+                                                    <div style = "width: 100%; padding: 1em;">
+                                                        <div class="mb-3">
+                                                            <label for="suggestionTextarea" class="form-label">Fecha
+                                                                de Publicación</label>
+                                                            <div class="input-group" id="datepicker1"
+                                                                data-td-target-input="nearest"
+                                                                data-td-target-toggle="nearest">
+                                                                <input id="kt_td_picker_basic_input" type="text"
+                                                                    class="form-control"
+                                                                    data-td-target="#kt_td_picker_basic" readonly />
+                                                                <span class="input-group-text"
+                                                                    data-td-target="#kt_td_picker_basic"
+                                                                    data-td-toggle="datetimepicker">
+                                                                    <i class="fas fa-calendar-week fs-2"><span
+                                                                            class="path1"></span><span
+                                                                            class="path2"></span></i>
+                                                                </span>
                                                             </div>
-                                                            <div class="mb-3"
-                                                                sytle = " width: 100%;
+                                                        </div>
+                                                        <div class="mb-3"
+                                                            sytle = " width: 100%;
                                                             height: 100%; ">
-                                                                <label for="suggestionTextarea"
-                                                                    class="form-label">Comentario</label>
-                                                                <textarea
-                                                                    sytle = " width: 100%;
+                                                            <label for="suggestionTextarea"
+                                                                class="form-label">Comentario</label>
+                                                            <textarea
+                                                                sytle = " width: 100%;
                                                                 height: 100%; 
                                                                 box-sizing: border-box;"
-                                                                    class="form-control" id="suggestionTextarea"></textarea>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    id = "restoreSuggestionBtn">Reestablecer</button>
-                                                            </div>
+                                                                class="form-control" id="suggestionTextarea"></textarea>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                id = "restoreSuggestionBtn">Reestablecer</button>
                                                         </div>
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        {{-- <button type="button" class="btn btn-secondary"
+                                                </div>
+                                                <div class="modal-footer">
+                                                    {{-- <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Reestablecer</button> --}}
-                                                        <button type="button" class="btn btn-primary"
-                                                            id = "updateSuggestionBtn">ACTUALIZAR</button>
-                                                    </div>
+                                                    <button type="button" class="btn btn-primary"
+                                                        id = "updateSuggestionBtn">ACTUALIZAR</button>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div class="modal fade" id="modalUpdateSuggestion2" aria-hidden="true"
-                                            data-bs-backdrop="static" data-bs-keyboard="false"
-                                            aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalToggleLabel2">CONFIRMACIÓN
-                                                        </h5>
-                                                    </div>
-                                                    <div class="modal-body fs-5">
-                                                        ¿Estás seguro de modificar el registro?
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button class="btn btn-danger"id="confirmUpdate">SÍ
-                                                        </button>
-                                                        <button class="btn btn-primary" id="dismissUpdate">NO</button>
-                                                    </div>
+                                    <div class="modal fade" id="modalUpdateSuggestion2" aria-hidden="true"
+                                        data-bs-backdrop="static" data-bs-keyboard="false"
+                                        aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalToggleLabel2">CONFIRMACIÓN
+                                                    </h5>
+                                                </div>
+                                                <div class="modal-body fs-5">
+                                                    ¿Estás seguro de modificar el registro?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-danger"id="confirmUpdate">SÍ
+                                                    </button>
+                                                    <button class="btn btn-primary" id="dismissUpdate">NO</button>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        {{-- <div class="position-fixed bottom-0 end-0 p-3">
+                                    {{-- <div class="position-fixed bottom-0 end-0 p-3">
                                             <div id="updateSuggestionToast"
                                                 class="toast hide align-items-center text-white bg-primary border-0"
                                                 role="alert" aria-live="assertive" aria-atomic="true">
@@ -443,61 +396,70 @@
                                             </div>
                                         </div> --}}
 
-                                        <div class="position-fixed bottom-0 end-0 p-3" style="z-index:99999;">
-                                            <div class="toast align-items-center text-white bg-primary border-0 p-3 fs-5"
-                                                id = "updateSuggestionToast" role="alert" aria-live="assertive"
-                                                aria-atomic="true">
-                                                <div class="d-flex">
-                                                    <div class="toast-body">
-                                                        Actualizado correctamente.
-                                                    </div>
-                                                    <button type="button" class="btn-close btn-close-white me-2 m-auto"
-                                                        data-bs-dismiss="toast" aria-label="Close"></button>
+                                    <div class="position-fixed bottom-0 end-0 p-3" style="z-index:99999;">
+                                        <div class="toast align-items-center text-white bg-primary border-0 p-3 fs-5"
+                                            id = "updateSuggestionToast" role="alert" aria-live="assertive"
+                                            aria-atomic="true">
+                                            <div class="d-flex">
+                                                <div class="toast-body">
+                                                    Actualizado correctamente.
                                                 </div>
+                                                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                                    data-bs-dismiss="toast" aria-label="Close"></button>
                                             </div>
                                         </div>
-
-
-                                        {{-- Modal Eliminar --}}
-                                        <div class="modal fade" tabindex="-1" id="modalDeleteSuggestion">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h3 class="modal-title">Eliminar área</h3>
-
-                                                        <!--begin::Close-->
-                                                        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
-                                                            data-bs-dismiss="modal" aria-label="Close">
-                                                            <i class="ki-duotone ki-cross fs-1"><span
-                                                                    class="path1"></span><span class="path2"></span></i>
-                                                        </div>
-                                                        <!--end::Close-->
-                                                    </div>
-
-                                                    <div class="modal-body">
-                                                        <form action="#" method="post">
-                                                            <div class="mb-10">
-                                                                <label for="exampleFormControlInput1"
-                                                                    class="form-label">Estás
-                                                                    seguro de eliminar
-                                                                    <strong></strong></label>
-
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-light"
-                                                                    data-bs-dismiss="modal">Cerrar</button>
-                                                                <button type="submit"
-                                                                    class="btn btn-primary">Eliminar</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
                                     </div>
 
+                                    <div class="position-fixed bottom-0 end-0 p-3" style="z-index:99999;">
+                                        <div class="toast align-items-center text-white bg-success border-0 p-3 fs-5"
+                                            id = "searchParamsToast" role="alert" aria-live="assertive"
+                                            aria-atomic="true">
+                                            <div class="d-flex">
+                                                <div class="toast-body">
+                                                    Búsqueda exitosa.
+                                                </div>
+                                                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                                    data-bs-dismiss="toast" aria-label="Close"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    {{-- Modal Eliminar --}}
+                                    <div class="modal fade" tabindex="-1" id="modalDeleteSuggestion">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title">Eliminar área</h3>
+
+                                                    <!--begin::Close-->
+                                                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
+                                                        data-bs-dismiss="modal" aria-label="Close">
+                                                        <i class="ki-duotone ki-cross fs-1"><span
+                                                                class="path1"></span><span class="path2"></span></i>
+                                                    </div>
+                                                    <!--end::Close-->
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    <form action="#" method="post">
+                                                        <div class="mb-10">
+                                                            <label for="exampleFormControlInput1" class="form-label">Estás
+                                                                seguro de eliminar
+                                                                <strong></strong></label>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-light"
+                                                                data-bs-dismiss="modal">Cerrar</button>
+                                                            <button type="submit"
+                                                                class="btn btn-primary">Eliminar</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
