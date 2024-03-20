@@ -9,6 +9,9 @@ let valoresSubida;
 const toast = bootstrap.Toast.getOrCreateInstance(
     document.getElementById("updateSuggestionToast")
 );
+const toastParams = bootstrap.Toast.getOrCreateInstance(
+    document.getElementById("searchParamsToast")
+);
 
 const prepararModal = (e) => {
     let values = [];
@@ -152,7 +155,7 @@ document
     });
 
 document
-    .getElementById("kt_permissions_table")
+    .getElementById("kt_permissions_table_wrapper")
     .addEventListener("click", (e) => {
         if (
             e.target.classList.contains("updateRegisterBtn") ||
@@ -163,8 +166,142 @@ document
                     ? e.target
                     : e.target.parentNode
             );
-            // alert("algo");
+
             // document.getElementById("ejemploEjemplo").selectedIndex = 2;
             // $("#modalUpdateSuggestion").modal("show");
         }
     });
+
+// ! ******************************************************************
+
+document.getElementById("buscarBtn").addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const elementosFormulario = Array.from(
+        document.querySelectorAll("#searchForm select")
+    );
+    elementosFormulario.push(document.getElementById("datefilter"));
+    const valores = elementosFormulario.map((e) =>
+        e.value === "0" ? null : e.value
+    );
+
+    // const consulta = {
+    //     sede: valores[0],
+    //     semestre: valores[1],
+    //     area: valores[2],
+    //     categoria: valores[3],
+    //     by_: valores[4],
+    //     datefilter: valores[5],
+    // };
+
+    // const consulta = {
+    //     sede: "SCZ",
+    //     semestre: "2",
+    //     area: "Anfitriones/Tutores/Ayudantes/Hnos Mayores",
+    //     by_: "Estudiante",
+    //     categoria: "Sugerencia",
+    //     datefilter: "01/02/2024 - 13/03/2024",
+    // };
+
+    // const consulta = {
+    //     search_sede: "SCZ",
+    //     search_semestre: "2",
+    //     search_area: "Anfitriones/Tutores/Ayudantes/Hnos Mayores",
+    //     search_by_: "Estudiante",
+    //     search_categoria: "Sugerencia",
+    //     datefilter: "01/02/2023 - 13/03/2023",
+    // };
+
+    const consulta = {
+        search_sede: valores[0],
+        search_semestre: valores[1],
+        search_area: valores[2],
+        search_by: valores[4],
+        search_categoria: valores[3],
+        datefilter: valores[5],
+    };
+
+    console.log(consulta);
+
+    // Importar Axios si no lo has hecho aún
+    // import axios from 'axios';
+
+    // Configurar encabezados y realizar la solicitud
+    axios
+        .get("https://buzon-sugerencias.bo/", {
+            headers: {
+                "X-CSRF-TOKEN": _token,
+                AXIOS: "",
+            },
+            params: {
+                search_sede: valores[0],
+                search_semestre: valores[1],
+                search_area: valores[2],
+                search_by: valores[4],
+                search_categoria: valores[3],
+                datefilter: valores[5],
+            },
+        })
+        .then(function (response) {
+            // Manejar la respuesta exitosa
+            console.log("Respuesta consulta:", response.data);
+
+            document.getElementById("table-suggestions").innerHTML =
+                response.data;
+            document.getElementById("table-suggestions").innerHTML =
+                response.data;
+
+            toastParams.show();
+        })
+        .catch(function (error) {
+            // Manejar errores
+            console.error("Error:", error);
+        });
+});
+
+$(document).on("click", ".pagination a", function (e) {
+    e.preventDefault();
+    // let page = $(this).attr("href").split("page=")[1];
+    let page = $(this).attr("href");
+    record(page);
+});
+
+// function record(page) {
+//     axios
+//         .get(`/?page=${page}`, {
+//             headers: {
+//                 "X-CSRF-TOKEN": _token,
+//                 AXIOS: "",
+//             },
+//         })
+//         .then(function (response) {
+//             console.log("Respuesta:", response.data);
+//             document.getElementById("table-suggestions").innerHTML =
+//                 response.data;
+//             document.getElementById("table-suggestions").innerHTML =
+//                 response.data;
+//         })
+//         .catch(function (error) {
+//             console.error("Error:", error);
+//         });
+// }
+
+function record(page) {
+    axios
+        .get(page, {
+            headers: {
+                "X-CSRF-TOKEN": _token,
+                AXIOS: "",
+            },
+        })
+        .then(function (response) {
+            console.log("Respuesta:", response.data);
+            document.getElementById("table-suggestions").innerHTML =
+                response.data;
+            document.getElementById("table-suggestions").innerHTML =
+                response.data;
+        })
+        .catch(function (error) {
+            console.error("Error:", error);
+        });
+}
