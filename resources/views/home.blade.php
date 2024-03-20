@@ -49,14 +49,15 @@
 
                             <form href="" method="get" id = "searchForm">
                                 @csrf
-                                <div class="table-responsive">
+                                <div class="table-responsive" id = "table-params">
                                     <table class="table gs-7 gy-7 gx-7">
                                         <thead>
                                             <tr class="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
                                                 <th>
                                                     Sede
                                                     <select type="search" name="search_sede" id="search_sede"
-                                                        class="form-select" data-control="select2" data-placeholder="Todas">
+                                                        class="form-select selectSearchParam" data-control="select2"
+                                                        data-placeholder="Todas">
                                                         <option value="0">Todos</option>
                                                         <option value="LPZ"
                                                             {{ old('search_sede', $searchParams['sede']) == 'LPZ' ? 'selected' : '' }}>
@@ -75,7 +76,8 @@
                                                 <th>
                                                     Semestre
                                                     <select type="search" name="search_semestre" id="search_semestre"
-                                                        class="form-select" data-control="select2" data-placeholder="Todas">
+                                                        class="form-select selectSearchParam" data-control="select2"
+                                                        data-placeholder="Todas">
                                                         <option value="0">Todos</option>
                                                         <option value="1"
                                                             {{ old('search_sede', $searchParams['semestre']) == '1' ? 'selected' : '' }}>
@@ -115,7 +117,8 @@
                                                 <th>
                                                     Área
                                                     <select type="search" name="search_area" id="search_area"
-                                                        class="form-select" data-control="select2" data-placeholder="Todas">
+                                                        class="form-select selectSearchParam" data-control="select2"
+                                                        data-placeholder="Todas">
                                                         <option value="0">Seleccionar Área</option>
                                                         @foreach ($areas as $area)
                                                             <option value="{{ $area->area }}"
@@ -128,7 +131,8 @@
                                                 <th>
                                                     Categoría
                                                     <select type="search" name="search_categoria" id="search_categoria"
-                                                        class="form-select" data-control="select2" data-placeholder="Todas">
+                                                        class="form-select selectSearchParam" data-control="select2"
+                                                        data-placeholder="Todas">
                                                         <option value="0">Todos</option>
                                                         <option value="Sugerencia"
                                                             {{ old('search_categoria', $searchParams['categoria']) == 'Sugerencia' ? 'selected' : '' }}>
@@ -144,7 +148,7 @@
                                                 <th>
                                                     Participantes
                                                     <select type="search" name="search_by" id="search_by"
-                                                        class="form-select" data-control="select2">
+                                                        class="form-select selectSearchParam" data-control="select2">
                                                         <option value="0">Todos</option>
                                                         <option value="Estudiante"
                                                             {{ old('search_by', $searchParams['by_']) == 'Estudiante' ? 'selected' : '' }}>
@@ -163,10 +167,11 @@
                                                 <th>
                                                 </th>
                                                 <th>
-                                                    <button id="searchButton" class="btn btn-primary" type="submit"><i
-                                                            class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+                                                    {{-- <button id="searchButton" class="btn btn-primary" type="submit"><i
+                                                            class="fa-solid fa-magnifying-glass"></i> Buscar</button> --}}
 
-                                                    <button id="buscarBtn" class="btn btn-danger">Buscar</button>
+                                                    <button id="buscarBtn" class="btn btn-light-primary"><i
+                                                            class="fa-solid fa-magnifying-glass"></i>Buscar</button>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -219,7 +224,7 @@
                                                                     <option value="5">Option 5</option>
                                                                 </select> --}}
                                                             <label>Sede</label>
-                                                            <select class="form-select">
+                                                            <select disabled class="form-select">
                                                                 <option value="LPZ">
                                                                     La Paz</option>
                                                                 <option value="SCZ">
@@ -242,7 +247,7 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label>Participante</label>
-                                                            <select class="form-select">
+                                                            <select disabled class="form-select">
                                                                 <option value="Estudiante">
                                                                     Estudiante</option>
                                                                 <option value="Docente">
@@ -251,7 +256,7 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label>Carrera</label>
-                                                            <select class="form-select">
+                                                            <select disabled class="form-select">
                                                                 <option value = "ADM">ADM</option>
                                                                 <option value = "AHT">AHT</option>
                                                                 <option value = "ARQ">ARQ</option>
@@ -273,7 +278,7 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label>Semestre</label>
-                                                            <select class="form-select">
+                                                            <select disabled class="form-select">
                                                                 <option value="1">1</option>
                                                                 <option value="2">2</option>
                                                                 <option value="3">3</option>
@@ -322,7 +327,8 @@
                                                             <div class="input-group" id="datepicker1"
                                                                 data-td-target-input="nearest"
                                                                 data-td-target-toggle="nearest">
-                                                                <input id="kt_td_picker_basic_input" type="text"
+                                                                <input disabled style = "background: #EFF2F5"
+                                                                    id="kt_td_picker_basic_input" type="text"
                                                                     class="form-control"
                                                                     data-td-target="#kt_td_picker_basic" readonly />
                                                                 <span class="input-group-text"
@@ -339,15 +345,12 @@
                                                             height: 100%; ">
                                                             <label for="suggestionTextarea"
                                                                 class="form-label">Comentario</label>
-                                                            <textarea
-                                                                sytle = " width: 100%;
-                                                                height: 100%; 
-                                                                box-sizing: border-box;"
-                                                                class="form-control" id="suggestionTextarea"></textarea>
+                                                            <textarea class="form-control" rows="10" id="suggestionTextarea"></textarea>
                                                         </div>
                                                         <div class="mb-3">
                                                             <button type="button" class="btn btn-secondary"
-                                                                id = "restoreSuggestionBtn">Reestablecer</button>
+                                                                id = "restoreSuggestionBtn"><i
+                                                                    class="fa-solid fa-arrows-rotate"></i></button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -374,9 +377,11 @@
                                                     ¿Estás seguro de modificar el registro?
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button class="btn btn-danger"id="confirmUpdate">SÍ
+                                                    {{-- <button class="btn btn-danger"id="confirmUpdate">SÍ
                                                     </button>
-                                                    <button class="btn btn-primary" id="dismissUpdate">NO</button>
+                                                    <button class="btn btn-primary" id="dismissUpdate">NO</button> --}}
+                                                    <button id="confirmUpdate" class="btn btn-primary">SÍ</button>
+                                                    <button class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -412,6 +417,20 @@
 
                                     <div class="position-fixed bottom-0 end-0 p-3" style="z-index:99999;">
                                         <div class="toast align-items-center text-white bg-success border-0 p-3 fs-5"
+                                            id = "deleteSuggestionToast" role="alert" aria-live="assertive"
+                                            aria-atomic="true">
+                                            <div class="d-flex">
+                                                <div class="toast-body">
+                                                    Eliminado correctamente.
+                                                </div>
+                                                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                                    data-bs-dismiss="toast" aria-label="Close"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-fixed bottom-0 end-0 p-3" style="z-index:99999;">
+                                        <div class="toast align-items-center text-white bg-success border-0 p-3 fs-5"
                                             id = "searchParamsToast" role="alert" aria-live="assertive"
                                             aria-atomic="true">
                                             <div class="d-flex">
@@ -426,36 +445,25 @@
 
 
                                     {{-- Modal Eliminar --}}
-                                    <div class="modal fade" tabindex="-1" id="modalDeleteSuggestion">
-                                        <div class="modal-dialog">
+                                    <div class="modal fade" id="modalDeleteSuggestion" aria-hidden="true"
+                                        data-bs-backdrop="static" data-bs-keyboard="false"
+                                        aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h3 class="modal-title">Eliminar área</h3>
-
-                                                    <!--begin::Close-->
-                                                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
-                                                        data-bs-dismiss="modal" aria-label="Close">
-                                                        <i class="ki-duotone ki-cross fs-1"><span
-                                                                class="path1"></span><span class="path2"></span></i>
-                                                    </div>
-                                                    <!--end::Close-->
+                                                    <h5 class="modal-title" id="exampleModalToggleLabel2">CONFIRMACIÓN
+                                                    </h5>
                                                 </div>
+                                                <div class="modal-body fs-5">
+                                                    ¿Estás seguro de eliminar el registro?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    {{-- <button class="btn btn-danger"id="confirmDeletion">SÍ
+                                                    </button>
+                                                    <button class="btn btn-primary" id="dismissDeletion">NO</button> --}}
 
-                                                <div class="modal-body">
-                                                    <form action="#" method="post">
-                                                        <div class="mb-10">
-                                                            <label for="exampleFormControlInput1" class="form-label">Estás
-                                                                seguro de eliminar
-                                                                <strong></strong></label>
-
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-light"
-                                                                data-bs-dismiss="modal">Cerrar</button>
-                                                            <button type="submit"
-                                                                class="btn btn-primary">Eliminar</button>
-                                                        </div>
-                                                    </form>
+                                                    <button id="confirmDeletion" class="btn btn-primary">SÍ</button>
+                                                    <button class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
                                                 </div>
                                             </div>
                                         </div>

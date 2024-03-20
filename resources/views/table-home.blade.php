@@ -24,11 +24,15 @@
                     <td>{{ $s->area }}</td>
                     <td>{{ $s->sugerencia }}</td>
                     <td>{{ $s->created_at }}</td>
-                    <td>
-                        <button class="btn btn-warning updateRegisterBtn" id-suggestion = "{{ $s->id }}"><i
-                                class="fa-solid fa-pen-to-square"></i></button>
-                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDeleteSuggestion"><i
-                                class="fa-solid fa-trash"></i></button>
+                    <td class="d-flex bd-highlight">
+                        {{-- <button class="btn btn-light updateRegisterBtn m-2" id-suggestion = "{{ $s->id }}"><i
+                                    class="fa-solid fa-pen-to-square"></i></button>
+                            <button class="btn btn-light deleteRegisterBtn m-2" id-suggestion = "{{ $s->id }}"><i
+                                    class="fa-solid fa-trash"></i></button> --}}
+                        <button class="btn btn-light-primary updateRegisterBtn m-1"
+                            id-suggestion = "{{ $s->id }}"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button class="btn btn-light-primary deleteRegisterBtn m-1"
+                            id-suggestion = "{{ $s->id }}"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
             @endforeach

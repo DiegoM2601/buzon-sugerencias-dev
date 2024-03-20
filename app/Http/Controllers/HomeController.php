@@ -52,6 +52,10 @@ class HomeController extends Controller
                 $query->where($key, 'like', '%' . $value . '%');
             }
         }
+
+        //comprobar el estado de los registros
+        $query->where("deleted", 0);
+
         $suggestions = $query->paginate(5);
 
         if ($request->hasHeader("AXIOS")) {
@@ -216,6 +220,14 @@ class HomeController extends Controller
         $sugerencia->save();
 
         return response()->json($request);
+    }
+
+    public function deleteSuggestion(Request $request)
+    {
+        $sugerencia = Suggestion::find($request->idSuggestion);
+        $sugerencia->deleted = 1;
+        $sugerencia->save();
+        return response()->json($request->idSuggestion);
     }
 
 

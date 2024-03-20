@@ -46,6 +46,7 @@ Route::get('/google/callback', [App\Http\Controllers\GoogleLoginController::clas
 
 Route::post('/update-suggestion', [App\Http\Controllers\HomeController::class, 'updateSuggestion'])->name("updateSuggestion");
 
+Route::post('/delete-register', [App\Http\Controllers\HomeController::class, 'deleteSuggestion'])->name("deleteSuggestion");
 Route::post('/search-parameters', [App\Http\Controllers\HomeController::class, 'searchParameters']);
 
 Route::get("/pruebagetsearch", [App\Http\Controllers\HomeController::class, 'pruebaGetSearch']);

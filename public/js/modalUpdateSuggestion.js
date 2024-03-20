@@ -12,6 +12,9 @@ const toast = bootstrap.Toast.getOrCreateInstance(
 const toastParams = bootstrap.Toast.getOrCreateInstance(
     document.getElementById("searchParamsToast")
 );
+const toastDelete = bootstrap.Toast.getOrCreateInstance(
+    document.getElementById("deleteSuggestionToast")
+);
 
 const prepararModal = (e) => {
     let values = [];
@@ -117,14 +120,42 @@ const actualizarRegistros = () => {
     // $("#modalUpdateSuggestion").modal("hide");
 };
 
+const eliminarRegistros = () => {
+    axios
+        .post("https://buzon-sugerencias.bo/delete-register", {
+            headers: {
+                "X-CSRF-TOKEN": _token,
+            },
+            idSuggestion: btnpulsado.getAttribute("id-suggestion"),
+        })
+        .then(function (response) {
+            console.log(response.data);
+            btnpulsado.parentNode.parentNode.remove();
+            toastDelete.show();
+        })
+        .catch(function (error) {
+            // Manejar errores
+            console.error("Error:", error);
+        });
+};
+
 document.getElementById("confirmUpdate").addEventListener("click", () => {
     actualizarRegistros();
     $("#modalUpdateSuggestion2").modal("hide");
 });
 
-document.getElementById("dismissUpdate").addEventListener("click", () => {
-    $("#modalUpdateSuggestion2").modal("hide");
+// document.getElementById("dismissUpdate").addEventListener("click", () => {
+//     $("#modalUpdateSuggestion2").modal("hide");
+// });
+
+document.getElementById("confirmDeletion").addEventListener("click", () => {
+    $("#modalDeleteSuggestion").modal("hide");
+    eliminarRegistros();
 });
+
+// document.getElementById("dismissDeletion").addEventListener("click", () => {
+//     $("#modalDeleteSuggestion").modal("hide");
+// });
 
 document
     .getElementById("restoreSuggestionBtn")
@@ -169,6 +200,16 @@ document
 
             // document.getElementById("ejemploEjemplo").selectedIndex = 2;
             // $("#modalUpdateSuggestion").modal("show");
+        }
+
+        if (
+            e.target.classList.contains("deleteRegisterBtn") ||
+            e.target.parentNode.classList.contains("deleteRegisterBtn")
+        ) {
+            $("#modalDeleteSuggestion").modal("show");
+            btnpulsado = e.target.classList.contains("deleteRegisterBtn")
+                ? e.target
+                : e.target.parentNode;
         }
     });
 
