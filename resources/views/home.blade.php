@@ -56,8 +56,7 @@
                                                 <th>
                                                     Sede
                                                     <select type="search" name="search_sede" id="search_sede"
-                                                        class="form-select selectSearchParam" data-control="select2"
-                                                        data-placeholder="Todas">
+                                                        class="form-select selectSearchParam" data-placeholder="Todas">
                                                         <option value="0">Todos</option>
                                                         <option value="LPZ"
                                                             {{ old('search_sede', $searchParams['sede']) == 'LPZ' ? 'selected' : '' }}>
@@ -76,8 +75,7 @@
                                                 <th>
                                                     Semestre
                                                     <select type="search" name="search_semestre" id="search_semestre"
-                                                        class="form-select selectSearchParam" data-control="select2"
-                                                        data-placeholder="Todas">
+                                                        class="form-select selectSearchParam" data-placeholder="Todas">
                                                         <option value="0">Todos</option>
                                                         <option value="1"
                                                             {{ old('search_sede', $searchParams['semestre']) == '1' ? 'selected' : '' }}>
@@ -117,8 +115,7 @@
                                                 <th>
                                                     Área
                                                     <select type="search" name="search_area" id="search_area"
-                                                        class="form-select selectSearchParam" data-control="select2"
-                                                        data-placeholder="Todas">
+                                                        class="form-select selectSearchParam" data-placeholder="Todas">
                                                         <option value="0">Seleccionar Área</option>
                                                         @foreach ($areas as $area)
                                                             <option value="{{ $area->area }}"
@@ -131,8 +128,7 @@
                                                 <th>
                                                     Categoría
                                                     <select type="search" name="search_categoria" id="search_categoria"
-                                                        class="form-select selectSearchParam" data-control="select2"
-                                                        data-placeholder="Todas">
+                                                        class="form-select selectSearchParam" data-placeholder="Todas">
                                                         <option value="0">Todos</option>
                                                         <option value="Sugerencia"
                                                             {{ old('search_categoria', $searchParams['categoria']) == 'Sugerencia' ? 'selected' : '' }}>
@@ -148,7 +144,7 @@
                                                 <th>
                                                     Participantes
                                                     <select type="search" name="search_by" id="search_by"
-                                                        class="form-select selectSearchParam" data-control="select2">
+                                                        class="form-select selectSearchParam">
                                                         <option value="0">Todos</option>
                                                         <option value="Estudiante"
                                                             {{ old('search_by', $searchParams['by_']) == 'Estudiante' ? 'selected' : '' }}>
@@ -161,8 +157,8 @@
                                                 </th>
                                                 <th>
                                                     Rango de fecha
-                                                    <input class="form-control" type="text" name="datefilter"
-                                                        id="datefilter" placeholder="Filtro por fechas" />
+                                                    <input class="form-control selectSearchParam" type="text"
+                                                        name="datefilter" id="datefilter" placeholder="Filtro por fechas" />
                                                 </th>
                                                 <th>
                                                 </th>
@@ -170,8 +166,8 @@
                                                     {{-- <button id="searchButton" class="btn btn-primary" type="submit"><i
                                                             class="fa-solid fa-magnifying-glass"></i> Buscar</button> --}}
 
-                                                    <button id="buscarBtn" class="btn btn-light-primary"><i
-                                                            class="fa-solid fa-magnifying-glass"></i>Buscar</button>
+                                                    {{-- <button id="buscarBtn" class="btn btn-light-primary"><i
+                                                            class="fa-solid fa-magnifying-glass"></i>Buscar</button> --}}
                                                 </th>
                                             </tr>
                                         </thead>
@@ -515,11 +511,24 @@
                     'DD/MM/YYYY'));
                 Cookies.set('savedStartDate', picker.startDate.format('DD/MM/YYYY'));
                 Cookies.set('savedEndDate', picker.endDate.format('DD/MM/YYYY'));
+
+                // Crear un nuevo evento de tipo 'change'
+                var eventoChange = new Event('change');
+
+                // provocar el evento 'change' en el input
+                document.querySelector("#datefilter").dispatchEvent(eventoChange);
+
             });
             $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
                 $(this).val('');
                 Cookies.remove('savedStartDate');
                 Cookies.remove('savedEndDate');
+
+                // Crear un nuevo evento de tipo 'change'
+                var eventoChange = new Event('change');
+
+                // provocar el evento 'change' en el input
+                document.querySelector("#datefilter").dispatchEvent(eventoChange);
             });
 
 

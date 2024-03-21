@@ -215,9 +215,12 @@ document
 
 // ! ******************************************************************
 
-document.getElementById("buscarBtn").addEventListener("click", (e) => {
-    e.preventDefault();
+// document.getElementById("buscarBtn").addEventListener("click", (e) => {
+//     e.preventDefault();
+//     searchParams();
+// });
 
+const searchParams = () => {
     const elementosFormulario = Array.from(
         document.querySelectorAll("#searchForm select")
     );
@@ -298,7 +301,7 @@ document.getElementById("buscarBtn").addEventListener("click", (e) => {
             // Manejar errores
             console.error("Error:", error);
         });
-});
+};
 
 $(document).on("click", ".pagination a", function (e) {
     e.preventDefault();
@@ -346,3 +349,11 @@ function record(page) {
             console.error("Error:", error);
         });
 }
+
+const selectores = document.querySelectorAll(".selectSearchParam");
+console.log(selectores);
+selectores.forEach((selector) => {
+    selector.addEventListener("change", (e) => {
+        searchParams();
+    });
+});
