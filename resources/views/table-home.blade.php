@@ -22,7 +22,7 @@
                     <td>{{ $s->carrera }}</td>
                     <td>{{ $s->semestre }}</td>
                     <td>{{ $s->area }}</td>
-                    <td>{{ $s->sugerencia }}</td>
+                    <td class = "truncate">{{ $s->sugerencia }}</td>
                     <td>{{ $s->created_at }}</td>
                     <td class="d-flex bd-highlight">
                         {{-- <button class="btn btn-light updateRegisterBtn m-2" id-suggestion = "{{ $s->id }}"><i

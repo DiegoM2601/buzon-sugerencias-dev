@@ -341,7 +341,7 @@
                                                             height: 100%; ">
                                                             <label for="suggestionTextarea"
                                                                 class="form-label">Comentario</label>
-                                                            <textarea class="form-control" rows="10" id="suggestionTextarea"></textarea>
+                                                            <textarea class="form-control" rows="10" id="suggestionTextarea" disabled></textarea>
                                                         </div>
                                                         <div class="mb-3">
                                                             <button type="button" class="btn btn-secondary"
