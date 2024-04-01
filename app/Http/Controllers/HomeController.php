@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Suggestion;
+use App\Models\Sub_area;
 use App\Exports\SuggestionExport;
 use App\Models\Area;
 use Maatwebsite\Excel\Facades\Excel;
@@ -65,87 +66,17 @@ class HomeController extends Controller
         return view('home', compact('suggestions', 'searchParams', 'areas'));
     }
 
-    // public function pruebaGetSearch(Request $request)
-    // {
-    //     $searchParams = [
-    //         'sede' => $request->get('search_sede'),
-    //         'semestre' => $request->get('search_semestre'),
-    //         'area' => $request->get('search_area'),
-    //         'by_' => $request->get('search_by'),
-    //         'categoria' => $request->get('search_categoria'),
-    //     ];
-    //     $query = Suggestion::orderBy('id', 'DESC');
-
-    //     $dateRange = $request->input('datefilter');
-    //     $dates = explode(' - ', $dateRange);
-    //     if ($dateRange) {
-    //         $startDate = Carbon::createFromFormat('d/m/Y', $dates[0])->startOfDay();
-    //         $endDate = Carbon::createFromFormat('d/m/Y', $dates[1])->endOfDay();
-    //         $query->whereBetween('created_at', [$startDate, $endDate]);
-    //     }
-
-    //     foreach ($searchParams as $key => $value) {
-    //         if ($value) {
-    //             $query->where($key, 'like', '%' . $value . '%');
-    //         }
-    //     }
-
-    //     if ($request->hasHeader("AXIOS")) {
-    //         return view('table', compact('records'))->render();
-    //     }
-
-    //     return response()->json($query->get());
-    // }
-
-    public function pruebaGetSearch(Request $request)
+    public function getSuggestion($idSuggestion)
     {
-        $searchParams = [
-            'sede' => $request->get('search_sede'),
-            'semestre' => $request->get('search_semestre'),
-            'area' => $request->get('search_area'),
-            'by_' => $request->get('search_by'),
-            'categoria' => $request->get('search_categoria'),
-        ];
-        $query = Suggestion::orderBy('id', 'DESC');
+        $sugerencia = Suggestion::find($idSuggestion);
 
-        $dateRange = $request->input('datefilter');
-        $dates = explode(' - ', $dateRange);
-        if ($dateRange) {
-            $startDate = Carbon::createFromFormat('d/m/Y', $dates[0])->startOfDay();
-            $endDate = Carbon::createFromFormat('d/m/Y', $dates[1])->endOfDay();
-            $query->whereBetween('created_at', [$startDate, $endDate]);
-        }
-
-        foreach ($searchParams as $key => $value) {
-            if ($value) {
-                $query->where($key, 'like', '%' . $value . '%');
-            }
-        }
-
-        $suggestions = $query->paginate(5);
-
-        return view('table-home', compact('suggestions'));
+        return response()->json($sugerencia);
     }
 
-    public function searchParameters(Request $request)
+    public function getSubareas($idArea)
     {
-        $query = Suggestion::orderBy('id', 'DESC');
-
-        $dateRange = $request['consulta']['datefilter'];
-        $dates = explode(' - ', $dateRange);
-        if ($dateRange) {
-            $startDate = Carbon::createFromFormat('d/m/Y', $dates[0])->startOfDay();
-            $endDate = Carbon::createFromFormat('d/m/Y', $dates[1])->endOfDay();
-            $query->whereBetween('created_at', [$startDate, $endDate]);
-        }
-
-        foreach ($request->consulta as $key => $value) {
-            if ($value && $key != "datefilter") {
-                $query->where($key, 'like', '%' . $value . '%');
-            }
-        }
-
-        return response()->json($query->get());
+        $subareas = Sub_area::where('area_id', $idArea)->get();
+        return response()->json($subareas);
     }
 
     public function export(Request $request)

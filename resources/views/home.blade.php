@@ -289,14 +289,30 @@
                                                             </select>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label">Área</label>
-                                                                <select class="form-select">
-                                                                    @foreach ($areas as $area)
-                                                                        <option value="{{ $area->area }}">
-                                                                            {{ $area->area }}</option>
-                                                                    @endforeach
-                                                                </select>
+                                                            <label>Área</label>
+                                                            <select class="form-select" id = "modalUpdateSelectArea">
+                                                                @foreach ($areas as $area)
+                                                                    <option value="{{ $area->id }}">
+                                                                        {{ $area->area }}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
+                                                        <div class="mb-3">
+                                                            <label>Subárea</label>
+                                                            <select class="form-select">
+                                                                <option value="1">uno</option>
+                                                                <option value="2">dos</option>
+                                                                <option value="3">tres</option>
+                                                                <option value="4">cuatro</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <div id = "alerta-updateSuggestion" role="alert">
+                                                            </div>
+                                                        </div>
+
+
                                                         {{-- <div
                                                             style = "background: green; padding: 2em; width: 100px; flex-grow: 1.5;">
                                                             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
@@ -596,4 +612,5 @@
     </script>
 
     <script src="{{ asset('js/modalUpdateSuggestion.js') }}"></script>
+    <script src="{{ asset('js/dynamicSearch.js') }}"></script>
 @endsection

@@ -8,3 +8,7 @@
 #table-suggestions td {
     height: 5em;
 }
+
+#alerta-updateSuggestion {
+    display: none;
+}
