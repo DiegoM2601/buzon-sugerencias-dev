@@ -8,6 +8,7 @@
                 <th>Carrera</th>
                 <th>Semestre</th>
                 <th>Área</th>
+                <th>Subárea</th>
                 <th>Sugerencia</th>
                 <th>Fecha</th>
                 <th>Acciones</th>
@@ -21,7 +22,15 @@
                     <td>{{ $s->by_ }}</td>
                     <td>{{ $s->carrera }}</td>
                     <td>{{ $s->semestre }}</td>
-                    <td>{{ $s->area }}</td>
+                    {{-- <td>{{ $s->area_id }}</td> --}}
+                    <td>{{ $s->objeto_area->area }}</td>
+                    <td>
+                        @isset($s->subarea_id)
+                            {{ $s->subarea->subarea }}
+                        @else
+                            <span class="badge badge-primary">Sin Asignar</span>
+                        @endisset
+                    </td>
                     <td class = "truncate">{{ $s->sugerencia }}</td>
                     <td>{{ $s->created_at }}</td>
                     <td class="d-flex bd-highlight">

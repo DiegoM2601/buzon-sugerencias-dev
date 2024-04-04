@@ -144,13 +144,17 @@ class HomeController extends Controller
         $sugerencia->by_ = $request->valoresSubida[2];
         $sugerencia->carrera = $request->valoresSubida[3];
         $sugerencia->semestre = $request->valoresSubida[4];
-        $sugerencia->area = $request->valoresSubida[5];
-        $sugerencia->sugerencia = $request->valoresSubida[6];
-        $sugerencia->created_at = Carbon::create($request->valoresSubida[7]);
+        $sugerencia->area_id = $request->valoresSubida[5];
+        $sugerencia->subarea_id = $request->valoresSubida[6];
+        $sugerencia->sugerencia = $request->valoresSubida[7];
+        $sugerencia->created_at = Carbon::create($request->valoresSubida[8]);
 
         $sugerencia->save();
 
-        return response()->json($request);
+        $sugerencia->load('subarea');
+        $sugerencia->load('objeto_area');
+
+        return response()->json($sugerencia);
     }
 
     public function deleteSuggestion(Request $request)
@@ -159,6 +163,20 @@ class HomeController extends Controller
         $sugerencia->deleted = 1;
         $sugerencia->save();
         return response()->json($request->idSuggestion);
+    }
+
+    public function pruebaEjemplo($id)
+    {
+        // FUNCIONA
+        // $sugerencias = Sub_area::find($id)->suggestions;
+        // dd([$sugerencias[0]->sede, $sugerencias[0]->area]);
+
+        // $subarea = Suggestion::find($id);
+        $subarea = Suggestion::with('subarea')
+            ->find($id);
+
+        // dd($subarea);
+        return response()->json($subarea);
     }
 
 

@@ -53,3 +53,7 @@ Route::get('/get-subareas/{id}', [App\Http\Controllers\HomeController::class, 'g
 Route::get('/registro', function () {
     return view('auth.register');
 });
+
+
+//! PRUEBAS
+Route::get("/prueba/{id}", [App\Http\Controllers\HomeController::class, 'pruebaEjemplo']);

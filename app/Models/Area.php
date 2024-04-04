@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Area extends Model
 {
     use HasFactory;
-    
-    protected $guarded = [];  
+
+    protected $guarded = [];
+
+    public function suggestions()
+    {
+        return $this->hasMany(Suggestion::class, "subarea_id");
+    }
 }

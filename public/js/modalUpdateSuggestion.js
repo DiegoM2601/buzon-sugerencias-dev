@@ -304,10 +304,8 @@ const actualizarRegistros = () => {
     valoresSubida = valoresActualizados.map((v) => (v === "" ? null : v));
     console.log(valoresSubida);
 
-    return;
-
-    $("#modalUpdateSuggestion").modal("hide");
-    $("#modalUpdateSuggestion2").modal("show");
+    // $("#modalUpdateSuggestion").modal("hide");
+    // $("#modalUpdateSuggestion2").modal("show");
 
     axios
         .post("https://buzon-sugerencias.bo/update-suggestion", {
@@ -317,6 +315,26 @@ const actualizarRegistros = () => {
         })
         .then((response) => {
             console.log("Respuesta del servidor:", response.data);
+
+            //! actualizar frontend
+            //prettier-ignore
+            btnpulsado.parentNode.parentNode.innerHTML =
+            `<td>${response.data.sede}</td>
+            <td>${response.data.categoria}</td>
+            <td>${response.data.by_}</td>
+            <td>${response.data.carrera === null ? "" : response.data.carrera}</td>
+            <td>${response.data.semestre === null ? "" : response.data.semestre}</td>
+            <td>${response.data.objeto_area.area}</td>
+            <td>${response.data.subarea ? response.data.subarea.subarea : `<span class="badge badge-primary">Sin Asignar</span>`}</td>
+            <td class = "truncate">${response.data.sugerencia}</td>
+            <td>${fechaLegible(response.data.created_at)}</td>
+            <td class="d-flex bd-highlight">
+            <button class="btn btn-light-primary updateRegisterBtn m-1"
+            id-suggestion = "${response.data.id}"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="btn btn-light-primary deleteRegisterBtn m-1"
+            id-suggestion = "${response.data.id}"><i class="fa-solid fa-trash"></i></button>
+            </td>`;
+
             toast.show();
         })
         .catch((error) => {
