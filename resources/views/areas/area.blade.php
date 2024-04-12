@@ -89,7 +89,7 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>
-                                                            <a href="#" id = "ancla"><i
+                                                            <a href="#" class = "collapse-subareas"><i
                                                                     class="fa-solid fa-chevron-down rotate"></i></a>
                                                         </td>
                                                         <td>Direcciones de Carrera/ CIU/Jefaturas Enseñanza Aprendizaje</td>
@@ -101,151 +101,76 @@
                                                                     class="fa-solid fa-trash"></i></button>
                                                         </td>
                                                     </tr>
-                                                    <tr id = "row-nested" class = "hide-row">
-                                                        <td></td>
-                                                        <td colspan="2">
-                                                            <div class="table-responsive">
-                                                                <table
-                                                                    class="table table-rounded table-striped border gy-7 gs-7 table-subareas-nested">
-                                                                    {{-- <table class="table gy-7 gs-7"> --}}
-                                                                    <thead>
-                                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                                            {{-- <th>SUBÁREAS</th> --}}
-                                                                            <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                            </th>
-                                                                            <th></th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr class = "formato-tabla">
-                                                                            <td>Subarea Direcciones de Carrera/
-                                                                                CIU/Jefaturas Enseñanza Aprendizaje 1</td>
-                                                                            <td>
-                                                                                <button
-                                                                                    class="btn btn-light-primary updateRegisterBtn"
-                                                                                    id-suggestion = "3"><i
-                                                                                        class="fa-solid fa-pen-to-square"></i></button>
-                                                                                <button
-                                                                                    class="btn btn-light-primary deleteRegisterBtn"
-                                                                                    id-suggestion = "3"><i
-                                                                                        class="fa-solid fa-trash"></i></button>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr class = "formato-tabla">
-                                                                            <td>Subarea Direcciones de Carrera/
-                                                                                CIU/Jefaturas Enseñanza Aprendizaje 2</td>
-                                                                            <td>
-                                                                                <button
-                                                                                    class="btn btn-light-primary updateRegisterBtn "
-                                                                                    id-suggestion = "3"><i
-                                                                                        class="fa-solid fa-pen-to-square"></i></button>
-                                                                                <button
-                                                                                    class="btn btn-light-primary deleteRegisterBtn"
-                                                                                    id-suggestion = "3"><i
-                                                                                        class="fa-solid fa-trash"></i></button>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr class = "formato-tabla">
-                                                                            <td>Subarea Direcciones de Carrera/
-                                                                                CIU/Jefaturas Enseñanza Aprendizaje 3</td>
-                                                                            <td>
-                                                                                <button
-                                                                                    class="btn btn-light-primary updateRegisterBtn"
-                                                                                    id-suggestion = "3"><i
-                                                                                        class="fa-solid fa-pen-to-square"></i></button>
-                                                                                <button
-                                                                                    class="btn btn-light-primary deleteRegisterBtn"
-                                                                                    id-suggestion = "3"><i
-                                                                                        class="fa-solid fa-trash"></i></button>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-
-
-                                                        </td>
-                                                    </tr>
                                                     <tr>
                                                         <td>
-                                                            <a href="#" id = "ancla"><i
+                                                            <a href="#" class = "collapse-subareas"><i
                                                                     class="fa-solid fa-chevron-down rotate"></i></a>
                                                         </td>
-                                                        <td>
-                                                            ARCA
-                                                        </td>
-                                                        <td> <button class="btn btn-light-primary updateRegisterBtn m-1"
+                                                        <td>ARCA</td>
+                                                        <td> <button class="btn btn-light-primary updateRegisterBtn"
                                                                 id-suggestion = "3"><i
                                                                     class="fa-solid fa-pen-to-square"></i></button>
-                                                            <button class="btn btn-light-primary deleteRegisterBtn m-1"
+                                                            <button class="btn btn-light-primary deleteRegisterBtn"
                                                                 id-suggestion = "3"><i
                                                                     class="fa-solid fa-trash"></i></button>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <a href="#" id = "ancla"><i
+                                                            <a href="#" class = "collapse-subareas"><i
                                                                     class="fa-solid fa-chevron-down rotate"></i></a>
                                                         </td>
-                                                        <td>
-                                                            Anfitriones/Tutores/Ayudantes/Hnos Mayores
-                                                        </td>
-                                                        <td> <button class="btn btn-light-primary updateRegisterBtn m-1"
+                                                        <td>Anfitriones/Tutores/Ayudantes/Hnos Mayores</td>
+                                                        <td> <button class="btn btn-light-primary updateRegisterBtn"
                                                                 id-suggestion = "3"><i
                                                                     class="fa-solid fa-pen-to-square"></i></button>
-                                                            <button class="btn btn-light-primary deleteRegisterBtn m-1"
+                                                            <button class="btn btn-light-primary deleteRegisterBtn"
                                                                 id-suggestion = "3"><i
                                                                     class="fa-solid fa-trash"></i></button>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <a href="#" id = "ancla"><i
+                                                            <a href="#" class = "collapse-subareas"><i
                                                                     class="fa-solid fa-chevron-down rotate"></i></a>
                                                         </td>
-                                                        <td>
-                                                            Infraestructura/Ambientes de la Universidad
-                                                        </td>
-                                                        <td> <button class="btn btn-light-primary updateRegisterBtn m-1"
+                                                        <td>Infraestructura/Ambientes de la Universidad</td>
+                                                        <td> <button class="btn btn-light-primary updateRegisterBtn"
                                                                 id-suggestion = "3"><i
                                                                     class="fa-solid fa-pen-to-square"></i></button>
-                                                            <button class="btn btn-light-primary deleteRegisterBtn m-1"
+                                                            <button class="btn btn-light-primary deleteRegisterBtn"
                                                                 id-suggestion = "3"><i
                                                                     class="fa-solid fa-trash"></i></button>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <a href="#" id = "ancla"><i
+                                                            <a href="#" class = "collapse-subareas"><i
                                                                     class="fa-solid fa-chevron-down rotate"></i></a>
                                                         </td>
-                                                        <td>
-                                                            Servicios Estudiantiles
-                                                        </td>
-                                                        <td> <button class="btn btn-light-primary updateRegisterBtn m-1"
+                                                        <td>Servicios Estudiantiles</td>
+                                                        <td> <button class="btn btn-light-primary updateRegisterBtn"
                                                                 id-suggestion = "3"><i
                                                                     class="fa-solid fa-pen-to-square"></i></button>
-                                                            <button class="btn btn-light-primary deleteRegisterBtn m-1"
+                                                            <button class="btn btn-light-primary deleteRegisterBtn"
                                                                 id-suggestion = "3"><i
                                                                     class="fa-solid fa-trash"></i></button>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <a href="#" id = "ancla"><i
+                                                            <a href="#" class = "collapse-subareas"><i
                                                                     class="fa-solid fa-chevron-down rotate"></i></a>
                                                         </td>
-                                                        <td>
-                                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fuga
+                                                        <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fuga
                                                             numquam nulla ipsum consectetur? Enim necessitatibus dolore ad?
                                                             Repellat in suscipit praesentium cumque aliquam maxime error
                                                             enim, aliquid commodi eius eveniet iure deserunt nulla itaque
-                                                            architecto? Repellat optio deleniti minima molestias!
-                                                        </td>
-                                                        <td> <button class="btn btn-light-primary updateRegisterBtn m-1"
+                                                            architecto? Repellat optio deleniti minima molestias!</td>
+                                                        <td> <button class="btn btn-light-primary updateRegisterBtn"
                                                                 id-suggestion = "3"><i
                                                                     class="fa-solid fa-pen-to-square"></i></button>
-                                                            <button class="btn btn-light-primary deleteRegisterBtn m-1"
+                                                            <button class="btn btn-light-primary deleteRegisterBtn"
                                                                 id-suggestion = "3"><i
                                                                     class="fa-solid fa-trash"></i></button>
                                                         </td>

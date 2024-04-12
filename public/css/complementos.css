@@ -56,12 +56,17 @@
 /* ! TABLA SUBAREAS */
 /* dimensiones columnas tabla SUBAREAS*/
 /* colmna acciones */
-.table-subareas-nested > thead:nth-child(1) > tr:nth-child(1) > th {
-    /* background-color: aqua; */
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
+.nested-table {
+    -webkit-transition: all 0.7s;
+    -moz-transition: all 0.7s;
+    transition: all 0.7s;
+
+    opacity: 0;
 }
-.table-subareas-nested th:nth-child(2) {
+.nested-table.nested-table-show {
+    opacity: 1;
+}
+.table-subareas-nested td:nth-child(2) {
     width: 20%;
     /* background-color: pink; */
 }
@@ -73,14 +78,6 @@
     /* text-align: center !important; */
     /* vertical-align: middle !important; */
 }
-.table-subareas-nested th {
-    padding-top: 5px !important;
-    padding-bottom: 5px !important;
-
-    /* text-align: center !important; */
-    vertical-align: middle !important;
-}
-
 .hide-row {
     display: none;
 }
