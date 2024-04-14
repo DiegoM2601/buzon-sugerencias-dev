@@ -1,25 +1,21 @@
 const ancla = document.getElementById("ancla");
 const _token = document.querySelector("input[name=_token]").value;
+const updateSubareaToast = bootstrap.Toast.getOrCreateInstance(
+    document.getElementById("updateSubareaToast")
+);
+let btnPulsado;
 
-// ancla.addEventListener("click", async (e) => {
-//     e.preventDefault();
-//     ancla.querySelector("i").classList.toggle("rotate-180");
-
-//     // document.getElementById("row-nested").style.display = "table-row";
-//     document.getElementById("row-nested").classList.toggle("hide-row");
-
-//     let algo = await consultarSubareas(8);
-//     console.log(algo);
-// });
+// formulario modal update subarea
+const updateSubareaForm = document.querySelectorAll(".update-subarea-txt");
+const updateSubareaBtn = document.getElementById("updateSubareaBtn");
 
 document.getElementById("table-areas").addEventListener("click", (e) => {
+    // ! DESPLEGAR SUBAREAS
     if (
         e.target.classList.contains("collapse-subareas") ||
         e.target.parentNode.classList.contains("collapse-subareas")
     ) {
         e.preventDefault();
-        // e.target.querySelector("i").classList.toggle("rotate-180");
-        // e.preventDefault();
 
         let subareaAnchor = e.target.classList.contains("collapse-subareas")
             ? e.target
@@ -39,24 +35,98 @@ document.getElementById("table-areas").addEventListener("click", (e) => {
             fetchSubareas(subareaAnchor);
         }
     }
+    // ! BOTON ACTUALIZAR SUBAREA
+    else if (
+        e.target.classList.contains("updateSubarea") ||
+        e.target.parentNode.classList.contains("updateSubarea")
+    ) {
+        prepararModalSubarea(
+            e.target.classList.contains("updateSubarea")
+                ? e.target
+                : e.target.parentNode
+        );
+    }
 });
 
+const prepararModalSubarea = (btn) => {
+    // updateSubareaForm[0].value =
+    //     btn.parentNode.parentNode.querySelector("td").innerText;
+
+    btnPulsado = btn;
+
+    updateSubareaForm[0].value = document
+        .querySelector(".nested-table-parent")
+        .querySelectorAll("td")[1].innerText;
+    updateSubareaForm[1].value =
+        btn.parentNode.parentNode.querySelector("td").innerText;
+
+    updateSubareaForm[2].value = btn.getAttribute("id-subarea");
+
+    $("#modalUpdateSubarea").modal("show");
+
+    console.log("btn:" + btn.getAttribute("id-subarea"));
+};
+updateSubareaBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    $("#modalUpdateSubarea2").modal("hide");
+    let updatedRow = btnPulsado.parentNode.parentNode;
+
+    // TODO: Actualizar la URL
+    //prettier-ignore
+    // * animacion
+    updatedRow.innerHTML = `
+        <td colspan="3">
+            <img src="https://buzon-sugerencias.bo/gifs/loading2.gif" width = "120px">
+        </td>
+    `;
+    updatedRow.classList.toggle("center-text");
+
+    axios
+        .post("https://buzon-sugerencias.bo/update-subarea", {
+            headers: {
+                "X-CSRF-TOKEN": _token,
+            },
+            idSubarea: updateSubareaForm[2].value,
+            subarea: updateSubareaForm[1].value,
+        })
+        .then((res) => {
+            console.log(res.data);
+            updatedRow.innerHTML = `
+                <td>${res.data.subarea}</td>
+                <td>
+                    <button class="btn btn-light-primary updateSubarea" id-subarea = "${res.data.id}">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <button class="btn btn-light-primary deleteSubarea" id-subarea = "${res.data.id}">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            updatedRow.classList.toggle("center-text");
+            updateSubareaToast.show();
+        })
+        .catch((err) => {
+            console.error("Error al realizar la solicitud:", err);
+        });
+});
+
+// ! COLAPSAR TODAS LAS TABLAS ANIDADAS
 const collapseAll = () => {
     var nestedTableRows = document
         .getElementById("table-areas")
         .querySelectorAll("tr.nested-table");
-    // console.log(nestedTableRows);
 
     var nestedTableParents = document
         .getElementById("table-areas")
         .querySelectorAll("tr.nested-table-parent");
 
-    // ! colapsar el resto
     if (nestedTableRows.length > 0) {
+        // * Elminar todas las tablas anidadas del DOM
         nestedTableRows.forEach((e) => {
             e.remove();
         });
 
+        // * Llevar todos los iconos a su estado inicial
         let iconos = document
             .getElementById("table-areas")
             .querySelectorAll("tr .collapse-subareas i");
@@ -77,7 +147,7 @@ const fetchSubareas = async (a) => {
     a.querySelector("i").classList.toggle("rotate-180");
     console.log(a.parentNode.parentNode);
 
-    let subareas = await consultarSubareas(69);
+    let subareas = await consultarSubareas(a.getAttribute("id-area"));
 
     if (subareas && subareas.length > 0) {
         let subareasRows = subareas
@@ -87,10 +157,12 @@ const fetchSubareas = async (a) => {
                 <tr class = "formato-tabla" id-subarea = "${obj.id}">
                     <td>${obj.subarea}</td>
                     <td>
-                        <button class="btn btn-light-primary" id-suggestion = "3"><i
-                                class="fa-solid fa-pen-to-square"></i></button>
-                        <button class="btn btn-light-primary" id-suggestion = "3"><i
-                                class="fa-solid fa-trash"></i></button>
+                        <button class="btn btn-light-primary updateSubarea" id-subarea = "${obj.id}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button class="btn btn-light-primary deleteSubarea" id-subarea = "${obj.id}">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
                     </td>
                 </tr>`;
             })

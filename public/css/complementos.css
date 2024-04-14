@@ -78,6 +78,11 @@
     /* text-align: center !important; */
     /* vertical-align: middle !important; */
 }
+
+.center-text {
+    text-align: center;
+}
+
 .hide-row {
     display: none;
 }

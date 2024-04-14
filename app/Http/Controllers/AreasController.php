@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area as ModelsArea;
+use App\Models\Sub_area;
 use Illuminate\Http\Request;
 use App\Models\Suggestion;
 use Models\Area;
+
 class AreasController extends Controller
 {
     /**
@@ -15,9 +17,9 @@ class AreasController extends Controller
      */
     public function index()
     {
-        
-        $areas=ModelsArea::all();
-        return view('areas',compact('areas'));
+
+        $areas = ModelsArea::all();
+        return view('areas', compact('areas'));
     }
 
     /**
@@ -39,11 +41,12 @@ class AreasController extends Controller
     public function store(Request $request)
     {
         //
-        $areas=new ModelsArea();
-        $areas->area=$request->input('area');
+        $areas = new ModelsArea();
+        $areas->area = $request->input('area');
         $areas->save();
         return redirect()->back();
     }
+
 
     /**
      * Display the specified resource.
@@ -54,8 +57,8 @@ class AreasController extends Controller
     public function show($id)
     {
         //
-        $areas=ModelsArea::find($id);
-        return view('areas.area',compact('areas.area'));
+        $areas = ModelsArea::find($id);
+        return view('areas.area', compact('areas.area'));
     }
 
     /**
@@ -69,6 +72,15 @@ class AreasController extends Controller
         //
     }
 
+    public function updateSubarea(Request $request)
+    {
+        $subarea = Sub_area::find($request->idSubarea);
+        $subarea->subarea = $request->subarea;
+        $subarea->save();
+
+        return response()->json($subarea);
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -79,8 +91,8 @@ class AreasController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $areas=ModelsArea::find($id);
-        $areas->area=$request->input('area');
+        $areas = ModelsArea::find($id);
+        $areas->area = $request->input('area');
         $areas->update();
         return redirect()->back();
     }
@@ -94,7 +106,7 @@ class AreasController extends Controller
     public function destroy($id)
     {
         //
-        $areas=ModelsArea::find($id);
+        $areas = ModelsArea::find($id);
         $areas->delete();
         return redirect()->back();
     }
