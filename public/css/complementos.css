@@ -79,6 +79,11 @@
     /* vertical-align: middle !important; */
 }
 
+.nested-add-subarea {
+    /* background-color: green !important; */
+    vertical-align: top !important;
+}
+
 .center-text {
     text-align: center;
 }

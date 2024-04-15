@@ -282,6 +282,64 @@
                                         </div>
                                     </div>
 
+
+                                    {{-- ! MODAL CONFIRMAR EDICIÓN SUBÁREA --}}
+                                    <div class="modal fade" id="modalDeleteSubarea" aria-hidden="true"
+                                        data-bs-backdrop="static" data-bs-keyboard="false"
+                                        aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalToggleLabel2">CONFIRMACIÓN
+                                                    </h5>
+                                                </div>
+                                                <div class="modal-body fs-5">
+                                                    ¿Estás seguro de eliminar el registro?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button id="deleteSubareaBtn" class="btn btn-primary">SÍ</button>
+                                                    <button class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- ! MODAL CREAR NUEVA SUBÁREA --}}
+                                    <div class="modal fade" tabindex="-1" id="modalCreateSubarea">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title">Nueva Subárea</h3>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="mb-10">
+                                                        <label for="exampleFormControlInput1" class="form-label">Área
+                                                            a la que pertence:</label>
+                                                        <div class="position-relative mb-3">
+                                                            <input type="text"
+                                                                class="form-control form-control-solid create-subarea-txt"
+                                                                value = "Fundación UNIFRANZ" readonly disabled />
+                                                        </div>
+                                                        <label for="exampleFormControlInput1" class="form-label">Nueva
+                                                            Subárea:</label>
+                                                        <div class="position-relative">
+                                                            <input type="text"
+                                                                class="form-control form-control-solid create-subarea-txt"
+                                                                name="area" autocomplete="off" />
+                                                        </div>
+                                                        <input type="hidden" class = "create-subarea-txt">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-light"
+                                                            data-bs-dismiss="modal">Cerrar</button>
+                                                        <button class="btn btn-primary"
+                                                            id = "createSubareaBtn">Guardar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     {{-- ! NOTIFICACIONES TOAST --}}
                                     <div class="position-fixed bottom-0 end-0 p-3" style="z-index:99999;">
                                         <div class="toast align-items-center text-white bg-primary border-0 p-3 fs-5"

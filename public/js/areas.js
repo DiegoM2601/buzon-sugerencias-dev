@@ -9,6 +9,13 @@ let btnPulsado;
 const updateSubareaForm = document.querySelectorAll(".update-subarea-txt");
 const updateSubareaBtn = document.getElementById("updateSubareaBtn");
 
+// formulario modal create subarea
+const createSubareaForm = document.querySelectorAll(".create-subarea-txt");
+const createSubareaBtn = document.getElementById("createSubareaBtn");
+
+// modal delete subarea
+const deleteSubareaBtn = document.getElementById("deleteSubareaBtn");
+
 document.getElementById("table-areas").addEventListener("click", (e) => {
     // ! DESPLEGAR SUBAREAS
     if (
@@ -40,15 +47,32 @@ document.getElementById("table-areas").addEventListener("click", (e) => {
         e.target.classList.contains("updateSubarea") ||
         e.target.parentNode.classList.contains("updateSubarea")
     ) {
-        prepararModalSubarea(
+        prepararModalUpdateSubarea(
             e.target.classList.contains("updateSubarea")
                 ? e.target
                 : e.target.parentNode
         );
+    } else if (
+        e.target.classList.contains("createSubarea") ||
+        e.target.parentNode.classList.contains("createSubarea")
+    ) {
+        prepararModalCreateSubarea(
+            e.target.classList.contains("createSubarea")
+                ? e.target
+                : e.target.parentNode
+        );
+    } else if (
+        e.target.classList.contains("deleteSubarea") ||
+        e.target.parentNode.classList.contains("deleteSubarea")
+    ) {
+        btnPulsado = e.target.classList.contains("deleteSubarea")
+            ? e.target
+            : e.target.parentNode;
+        $("#modalDeleteSubarea").modal("show");
     }
 });
 
-const prepararModalSubarea = (btn) => {
+const prepararModalUpdateSubarea = (btn) => {
     // updateSubareaForm[0].value =
     //     btn.parentNode.parentNode.querySelector("td").innerText;
 
@@ -109,6 +133,113 @@ updateSubareaBtn.addEventListener("click", (e) => {
             console.error("Error al realizar la solicitud:", err);
         });
 });
+
+createSubareaBtn.addEventListener("click", () => {
+    let newRow = document.createElement("tr");
+    let subarea = createSubareaForm[1].value;
+    let areaId = createSubareaForm[2].value;
+
+    if (btnPulsado.classList.contains("empty-nested-table")) {
+        // console.log(btn.parentNode.parentNode);
+
+        //prettier-ignore
+        btnPulsado.parentNode.parentNode.innerHTML = `
+            <td class = "nested-add-subarea">
+                <button class="btn btn-light-primary createSubarea">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </td>
+            <td colspan="2">
+                <div class="table-responsive">
+                    <table class="table table-rounded table-striped border gy-7 gs-7 table-subareas-nested">
+                        <tbody>
+                            <tr class = "formato-tabla" id-subarea = "${areaId}">
+                                <td>${subarea}</td>
+                                <td>
+                                    <button class="btn btn-light-primary updateSubarea" id-subarea = "${areaId}">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                    <button class="btn btn-light-primary deleteSubarea" id-subarea = "${areaId}">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </td>   
+        `;
+    } else {
+        //TODO: Insertar el id de la subarea en lugar de la area
+        //prettier-ignore
+        newRow.innerHTML = `
+            <td>${subarea}</td>
+            <td>
+                <button class="btn btn-light-primary updateSubarea" id-subarea = "${areaId}">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button class="btn btn-light-primary deleteSubarea" id-subarea = "${areaId}">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </td>
+        `;
+
+        insertAfter(
+            document.querySelector(".table-subareas-nested tr:last-child"),
+            newRow
+        );
+    }
+    $("#modalCreateSubarea").modal("hide");
+});
+
+deleteSubareaBtn.addEventListener("click", () => {
+    let row = btnPulsado.parentNode.parentNode;
+    let nestedTable = document.querySelector(".table-subareas-nested");
+
+    row.remove();
+    if (nestedTable && nestedTable.querySelectorAll("tr").length === 0) {
+        document.querySelector(".nested-table").remove();
+
+        // return;
+
+        let newRow = document.createElement("tr");
+        newRow.classList.add("nested-table");
+
+        //prettier-ignore
+        newRow.innerHTML = `
+            <td class = "nested-add-subarea">
+                <button class="btn btn-light-primary createSubarea empty-nested-table">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </td>
+            <td colspan="2" style="text-align: center;">
+                <div class="alert alert-secondary" role="alert">
+                    Esta área aún no cuenta con subáreas asignadas.
+                </div>
+            </td>
+        `;
+
+        insertAfter(document.querySelector(".nested-table-parent"), newRow);
+
+        window.getComputedStyle(newRow).opacity;
+        newRow.className += " nested-table-show";
+    }
+
+    $("#modalDeleteSubarea").modal("hide");
+});
+
+const prepararModalCreateSubarea = (btn) => {
+    btnPulsado = btn;
+    createSubareaForm[0].value = document
+        .querySelector(".nested-table-parent")
+        .querySelectorAll("td")[1].innerText;
+
+    createSubareaForm[2].value = document
+        .querySelector(".nested-table-parent")
+        .getAttribute("id-area");
+
+    $("#modalCreateSubarea").modal("show");
+};
 
 // ! COLAPSAR TODAS LAS TABLAS ANIDADAS
 const collapseAll = () => {
@@ -173,7 +304,11 @@ const fetchSubareas = async (a) => {
 
         //prettier-ignore
         newRow.innerHTML = `
-            <td></td>
+            <td class = "nested-add-subarea">
+                <button class="btn btn-light-primary createSubarea">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </td>
             <td colspan="2">
                 <div class="table-responsive">
                     <table class="table table-rounded table-striped border gy-7 gs-7 table-subareas-nested">
@@ -191,8 +326,11 @@ const fetchSubareas = async (a) => {
         window.getComputedStyle(newRow).opacity;
         newRow.className += " nested-table-show";
     } else {
+        //TODO: llevar el siguiente código a una función, el mismo se ejecuta también al momento de eliminar filas cuando la nested-table queda vacía
         let newRow = document.createElement("tr");
         newRow.classList.add("nested-table");
+
+        //FIXME: Esta línea sirve?
         newRow.innerHTML = `
         <div class="alert alert-secondary" role="alert">
             Esta área aún no cuenta con subáreas asignadas.
@@ -201,7 +339,11 @@ const fetchSubareas = async (a) => {
 
         //prettier-ignore
         newRow.innerHTML = `
-            <td></td>
+            <td class = "nested-add-subarea">
+                <button class="btn btn-light-primary createSubarea empty-nested-table">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </td>
             <td colspan="2" style="text-align: center;">
                 <div class="alert alert-secondary" role="alert">
                     Esta área aún no cuenta con subáreas asignadas.
