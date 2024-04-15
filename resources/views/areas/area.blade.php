@@ -401,9 +401,10 @@
                                         </div>
                                     </div>
 
-                                    <div class="mt-5">
+                                    {{-- ! PRESCINDIR de la paginacion --}}
+                                    {{-- <div class="mt-5">
                                         {{ $areas->links() }}
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>

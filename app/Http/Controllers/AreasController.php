@@ -17,9 +17,10 @@ class AreasController extends Controller
      */
     public function index()
     {
-
-        $areas = ModelsArea::all();
-        return view('areas', compact('areas'));
+        $areas = ModelsArea::where("deleted", 0)->get();
+        return view('areas.area', [
+            'areas' => $areas
+        ]);
     }
 
     /**
@@ -130,11 +131,36 @@ class AreasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    // TODO: Cambiar stated por deleted EN LA BASE DE DATOS
     public function destroy($id)
     {
         //
-        $areas = ModelsArea::find($id);
-        $areas->delete();
+        // $areas = ModelsArea::find($id);
+        // $areas->delete();
+
+        $area = ModelsArea::find($id);
+        $area->deleted = 1;
+        $area->save();
+
+        // configurar area_id = null y subarea_id = null
+        $sugerencias = Suggestion::where('area_id', $id)->get();
+        // dd($sugerencias);
+        foreach ($sugerencias as $sugerencia) {
+            //TODO: En lugar de estblecer el area como nulo, dar de baja directamente la sugerencia?
+            $sugerencia->subarea_id = null;
+            // $sugerencia->area_id = null;
+            $sugerencia->deleted = 1;
+            $sugerencia->save();
+        }
+
+        // eliminacion logica de las subareas pertenecientes a este area
+        $subareas = Sub_area::where('area_id', $id)->get();
+        foreach ($subareas as $subarea) {
+            $subarea->deleted = 1;
+            $subarea->save();
+        }
+
         return redirect()->back();
     }
 }

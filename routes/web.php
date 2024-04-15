@@ -35,7 +35,10 @@ Route::resource('areas', App\Http\Controllers\AreasController::class);
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 Route::get('/export', [App\Http\Controllers\HomeController::class, 'export'])->name('export');
-Route::get('/area', [App\Http\Controllers\HomeController::class, 'area'])->name('area');
+
+// ! Modificado para emplear el controlador AreasController
+// Route::get('/area', [App\Http\Controllers\HomeController::class, 'area'])->name('area');
+Route::get('/area', [App\Http\Controllers\AreasController::class, 'index'])->name('area');
 
 Route::get('/acceso-restringido', function () {
     return view('acceso-restringido');
