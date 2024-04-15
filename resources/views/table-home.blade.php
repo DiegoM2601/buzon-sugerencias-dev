@@ -23,7 +23,14 @@
                     <td>{{ $s->carrera }}</td>
                     <td>{{ $s->semestre }}</td>
                     {{-- <td>{{ $s->area_id }}</td> --}}
-                    <td>{{ $s->objeto_area->area }}</td>
+                    {{-- <td>{{ $s->objeto_area->area }}</td> --}}
+                    <td>
+                        @isset($s->objeto_area->area)
+                            {{ $s->objeto_area->area }}
+                        @else
+                            <span class="badge badge-primary">Sin Asignar</span>
+                        @endisset
+                    </td>
                     <td>
                         @isset($s->subarea_id)
                             {{ $s->subarea->subarea }}

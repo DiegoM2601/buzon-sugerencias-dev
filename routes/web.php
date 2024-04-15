@@ -35,7 +35,10 @@ Route::resource('areas', App\Http\Controllers\AreasController::class);
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 Route::get('/export', [App\Http\Controllers\HomeController::class, 'export'])->name('export');
-Route::get('/area', [App\Http\Controllers\HomeController::class, 'area'])->name('area');
+
+// ! Modificado para emplear el controlador AreasController
+// Route::get('/area', [App\Http\Controllers\HomeController::class, 'area'])->name('area');
+Route::get('/area', [App\Http\Controllers\AreasController::class, 'index'])->name('area');
 
 Route::get('/acceso-restringido', function () {
     return view('acceso-restringido');
@@ -49,6 +52,9 @@ Route::post('/update-suggestion', [App\Http\Controllers\HomeController::class, '
 Route::post('/delete-register', [App\Http\Controllers\HomeController::class, 'deleteSuggestion'])->name("deleteSuggestion");
 Route::get('/get-suggestion/{id}', [App\Http\Controllers\HomeController::class, 'getSuggestion'])->name("getSuggestion");
 Route::get('/get-subareas/{id}', [App\Http\Controllers\HomeController::class, 'getSubareas'])->name("getSubareas");
+Route::post('/update-subarea', [App\Http\Controllers\AreasController::class, 'updateSubarea']);
+Route::post('/create-subarea', [App\Http\Controllers\AreasController::class, 'createSubarea']);
+Route::post('/delete-subarea', [App\Http\Controllers\AreasController::class, 'deleteSubarea']);
 
 Route::get('/registro', function () {
     return view('auth.register');

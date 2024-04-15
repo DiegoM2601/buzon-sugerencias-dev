@@ -5,10 +5,89 @@
     overflow: hidden;
 }
 
+/* * tabla sugerencias */
 #table-suggestions td {
     height: 5em;
 }
 
 #alerta-updateSuggestion {
+    display: none;
+}
+
+/* Definir la transición de la rotación */
+.rotate {
+    transition: transform 0.2s linear;
+    -moz-transition: transform 0.2s linear; /* Firefox 4 */
+    -webkit-transition: transform 0.2s linear; /* Safari and Chrome */
+    -o-transition: transform 0.2s linear; /* Opera */
+    -ms-transition: transform 0.2s linear; /* Explorer 1*/
+}
+
+/* Rotar el botón cuando se añade la clase 'rotate' */
+.rotate.rotate-180 {
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+}
+
+/* ! LAS 2 TABLAS */
+#table-areas td {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    vertical-align: middle;
+}
+/* ! TABLA AREAS */
+/* dimensiones columnas tabla AREAS*/
+/* columna collapse */
+#table-areas > thead:nth-child(1) > tr:nth-child(1) > th {
+    /* background-color: aqua; */
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+#table-areas > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(1) {
+    width: 5%;
+    /* background-color: green; */
+}
+#table-areas > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(3) {
+    width: 15%;
+    /* background-color: green; */
+}
+
+/* ! TABLA SUBAREAS */
+/* dimensiones columnas tabla SUBAREAS*/
+/* colmna acciones */
+.nested-table {
+    -webkit-transition: all 0.7s;
+    -moz-transition: all 0.7s;
+    transition: all 0.7s;
+
+    opacity: 0;
+}
+.nested-table.nested-table-show {
+    opacity: 1;
+}
+.table-subareas-nested td:nth-child(2) {
+    width: 20%;
+    /* background-color: pink; */
+}
+.table-subareas-nested td {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    /* background-color: green; */
+
+    /* text-align: center !important; */
+    /* vertical-align: middle !important; */
+}
+
+.nested-add-subarea {
+    /* background-color: green !important; */
+    vertical-align: top !important;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.hide-row {
     display: none;
 }
