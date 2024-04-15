@@ -75,7 +75,7 @@ class HomeController extends Controller
 
     public function getSubareas($idArea)
     {
-        $subareas = Sub_area::where('area_id', $idArea)->get();
+        $subareas = Sub_area::where('area_id', $idArea)->where('deleted', 0)->get();
         return response()->json($subareas);
     }
 

@@ -51,6 +51,7 @@ Route::get('/get-suggestion/{id}', [App\Http\Controllers\HomeController::class, 
 Route::get('/get-subareas/{id}', [App\Http\Controllers\HomeController::class, 'getSubareas'])->name("getSubareas");
 Route::post('/update-subarea', [App\Http\Controllers\AreasController::class, 'updateSubarea']);
 Route::post('/create-subarea', [App\Http\Controllers\AreasController::class, 'createSubarea']);
+Route::post('/delete-subarea', [App\Http\Controllers\AreasController::class, 'deleteSubarea']);
 
 Route::get('/registro', function () {
     return view('auth.register');

@@ -3,6 +3,12 @@ const _token = document.querySelector("input[name=_token]").value;
 const updateSubareaToast = bootstrap.Toast.getOrCreateInstance(
     document.getElementById("updateSubareaToast")
 );
+const deleteSubareaToast1 = bootstrap.Toast.getOrCreateInstance(
+    document.getElementById("deleteSubareaToast1")
+);
+const deleteSubareaToast2 = bootstrap.Toast.getOrCreateInstance(
+    document.getElementById("deleteSubareaToast2")
+);
 let btnPulsado;
 
 // formulario modal update subarea
@@ -196,11 +202,24 @@ createSubareaBtn.addEventListener("click", async () => {
     $("#modalCreateSubarea").modal("hide");
 });
 
-deleteSubareaBtn.addEventListener("click", () => {
+deleteSubareaBtn.addEventListener("click", async () => {
     let row = btnPulsado.parentNode.parentNode;
     let nestedTable = document.querySelector(".table-subareas-nested");
 
+    //TODO: Notificar al usuario cuantos registros de la tabla sugerencias se han modificado
+    let res = await deleteSubarea(row.getAttribute("id-subarea"));
+    console.log(res.onDeleteSuggestions);
+
+    deleteSubareaToast1.show();
+
+    document.querySelector(
+        "#deleteSubareaToast2 .toast-body"
+    ).innerHTML = `Se han actualizado ${res.onDeleteSuggestions} registros adicionalmente.`;
+    deleteSubareaToast2.show();
+
     row.remove();
+
+    // * si la nested table se halla vacia ...
     if (nestedTable && nestedTable.querySelectorAll("tr").length === 0) {
         document.querySelector(".nested-table").remove();
 
@@ -399,6 +418,24 @@ const createSubarea = (areaId, subarea) => {
             })
             .then((res) => {
                 resolve(res.data.subareaId);
+            })
+            .catch((err) => {
+                reject(err);
+            });
+    });
+};
+
+const deleteSubarea = (subareaId) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .post("https://buzon-sugerencias.bo/delete-subarea", {
+                headers: {
+                    "X-CSRF-TOKEN": _token,
+                },
+                subareaId,
+            })
+            .then((res) => {
+                resolve(res.data);
             })
             .catch((err) => {
                 reject(err);

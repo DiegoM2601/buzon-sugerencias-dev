@@ -295,6 +295,11 @@
                                                 </div>
                                                 <div class="modal-body fs-5">
                                                     ¿Estás seguro de eliminar el registro?
+
+                                                    <div class="alert alert-warning mt-3" role="alert">
+                                                        Todas las sugerencias/reclamos que tengan asignadas esta subárea se
+                                                        modificarán.
+                                                    </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button id="deleteSubareaBtn" class="btn btn-primary">SÍ</button>
@@ -355,6 +360,46 @@
                                         </div>
                                     </div>
 
+                                    {{-- <div class="position-fixed bottom-0 end-0 p-3" style="z-index:99999;">
+                                        <div class="toast align-items-center text-white bg-primary border-0 p-3 fs-6"
+                                            id = "deleteSubareaToast" role="alert" aria-live="assertive"
+                                            aria-atomic="true">
+                                            <div class="d-flex">
+                                                <div class="toast-body">
+                                                    Actualizado correctamente.
+                                                </div>
+                                                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                                    data-bs-dismiss="toast" aria-label="Close"></button>
+                                            </div>
+                                        </div>
+                                    </div> --}}
+
+                                    <div class="toast-container position-static position-fixed bottom-0 end-0 p-3"
+                                        style="z-index:99999;">
+                                        <div class="toast align-items-center text-white bg-primary border-0 p-3 fs-6"
+                                            id = "deleteSubareaToast1" role="alert" aria-live="assertive"
+                                            aria-atomic="true">
+                                            <div class="d-flex">
+                                                <div class="toast-body">
+                                                    Actualizado correctamente.
+                                                </div>
+                                                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                                    data-bs-dismiss="toast" aria-label="Close"></button>
+                                            </div>
+                                        </div>
+
+                                        <div class="toast align-items-center text-white bg-primary border-0 p-3 fs-6"
+                                            id = "deleteSubareaToast2" role="alert" aria-live="assertive"
+                                            aria-atomic="true">
+                                            <div class="d-flex">
+                                                <div class="toast-body">
+                                                    Actualizado correctamente.
+                                                </div>
+                                                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                                    data-bs-dismiss="toast" aria-label="Close"></button>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <div class="mt-5">
                                         {{ $areas->links() }}

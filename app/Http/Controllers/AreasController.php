@@ -91,6 +91,23 @@ class AreasController extends Controller
         return response()->json(["subareaId" => $subarea->id]);
     }
 
+    public function deleteSubarea(Request $request)
+    {
+        $subarea = Sub_area::find($request->subareaId);
+        $subarea->deleted = 1;
+        $subarea->save();
+
+        // * configurar las sugerencias enlazadas a esta subarea a null
+        $sugerencias = Suggestion::where('subarea_id', $request->subareaId)->get();
+
+        foreach ($sugerencias as $sugerencia) {
+            $sugerencia->subarea_id = null;
+            $sugerencia->save();
+        }
+
+        return response()->json(["onDeleteSuggestions" => count($sugerencias)]);
+    }
+
     /**
      * Update the specified resource in storage.
      *
