@@ -81,6 +81,16 @@ class AreasController extends Controller
         return response()->json($subarea);
     }
 
+    public function createSubarea(Request $request)
+    {
+        $subarea = new Sub_area();
+        $subarea->subarea = $request->subarea;
+        $subarea->area_id = $request->areaId;
+        $subarea->save();
+
+        return response()->json(["subareaId" => $subarea->id]);
+    }
+
     /**
      * Update the specified resource in storage.
      *

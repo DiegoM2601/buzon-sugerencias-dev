@@ -134,10 +134,14 @@ updateSubareaBtn.addEventListener("click", (e) => {
         });
 });
 
-createSubareaBtn.addEventListener("click", () => {
+createSubareaBtn.addEventListener("click", async () => {
     let newRow = document.createElement("tr");
     let subarea = createSubareaForm[1].value;
     let areaId = createSubareaForm[2].value;
+
+    // console.log(subarea, areaId);
+
+    let nuevaSubareaId = await createSubarea(areaId, subarea);
 
     if (btnPulsado.classList.contains("empty-nested-table")) {
         // console.log(btn.parentNode.parentNode);
@@ -153,13 +157,13 @@ createSubareaBtn.addEventListener("click", () => {
                 <div class="table-responsive">
                     <table class="table table-rounded table-striped border gy-7 gs-7 table-subareas-nested">
                         <tbody>
-                            <tr class = "formato-tabla" id-subarea = "${areaId}">
+                            <tr class = "formato-tabla" id-subarea = "${nuevaSubareaId}">
                                 <td>${subarea}</td>
                                 <td>
-                                    <button class="btn btn-light-primary updateSubarea" id-subarea = "${areaId}">
+                                    <button class="btn btn-light-primary updateSubarea" id-subarea = "${nuevaSubareaId}">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </button>
-                                    <button class="btn btn-light-primary deleteSubarea" id-subarea = "${areaId}">
+                                    <button class="btn btn-light-primary deleteSubarea" id-subarea = "${nuevaSubareaId}">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </td>
@@ -175,10 +179,10 @@ createSubareaBtn.addEventListener("click", () => {
         newRow.innerHTML = `
             <td>${subarea}</td>
             <td>
-                <button class="btn btn-light-primary updateSubarea" id-subarea = "${areaId}">
+                <button class="btn btn-light-primary updateSubarea" id-subarea = "${nuevaSubareaId}">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </button>
-                <button class="btn btn-light-primary deleteSubarea" id-subarea = "${areaId}">
+                <button class="btn btn-light-primary deleteSubarea" id-subarea = "${nuevaSubareaId}">
                     <i class="fa-solid fa-trash"></i>
                 </button>
             </td>
@@ -379,6 +383,25 @@ const consultarSubareas = (idArea) => {
             })
             .catch(function (error) {
                 reject(error);
+            });
+    });
+};
+
+const createSubarea = (areaId, subarea) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .post("https://buzon-sugerencias.bo/create-subarea", {
+                headers: {
+                    "X-CSRF-TOKEN": _token,
+                },
+                areaId,
+                subarea,
+            })
+            .then((res) => {
+                resolve(res.data.subareaId);
+            })
+            .catch((err) => {
+                reject(err);
             });
     });
 };
