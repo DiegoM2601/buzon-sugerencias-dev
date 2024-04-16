@@ -55,7 +55,7 @@ class HomeController extends Controller
         }
 
         //comprobar el estado de los registros
-        $query->where("deleted", 0);
+        // $query->where("deleted", 0);
 
         $suggestions = $query->paginate(5);
 

@@ -26,8 +26,9 @@
     <script src="https://kit.fontawesome.com/5ff3d2d8e3.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <link rel="stylesheet" href="{{ asset('css/complementos.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('css/sugerencias.css') }}"> --}}
 
+    @yield('estilos-css')
 
 </head>
 

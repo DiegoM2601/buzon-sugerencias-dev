@@ -14,6 +14,10 @@
     </ul>
 @endsection
 
+@section('estilos-css')
+    <link rel="stylesheet" href="{{ asset('css/sugerencias.css') }}">
+@endsection
+
 @section('content-main')
     <div class="content flex-row-fluid" id="kt_content">
         <div class="card card-page">

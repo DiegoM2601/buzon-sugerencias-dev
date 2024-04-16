@@ -1,0 +1,39 @@
+.truncate {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* * tabla sugerencias */
+#table-suggestions td {
+    height: 7em;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#kt_permissions_table tbody tr td:nth-child(8) {
+    vertical-align: top !important;
+    text-align: start !important;
+    /* background: green; */
+}
+
+#kt_permissions_table tbody tr td:nth-child(11) button {
+    margin-top: 1.5em !important;
+    margin-bottom: 1.5em !important;
+}
+
+#alerta-updateSuggestion {
+    display: none;
+}
+
+.deleted-row {
+    color: #c4c4c4 !important;
+}
+
+#table-suggestions > table > thead > tr {
+    text-align: center !important;
+    /* background-color: green !important; */
+}

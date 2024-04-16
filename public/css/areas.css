@@ -13,7 +13,6 @@
 #alerta-updateSuggestion {
     display: none;
 }
-
 /* Definir la transición de la rotación */
 .rotate {
     transition: transform 0.2s linear;
