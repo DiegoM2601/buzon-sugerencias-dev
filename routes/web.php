@@ -50,6 +50,7 @@ Route::get('/google/callback', [App\Http\Controllers\GoogleLoginController::clas
 // ! MIS RUTAS
 Route::post('/update-suggestion', [App\Http\Controllers\HomeController::class, 'updateSuggestion'])->name("updateSuggestion");
 Route::post('/delete-register', [App\Http\Controllers\HomeController::class, 'deleteSuggestion'])->name("deleteSuggestion");
+Route::post('/undo-delete-register', [App\Http\Controllers\HomeController::class, 'undoDeleteSuggestion']);
 Route::get('/get-suggestion/{id}', [App\Http\Controllers\HomeController::class, 'getSuggestion'])->name("getSuggestion");
 Route::get('/get-subareas/{id}', [App\Http\Controllers\HomeController::class, 'getSubareas'])->name("getSubareas");
 Route::post('/update-subarea', [App\Http\Controllers\AreasController::class, 'updateSubarea']);

@@ -98,7 +98,7 @@
                             <span class="badge badge-secondary">INACTIVO</span>
                         </td>
                         <td class="d-flex bd-highlight">
-                            <button class="btn btn-light-primary updateRegisterBtn m-1"
+                            <button class="btn btn-light-primary restoreRegisterBtn m-1"
                                 id-suggestion = "{{ $s->id }}"><i class="fa-solid fa-arrows-rotate"></i></button>
                         </td>
                     </tr>

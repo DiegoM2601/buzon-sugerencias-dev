@@ -189,7 +189,7 @@
                                         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
                                         aria-hidden="true">
                                         <div class="modal-dialog modal-xl">
-                                            <div class="modal-content">
+                                            <div class="modal-content ">
                                                 <div class="modal-header">
                                                     <h1 class="modal-title fs-5" id="staticBackdropLabel">Actualizar
                                                         Registro
@@ -201,28 +201,6 @@
                                                     <input type="hidden" id = "pruebaVariable">
                                                     <div style = "width: 100%; padding: 1em;">
                                                         <div class="mb-3">
-                                                            {{-- <label>Sede</label>
-                                                                <select class="form-select" data-control="select2">
-                                                                    <option value="LPZ">
-                                                                        La Paz</option>
-                                                                    <option value="SCZ">
-                                                                        Santa Cruz</option>
-                                                                    <option value="CBB">
-                                                                        Cochabamba</option>
-                                                                    <option value="EAT">
-                                                                        El Alto</option>
-                                                                </select> --}}
-                                                            {{-- <select class="form-select form-select-solid"
-                                                                    data-control="select2"
-                                                                    data-placeholder="Select an option"
-                                                                    data-hide-search="true" id = "ejemploEjemplo">
-                                                                    <option></option>
-                                                                    <option value="1">Option 1</option>
-                                                                    <option value="2">Option 2</option>
-                                                                    <option value="3">Option 3</option>
-                                                                    <option value="4">Option 4</option>
-                                                                    <option value="5">Option 5</option>
-                                                                </select> --}}
                                                             <label>Sede</label>
                                                             <select disabled class="form-select">
                                                                 <option value="LPZ">
@@ -315,26 +293,6 @@
                                                             <div id = "alerta-updateSuggestion" role="alert">
                                                             </div>
                                                         </div>
-
-
-                                                        {{-- <div
-                                                            style = "background: green; padding: 2em; width: 100px; flex-grow: 1.5;">
-                                                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                                                Placeat
-                                                                accusantium quos tempora sint a delectus officia voluptates
-                                                                aliquid, itaque ut ducimus maxime, facilis molestias ad
-                                                                incidunt
-                                                                soluta tenetur dolores fugit.</p>
-                                                        </div>
-                                                        <div
-                                                            style = "background: red; padding: 2em; width: 100px; flex-grow: 1;">
-                                                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                                                Placeat
-                                                                accusantium quos tempora sint a delectus officia voluptates
-                                                                aliquid, itaque ut ducimus maxime, facilis molestias ad
-                                                                incidunt
-                                                                soluta tenetur dolores fugit.</p>
-                                                        </div> --}}
                                                     </div>
                                                     <div style = "width: 100%; padding: 1em;">
                                                         <div class="mb-3">
@@ -372,9 +330,12 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     {{-- <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Reestablecer</button> --}}
+                                                        data-bs-dismiss="modal">REESTABLECER</button> --}}
                                                     <button type="button" class="btn btn-primary"
                                                         id = "updateSuggestionBtn">ACTUALIZAR</button>
+                                                    <button type="button" class="btn btn-primary"
+                                                        id = "undoDeleteBtn">REESTABLECER &nbsp;&nbsp;&nbsp;<i
+                                                            class="fas fa-undo fs-4"></i></button>
                                                 </div>
                                             </div>
                                         </div>

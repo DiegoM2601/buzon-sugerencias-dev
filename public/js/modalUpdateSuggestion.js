@@ -30,7 +30,19 @@ document
             prepararModal(
                 e.target.classList.contains("updateRegisterBtn")
                     ? e.target
-                    : e.target.parentNode
+                    : e.target.parentNode,
+                true
+            );
+        }
+        if (
+            e.target.classList.contains("restoreRegisterBtn") ||
+            e.target.parentNode.classList.contains("restoreRegisterBtn")
+        ) {
+            prepararModal(
+                e.target.classList.contains("restoreRegisterBtn")
+                    ? e.target
+                    : e.target.parentNode,
+                false
             );
         }
 
@@ -47,8 +59,9 @@ document
     });
 
 // ! ************************************************************ MODAL EDITAR
-const prepararModal = async (e) => {
+const prepararModal = async (e, active) => {
     let suggestion = await consultarSuggestion(e.getAttribute("id-suggestion"));
+    let modal = document.querySelector("#modalUpdateSuggestion");
 
     let values = [
         suggestion.sede,
@@ -61,11 +74,9 @@ const prepararModal = async (e) => {
         suggestion.created_at,
     ];
 
-    let elementosSelect = Array.from(
-        document
-            .querySelector("#modalUpdateSuggestion")
-            .querySelectorAll("select")
-    );
+    let elementosSelect = Array.from(modal.querySelectorAll("select"));
+
+    let footerBtns = modal.querySelectorAll(".modal-footer button");
 
     for (let i = 0; i < 6; i++) {
         if (elementosSelect[i].querySelector(`option[value="${values[i]}"]`)) {
@@ -148,61 +159,37 @@ const prepararModal = async (e) => {
         );
     }
 
-    // elementosSelect[elementosSelect.length - 1].innerHTML = "";
+    // ! OPCIONES ALTERNAS ENTRE FORMULARIO DE EDICION Y FORMULARIO DE REESTABLECIMIENTO
+    // Encabezado
+    modal.querySelector(".modal-header h1").innerText = "Actualizar Registro";
 
-    console.log(subareas);
+    // BOTONES
+    footerBtns[0].style.display = "block";
+    footerBtns[1].style.display = "none";
+
+    // Campos editables del formulario
+    elementosSelect[1].disabled = false;
+    elementosSelect[5].disabled = false;
+    elementosSelect[6].disabled = false;
+
+    document.getElementById("restoreSuggestionBtn").style.display = "block";
+
+    if (!active) {
+        // Desactivar todos los campos
+        elementosSelect.forEach((e) => {
+            e.disabled = true;
+        });
+
+        footerBtns[0].style.display = "none";
+        footerBtns[1].style.display = "block";
+
+        document.getElementById("restoreSuggestionBtn").style.display = "none";
+
+        modal.querySelector(".modal-header h1").innerText =
+            "Reestablecer Registro";
+    }
 
     $("#modalUpdateSuggestion").modal("show");
-
-    // elementosSelect.forEach((select, i) => {});
-
-    // let values = [];
-    // let elementosSelect = [];
-
-    // e.parentNode.parentNode
-    //     .querySelectorAll("td:not(:last-child)")
-    //     .forEach((element) => {
-    //         values.push(element.innerText);
-    //     });
-
-    // document
-    //     .querySelector(
-    //         "#modalUpdateSuggestion .modal-dialog .modal-content .modal-body div"
-    //     )
-    //     .querySelectorAll("select")
-    //     .forEach((select) => elementosSelect.push(select));
-
-    // elementosSelect.forEach((elementoSelect, i) => {
-    //     if (i === elementosSelect.length - 1) {
-    //         elementoSelect.querySelector(
-    //             `option[value="${values[i]}"]`
-    //         ).selected = true;
-    //     }
-    //     if (elementoSelect.querySelector(`option[value="${values[i]}"]`)) {
-    //         elementoSelect.querySelector(
-    //             `option[value="${values[i]}"]`
-    //         ).selected = true;
-    //         elementoSelect.parentNode.style.display = "block";
-    //     }
-    //     if (!elementoSelect.querySelector(`option[value="${values[i]}"]`)) {
-    //         elementoSelect.parentNode.style.display = "none";
-    //         elementoSelect.selectedIndex = -1;
-    //     }
-    // });
-
-    // console.log(values);
-    // console.log(elementosSelect);
-
-    // btnpulsado = e;
-    // idSuggestion = e.getAttribute("id-suggestion");
-
-    // document.getElementById("kt_td_picker_basic_input").value =
-    //     values[values.length - 1];
-
-    // document.getElementById("suggestionTextarea").value =
-    //     values[values.length - 2];
-
-    // $("#modalUpdateSuggestion").modal("show");
 };
 
 // * poblar dropdown en tiempo real
@@ -294,18 +281,8 @@ const actualizarRegistros = () => {
         document.getElementById("kt_td_picker_basic_input").value
     );
 
-    // actualizar frontend
-    // btnpulsado.parentNode.parentNode
-    //     .querySelectorAll("td:not(:last-child)")
-    //     .forEach((td, i) => {
-    //         td.innerText = valoresActualizados[i];
-    //     });
-
     valoresSubida = valoresActualizados.map((v) => (v === "" ? null : v));
     console.log(valoresSubida);
-
-    // $("#modalUpdateSuggestion").modal("hide");
-    // $("#modalUpdateSuggestion2").modal("show");
 
     axios
         .post("https://buzon-sugerencias.bo/update-suggestion", {
@@ -317,24 +294,65 @@ const actualizarRegistros = () => {
             console.log("Respuesta del servidor:", response.data);
 
             //! actualizar frontend
+
             //prettier-ignore
-            btnpulsado.parentNode.parentNode.innerHTML =
-            `<td>${response.data.sede}</td>
+            btnpulsado.parentNode.parentNode.innerHTML = `
+            <td>${response.data.sede}</td>
             <td>${response.data.categoria}</td>
             <td>${response.data.by_}</td>
             <td>${response.data.carrera === null ? "" : response.data.carrera}</td>
             <td>${response.data.semestre === null ? "" : response.data.semestre}</td>
             <td>${response.data.objeto_area.area}</td>
             <td>${response.data.subarea ? response.data.subarea.subarea : `<span class="badge badge-primary">Sin Asignar</span>`}</td>
-            <td class = "truncate">${response.data.sugerencia}</td>
+            <td>
+                <p class = "truncate">${response.data.sugerencia}</p>
+            </td>
             <td>${fechaLegible(response.data.created_at)}</td>
+            <td><span class="badge badge-success">ACTIVO</span></td>
             <td class="d-flex bd-highlight">
-            <button class="btn btn-light-primary updateRegisterBtn m-1"
-            id-suggestion = "${response.data.id}"><i class="fa-solid fa-pen-to-square"></i></button>
-            <button class="btn btn-light-primary deleteRegisterBtn m-1"
-            id-suggestion = "${response.data.id}"><i class="fa-solid fa-trash"></i></button>
-            </td>`;
+                <button class="btn btn-light-primary updateRegisterBtn m-1" id-suggestion = "${response.data.id}">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button class="btn btn-light-primary deleteRegisterBtn m-1" id-suggestion = "${response.data.id}">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </td>
+            `;
 
+            toast.show();
+        })
+        .catch((error) => {
+            console.error("Error al realizar la solicitud:", error);
+        });
+};
+
+const deshacerEliminacion = () => {
+    axios
+        .post("https://buzon-sugerencias.bo/undo-delete-register", {
+            idSuggestion,
+            _token,
+        })
+        .then((response) => {
+            console.log("Respuesta del servidor:", response.data);
+
+            let deletedRow = btnpulsado.parentNode.parentNode;
+            deletedRow.classList.toggle("deleted-row");
+            let deletedColumns = deletedRow.querySelectorAll("td");
+
+            //prettier-ignore
+            deletedColumns[deletedColumns.length - 1].innerHTML = `
+            <button class="btn btn-light-primary updateRegisterBtn m-1" id-suggestion = "${idSuggestion}">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button class="btn btn-light-primary deleteRegisterBtn m-1" id-suggestion = "${idSuggestion}">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            `;
+            deletedColumns[
+                deletedColumns.length - 2
+            ].innerHTML = `<span class="badge badge-success">ACTIVO</span>`;
+
+            $("#modalUpdateSuggestion").modal("hide");
             toast.show();
         })
         .catch((error) => {
@@ -354,6 +372,11 @@ document
 document.getElementById("confirmUpdate").addEventListener("click", () => {
     actualizarRegistros();
     $("#modalUpdateSuggestion2").modal("hide");
+});
+
+// * Deshacer la eliminacion del registro
+document.getElementById("undoDeleteBtn").addEventListener("click", () => {
+    deshacerEliminacion();
 });
 
 // * Restaurar modal a valores originales
@@ -379,7 +402,22 @@ const eliminarRegistros = () => {
         })
         .then(function (response) {
             console.log(response.data);
-            btnpulsado.parentNode.parentNode.remove();
+            // btnpulsado.parentNode.parentNode.remove();
+
+            let deletedRow = btnpulsado.parentNode.parentNode;
+            deletedRow.classList.toggle("deleted-row");
+            let deletedColumns = deletedRow.querySelectorAll("td");
+
+            //prettier-ignore
+            deletedColumns[deletedColumns.length - 1].innerHTML = `
+            <button class="btn btn-light-primary restoreRegisterBtn m-1 table-suggestions-btn" id-suggestion = "${btnpulsado.getAttribute("id-suggestion")}">
+                <i class="fa-solid fa-arrows-rotate"></i>
+            </button> 
+            `;
+            deletedColumns[
+                deletedColumns.length - 2
+            ].innerHTML = `<span class="badge badge-secondary">INACTIVO</span>`;
+
             toastDelete.show();
         })
         .catch(function (error) {

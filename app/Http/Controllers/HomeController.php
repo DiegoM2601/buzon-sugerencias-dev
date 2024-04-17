@@ -165,6 +165,14 @@ class HomeController extends Controller
         return response()->json($request->idSuggestion);
     }
 
+    public function undoDeleteSuggestion(Request $request)
+    {
+        $sugerencia = Suggestion::find($request->idSuggestion);
+        $sugerencia->deleted = 0;
+        $sugerencia->save();
+        return response()->json($request->idSuggestion);
+    }
+
     public function pruebaEjemplo($id)
     {
         // FUNCIONA
