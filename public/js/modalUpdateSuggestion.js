@@ -83,7 +83,7 @@ const prepararModal = async (e, active) => {
 
     // ! poblar formulario
     //elementos dropdown: sede, categoria, particpante, carrera y semestre
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 5; i++) {
         if (elementosSelect[i].querySelector(`option[value="${values[i]}"]`)) {
             elementosSelect[i].querySelector(
                 `option[value="${values[i]}"]`
@@ -102,6 +102,67 @@ const prepararModal = async (e, active) => {
     // textarea comentario
     document.getElementById("suggestionTextarea").value =
         values[values.length - 2];
+
+    // ! areas
+    let areas = await consultarAreas();
+    let areasActivas = areas.filter((area) => {
+        if (area.deleted === 0) {
+            return area;
+        }
+    });
+
+    let estadoArea = areasActivas.find((obj) => obj.id === suggestion.area_id);
+
+    if (areasActivas.length > 0 && estadoArea) {
+        let areasFormato = areasActivas
+            .map((area) => {
+                return `<option value = "${area.id}">${area.area}</option>`;
+            })
+            .join("");
+
+        elementosSelect[elementosSelect.length - 2].innerHTML = areasFormato;
+
+        elementosSelect[elementosSelect.length - 2].querySelector(
+            `option[value="${suggestion.area_id}"]`
+        ).selected = true;
+    } else if (areasActivas.length > 0 && !estadoArea) {
+        let areasFormato = areasActivas
+            .map((area) => {
+                return `<option value = "${area.id}">${area.area}</option>`;
+            })
+            .join("");
+
+        elementosSelect[elementosSelect.length - 2].innerHTML = areasFormato;
+
+        // ! añadir una nueva opcion con el elemento deprecado
+        let ref =
+            elementosSelect[elementosSelect.length - 2].querySelector(
+                "option:last-child"
+            );
+
+        var areaIndex = areas.findIndex(
+            (area) => area.id === suggestion.area_id
+        );
+
+        let newOption = document.createElement("option");
+        newOption.value = areas[areaIndex].id;
+        newOption.classList.add("text-danger");
+        newOption.innerText = `${areas[areaIndex].area} (Área Deprecada)`;
+
+        insertAfter(ref, newOption);
+
+        newOption.selected = true;
+    } else if (areasActivas.length === 0 && !estadoArea) {
+        let areaInactiva = areas.find((obj) => obj.id === suggestion.area_id);
+
+        // poblar dropdown con unicamente 2 opciones
+        // prettier-ignore
+        elementosSelect[elementosSelect.length - 2].innerHTML = `
+        <option class = "text-danger" value = "${areaInactiva.id}" selected>${areaInactiva.area} (Área Deprecada)</option>
+        `;
+
+        console.log("ejecutado 3er if");
+    }
 
     // ! subareas
 
@@ -232,7 +293,7 @@ const prepararModal = async (e, active) => {
 
             mostrarAlerta(
                 alertaUpdateSuggesion,
-                "El área seleccionada aún no cuenta con subáreas disponibles.",
+                "El área seleccionada no cuenta con subáreas disponibles.",
                 "danger"
             );
         }
@@ -277,7 +338,13 @@ document
     .addEventListener("change", async (e) => {
         console.log(e.target.value);
 
+        // mostrar areas activas unicamente
         let subareas = (await consultarSubareas(e.target.value))
+            .filter((subarea) => {
+                if (subarea.deleted === 0) {
+                    return subarea;
+                }
+            })
             .map((subarea) => {
                 return `<option value = "${subarea.id}">${subarea.subarea}</option>`;
             })
@@ -296,7 +363,7 @@ document
             subareasSelect.selectedIndex = 0;
             mostrarAlerta(
                 alertaUpdateSuggesion,
-                "El área seleccionada aún no cuenta con subáreas asignadas.",
+                "El área seleccionada no cuenta con subáreas disponibles.",
                 "danger"
             );
         }

@@ -278,21 +278,12 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label>Área</label>
-                                                            <select class="form-select" id = "modalUpdateSelectArea">
-                                                                @foreach ($areas as $area)
-                                                                    <option value="{{ $area->id }}">
-                                                                        {{ $area->area }}</option>
-                                                                @endforeach
-                                                            </select>
+                                                            <select class="form-select"
+                                                                id = "modalUpdateSelectArea"></select>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label>Subárea</label>
-                                                            <select class="form-select">
-                                                                <option value="1">uno</option>
-                                                                <option value="2">dos</option>
-                                                                <option value="3">tres</option>
-                                                                <option value="4">cuatro</option>
-                                                            </select>
+                                                            <select class="form-select"></select>
                                                         </div>
 
                                                         <div class="mb-3">
