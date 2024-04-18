@@ -57,6 +57,7 @@ Route::get('/get-areas', [App\Http\Controllers\HomeController::class, 'getAreas'
 Route::post('/update-subarea', [App\Http\Controllers\AreasController::class, 'updateSubarea']);
 Route::post('/create-subarea', [App\Http\Controllers\AreasController::class, 'createSubarea']);
 Route::post('/delete-subarea', [App\Http\Controllers\AreasController::class, 'deleteSubarea']);
+Route::post('/undo-delete-area', [App\Http\Controllers\AreasController::class, 'undoDelete'])->name("areas.undo-delete");
 
 Route::get('/registro', function () {
     return view('auth.register');

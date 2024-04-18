@@ -90,3 +90,7 @@
 .hide-row {
     display: none;
 }
+
+.deleted-row {
+    color: #c4c4c4 !important;
+}

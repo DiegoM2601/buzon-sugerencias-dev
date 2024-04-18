@@ -17,7 +17,7 @@ class AreasController extends Controller
      */
     public function index()
     {
-        $areas = ModelsArea::where("deleted", 0)->get();
+        $areas = ModelsArea::all();
         return view('areas.area', [
             'areas' => $areas
         ]);
@@ -145,6 +145,16 @@ class AreasController extends Controller
             $subarea->save();
         }
 
+        return redirect()->back();
+    }
+
+    public function undoDelete(Request $request)
+    {
+        $area = ModelsArea::find($request->areaId);
+        $area->deleted = 0;
+        $area->save();
+
+        // las subareas permenecen desactivadas
         return redirect()->back();
     }
 }

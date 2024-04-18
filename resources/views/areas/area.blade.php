@@ -92,36 +92,42 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($areas as $a)
-                                                        {{-- <tr>
-                                                            <td>{{ $a->id }}</td>
-                                                            <td>{{ $a->area }}</td>
-                                                            <td>
-                                                                <button class="btn btn-warning" data-bs-toggle="modal"
-                                                                    data-bs-target="#modalUpdate{{ $a->id }}"><i
-                                                                        class="fa-solid fa-pen-to-square"></i></button>
-                                                                <button class="btn btn-danger" data-bs-toggle="modal"
-                                                                    data-bs-target="#modalDelete{{ $a->id }}"><i
-                                                                        class="fa-solid fa-trash"></i></button>
+                                                        @if ($a->deleted == 0)
+                                                            <tr id-area = "{{ $a->id }}">
+                                                                <td>
+                                                                    <a href="#" class = "collapse-subareas"
+                                                                        id-area = "{{ $a->id }}"><i
+                                                                            class="fa-solid fa-chevron-down rotate"></i></a>
+                                                                </td>
+                                                                <td><span
+                                                                        class="badge badge-success">ACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;{{ $a->area }}
+                                                                </td>
+                                                                <td>
+                                                                    <button class="btn btn-light-primary"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#modalUpdate{{ $a->id }}"><i
+                                                                            class="fa-solid fa-pen-to-square"></i></button>
+                                                                    <button class="btn btn-light-primary"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#modalDelete{{ $a->id }}"><i
+                                                                            class="fa-solid fa-trash"></i></button>
+                                                                </td>
+                                                            </tr>
+                                                        @else
+                                                            <tr id-area = "{{ $a->id }}" class = "deleted-row">
+                                                                <td></td>
+                                                                <td><span
+                                                                        class="badge badge-secondary">INACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;{{ $a->area }}
+                                                                </td>
+                                                                <td>
+                                                                    <button class="btn btn-light-primary"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#modalRestore{{ $a->id }}"><i
+                                                                            class="fa-solid fa-arrows-rotate"></i></button>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
 
-                                                            </td>
-                                                        </tr> --}}
-
-                                                        <tr id-area = "{{ $a->id }}">
-                                                            <td>
-                                                                <a href="#" class = "collapse-subareas"
-                                                                    id-area = "{{ $a->id }}"><i
-                                                                        class="fa-solid fa-chevron-down rotate"></i></a>
-                                                            </td>
-                                                            <td>{{ $a->area }}</td>
-                                                            <td> <button class="btn btn-light-primary"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#modalUpdate{{ $a->id }}"><i
-                                                                        class="fa-solid fa-pen-to-square"></i></button>
-                                                                <button class="btn btn-light-primary" data-bs-toggle="modal"
-                                                                    data-bs-target="#modalDelete{{ $a->id }}"><i
-                                                                        class="fa-solid fa-trash"></i></button>
-                                                            </td>
-                                                        </tr>
 
                                                         <!--ModalUpdate-->
                                                         <div class="modal fade" tabindex="-1"
@@ -214,6 +220,52 @@
                                                                                     data-bs-dismiss="modal">Cerrar</button>
                                                                                 <button type="submit"
                                                                                     class="btn btn-primary">Eliminar</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        {{-- MODAL REESTABLECER --}}
+                                                        <div class="modal fade" tabindex="-1"
+                                                            id="modalRestore{{ $a->id }}">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h3 class="modal-title">Reestablecer área</h3>
+
+                                                                        <!--begin::Close-->
+                                                                        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
+                                                                            data-bs-dismiss="modal" aria-label="Close">
+                                                                            <i class="ki-duotone ki-cross fs-1"><span
+                                                                                    class="path1"></span><span
+                                                                                    class="path2"></span></i>
+                                                                        </div>
+                                                                        <!--end::Close-->
+                                                                    </div>
+
+                                                                    <div class="modal-body">
+                                                                        <form action="{{ route('areas.undo-delete') }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            @method('POST')
+                                                                            <input type="hidden"
+                                                                                value = "{{ $a->id }}"
+                                                                                name = "areaId">
+                                                                            <div class="mb-10">
+                                                                                <label for="exampleFormControlInput1"
+                                                                                    class="form-label">Estás seguro de
+                                                                                    reestablecer
+                                                                                    <strong>{{ $a->area }}</strong></label>
+
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                    class="btn btn-light"
+                                                                                    data-bs-dismiss="modal">Cerrar</button>
+                                                                                <button type="submit"
+                                                                                    class="btn btn-primary">Reestablecer</button>
                                                                             </div>
                                                                         </form>
                                                                     </div>
