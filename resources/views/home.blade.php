@@ -121,10 +121,16 @@
                                                     <select type="search" name="search_area" id="search_area"
                                                         class="form-select selectSearchParam" data-placeholder="Todas">
                                                         <option value="0">Seleccionar Área</option>
+                                                        {{-- ! Incluir en la busqueda areas que hayan sido eliminadas lógicamente --}}
                                                         @foreach ($areas as $area)
-                                                            <option value="{{ $area->area }}"
-                                                                {{ old('search_area', $searchParams['area']) == $area->area ? 'selected' : '' }}>
-                                                                {{ $area->area }}</option>
+                                                            @if ($area->deleted == 0)
+                                                                <option value="{{ $area->area }}">{{ $area->area }}
+                                                                </option>
+                                                            @else
+                                                                <option class = "text-danger" value="{{ $area->area }}">
+                                                                    {{ $area->area }} (Área Deprecada)
+                                                                </option>
+                                                            @endif
                                                         @endforeach
                                                     </select>
                                                 </th>

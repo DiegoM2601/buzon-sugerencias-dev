@@ -60,7 +60,10 @@ document
 
 // ! ************************************************************ MODAL EDITAR
 const prepararModal = async (e, active) => {
-    let suggestion = await consultarSuggestion(e.getAttribute("id-suggestion"));
+    btnpulsado = e;
+    idSuggestion = e.getAttribute("id-suggestion");
+
+    let suggestion = await consultarSuggestion(idSuggestion);
     let modal = document.querySelector("#modalUpdateSuggestion");
 
     let values = [
@@ -78,85 +81,161 @@ const prepararModal = async (e, active) => {
 
     let footerBtns = modal.querySelectorAll(".modal-footer button");
 
+    // ! poblar formulario
+    //elementos dropdown: sede, categoria, particpante, carrera y semestre
     for (let i = 0; i < 6; i++) {
         if (elementosSelect[i].querySelector(`option[value="${values[i]}"]`)) {
             elementosSelect[i].querySelector(
                 `option[value="${values[i]}"]`
             ).selected = true;
+
             elementosSelect[i].parentNode.style.display = "block";
         } else {
             elementosSelect[i].parentNode.style.display = "none";
             elementosSelect[i].selectedIndex = -1;
         }
     }
-
-    btnpulsado = e;
-    idSuggestion = e.getAttribute("id-suggestion");
-
+    // input fecha
     document.getElementById("kt_td_picker_basic_input").value = fechaLegible(
         values[values.length - 1]
     );
-
+    // textarea comentario
     document.getElementById("suggestionTextarea").value =
         values[values.length - 2];
 
-    // TODO: Validar la existencia de subareas
-    // let subareas = (await consultarSubareas(8))
-    //     .map((subarea) => {
-    //         return `<option value = "${subarea.id}">${subarea.subarea}</option>`;
-    //     })
-    //     .join("");
-    let subareas = (await consultarSubareas(suggestion.area_id))
-        .map((subarea) => {
-            return `<option value = "${subarea.id}">${subarea.subarea}</option>`;
-        })
-        .join("");
+    // ! subareas
 
-    // * problar dropdown
-    if (subareas.length > 0) {
-        // poblar dropdown son subareas
-        elementosSelect[elementosSelect.length - 1].innerHTML =
-            `<option value="">Sin Designar</option>` + subareas;
-        // mostrar dropdown
-        elementosSelect[elementosSelect.length - 1].style.display = "block";
-        // desctivar alerta por defecto
-        alertaUpdateSuggesion.style.display = "none";
+    if (suggestion.subarea_id) {
+        // * poblar drowpdown
+        let subareas = await consultarSubareas(suggestion.area_id);
 
-        // * seleccionar subarea
-        if (suggestion.subarea_id) {
-            // seleccionar option
+        let subareasActivas = subareas.filter((subarea) => {
+            if (subarea.deleted === 0) {
+                return subarea;
+            }
+        });
+
+        // * comprobar si la subarea esta activa o no
+        // * si subarea tiene un valor diferente de null o undefined eso quiero decir que la subarea esta activa
+        let estadoSubarea = subareasActivas.find(
+            (obj) => obj.id === suggestion.subarea_id
+        );
+
+        if (subareasActivas.length > 0 && estadoSubarea) {
+            let subareasFormato = subareasActivas
+                .map((subarea) => {
+                    return `<option value = "${subarea.id}">${subarea.subarea}</option>`;
+                })
+                .join("");
+
+            // poblar dropdown son subareas
+            elementosSelect[elementosSelect.length - 1].innerHTML =
+                `<option value="">Sin Designar</option>` + subareasFormato;
+            // mostrar dropdown
+            elementosSelect[elementosSelect.length - 1].style.display = "block";
+
+            // ! seleccionar subarea
             elementosSelect[elementosSelect.length - 1].querySelector(
                 `option[value="${suggestion.subarea_id}"]`
             ).selected = true;
-            //desactivar alerta
+
+            // desctivar alerta por defecto
             alertaUpdateSuggesion.style.display = "none";
-        } else {
-            //seleccionar option nulo si la sugerencia no cuenta todavia con un subarea_id
-            elementosSelect[elementosSelect.length - 1].selectedIndex = 0;
-            // alertaUpdateSuggesion.innerText =
-            //     "Aún no se ha asiganado una subárea al presente reclamo/sugerencia.";
-            // alertaUpdateSuggesion.className = "";
-            // alertaUpdateSuggesion.classList.add("alert", "alert-primary");
-            // alertaUpdateSuggesion.style.display = "block";
+        } else if (subareasActivas.length > 0 && !estadoSubarea) {
+            let subareasFormato = subareasActivas
+                .map((subarea) => {
+                    return `<option value = "${subarea.id}">${subarea.subarea}</option>`;
+                })
+                .join("");
+
+            // poblar dropdown son subareas
+            elementosSelect[elementosSelect.length - 1].innerHTML =
+                `<option value="">Sin Designar</option>` + subareasFormato;
+            // mostrar dropdown
+            elementosSelect[elementosSelect.length - 1].style.display = "block";
+
+            // ! añadir una nueva opcion con el elemento deprecado
+            let ref =
+                elementosSelect[elementosSelect.length - 1].querySelector(
+                    "option:last-child"
+                );
+
+            var subareaIndex = subareas.findIndex(
+                (subarea) => subarea.id === suggestion.subarea_id
+            );
+
+            let newOption = document.createElement("option");
+            newOption.value = subareas[subareaIndex].id;
+            newOption.classList.add("text-danger");
+            newOption.innerText = `${subareas[subareaIndex].subarea} (Subárea Deprecada)`;
+
+            insertAfter(ref, newOption);
+
+            newOption.selected = true;
+
+            mostrarAlerta(
+                alertaUpdateSuggesion,
+                "El presente registro está utilizando datos que han sido dados de baja.",
+                "warning"
+            );
+        } else if (subareasActivas.length === 0 && !estadoSubarea) {
+            let subareaInactiva = subareas.find(
+                (obj) => obj.id === suggestion.subarea_id
+            );
+
+            // poblar dropdown con unicamente 2 opciones
+            // prettier-ignore
+            elementosSelect[elementosSelect.length - 1].innerHTML = `
+            <option value="">Sin Designar</option>
+            <option class = "text-danger" value = "${subareaInactiva.id}" selected>${subareaInactiva.subarea} (Subárea Deprecada)</option>
+            `;
+            // mostrar dropdown
+            elementosSelect[elementosSelect.length - 1].style.display = "block";
+
+            mostrarAlerta(
+                alertaUpdateSuggesion,
+                "El presente registro está utilizando datos que han sido dados de baja.",
+                "warning"
+            );
+        }
+    }
+    // ! la sugerencia no cuenta con ninguna subarea asignada, no cuenta ni con una subarea activa ni tampoco con una subarea inactiva, ninguna de las dos
+    else {
+        // * poblar el dropwdown con subareas activas unicamente
+        let subareas = (await consultarSubareas(suggestion.area_id)).filter(
+            (subarea) => {
+                if (subarea.deleted === 0) {
+                    return subarea;
+                }
+            }
+        );
+
+        if (subareas.length > 0) {
+            let subareasFormato = subareas
+                .map((subarea) => {
+                    return `<option value = "${subarea.id}">${subarea.subarea}</option>`;
+                })
+                .join("");
+
+            // poblar dropdown son subareas
+            elementosSelect[elementosSelect.length - 1].innerHTML =
+                `<option value="">Sin Designar</option>` + subareasFormato;
+
             mostrarAlerta(
                 alertaUpdateSuggesion,
                 "Aún no se ha asiganado una subárea al presente reclamo/sugerencia.",
                 "primary"
             );
-        }
-    } else {
-        elementosSelect[elementosSelect.length - 1].style.display = "none";
-        elementosSelect[elementosSelect.length - 1].selectedIndex = 0;
+        } else {
+            elementosSelect[elementosSelect.length - 1].style.display = "none";
+            elementosSelect[elementosSelect.length - 1].selectedIndex = 0;
 
-        // alertaUpdateSuggesion.className = "";
-        // alertaUpdateSuggesion.classList.add("alert", "alert-danger");
-        // alertaUpdateSuggesion.innerText = "sin subareas";
-        // alertaUpdateSuggesion.style.display = "block";
-        mostrarAlerta(
-            alertaUpdateSuggesion,
-            "El área seleccionada aún no cuenta con subáreas asignadas.",
-            "danger"
-        );
+            mostrarAlerta(
+                alertaUpdateSuggesion,
+                "El área seleccionada aún no cuenta con subáreas disponibles.",
+                "danger"
+            );
+        }
     }
 
     // ! OPCIONES ALTERNAS ENTRE FORMULARIO DE EDICION Y FORMULARIO DE REESTABLECIMIENTO
@@ -234,6 +313,23 @@ const consultarSuggestion = (id) => {
     return new Promise((resolve, reject) => {
         axios
             .get("https://buzon-sugerencias.bo/get-suggestion/" + id, {
+                headers: {
+                    "X-CSRF-TOKEN": _token,
+                },
+            })
+            .then(function (response) {
+                resolve(response.data);
+            })
+            .catch(function (error) {
+                reject(error);
+            });
+    });
+};
+
+const consultarAreas = () => {
+    return new Promise((resolve, reject) => {
+        axios
+            .get("https://buzon-sugerencias.bo/get-areas", {
                 headers: {
                     "X-CSRF-TOKEN": _token,
                 },
@@ -450,4 +546,7 @@ function fechaLegible(fecha) {
         segundo.toString().padStart(2, "0");
 
     return `${formato1} ${formato2}`;
+}
+function insertAfter(referenceNode, newNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }

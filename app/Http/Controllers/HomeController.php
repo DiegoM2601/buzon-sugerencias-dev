@@ -73,10 +73,16 @@ class HomeController extends Controller
         return response()->json($sugerencia);
     }
 
+    //TODO: Trasladar una copia de la siguiente funcion a AreaController y modificar el crud areas frontend para usar esa funcion
     public function getSubareas($idArea)
     {
-        $subareas = Sub_area::where('area_id', $idArea)->where('deleted', 0)->get();
+        $subareas = Sub_area::where('area_id', $idArea)->get();
         return response()->json($subareas);
+    }
+    public function getAreas()
+    {
+        $areas = Area::all();
+        return response()->json($areas);
     }
 
     public function export(Request $request)

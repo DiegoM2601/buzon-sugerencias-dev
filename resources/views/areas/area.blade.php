@@ -299,11 +299,6 @@
                                                 </div>
                                                 <div class="modal-body fs-5">
                                                     ¿Estás seguro de eliminar el registro?
-
-                                                    <div class="alert alert-warning mt-3" role="alert">
-                                                        Todas las sugerencias/reclamos que tengan asignadas esta subárea se
-                                                        modificarán.
-                                                    </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button id="deleteSubareaBtn" class="btn btn-primary">SÍ</button>

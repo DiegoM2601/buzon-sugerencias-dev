@@ -53,6 +53,7 @@ Route::post('/delete-register', [App\Http\Controllers\HomeController::class, 'de
 Route::post('/undo-delete-register', [App\Http\Controllers\HomeController::class, 'undoDeleteSuggestion']);
 Route::get('/get-suggestion/{id}', [App\Http\Controllers\HomeController::class, 'getSuggestion'])->name("getSuggestion");
 Route::get('/get-subareas/{id}', [App\Http\Controllers\HomeController::class, 'getSubareas'])->name("getSubareas");
+Route::get('/get-areas', [App\Http\Controllers\HomeController::class, 'getAreas']);
 Route::post('/update-subarea', [App\Http\Controllers\AreasController::class, 'updateSubarea']);
 Route::post('/create-subarea', [App\Http\Controllers\AreasController::class, 'createSubarea']);
 Route::post('/delete-subarea', [App\Http\Controllers\AreasController::class, 'deleteSubarea']);

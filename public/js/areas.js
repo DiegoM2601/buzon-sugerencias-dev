@@ -214,7 +214,7 @@ deleteSubareaBtn.addEventListener("click", async () => {
 
     document.querySelector(
         "#deleteSubareaToast2 .toast-body"
-    ).innerHTML = `Se han actualizado ${res.onDeleteSuggestions} registros adicionalmente.`;
+    ).innerHTML = `${res.onDeleteSuggestions} sugerencias/reclamos están utilizando esta subárea.`;
     deleteSubareaToast2.show();
 
     row.remove();

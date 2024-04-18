@@ -98,13 +98,12 @@ class AreasController extends Controller
         $subarea->deleted = 1;
         $subarea->save();
 
-        // * configurar las sugerencias enlazadas a esta subarea a null
         $sugerencias = Suggestion::where('subarea_id', $request->subareaId)->get();
 
-        foreach ($sugerencias as $sugerencia) {
-            $sugerencia->subarea_id = null;
-            $sugerencia->save();
-        }
+        // foreach ($sugerencias as $sugerencia) {
+        //     $sugerencia->subarea_id = null;
+        //     $sugerencia->save();
+        // }
 
         return response()->json(["onDeleteSuggestions" => count($sugerencias)]);
     }
@@ -135,24 +134,9 @@ class AreasController extends Controller
     // TODO: Cambiar stated por deleted EN LA BASE DE DATOS
     public function destroy($id)
     {
-        //
-        // $areas = ModelsArea::find($id);
-        // $areas->delete();
-
         $area = ModelsArea::find($id);
         $area->deleted = 1;
         $area->save();
-
-        // configurar area_id = null y subarea_id = null
-        $sugerencias = Suggestion::where('area_id', $id)->get();
-        // dd($sugerencias);
-        foreach ($sugerencias as $sugerencia) {
-            //TODO: En lugar de estblecer el area como nulo, dar de baja directamente la sugerencia?
-            $sugerencia->subarea_id = null;
-            // $sugerencia->area_id = null;
-            $sugerencia->deleted = 1;
-            $sugerencia->save();
-        }
 
         // eliminacion logica de las subareas pertenecientes a este area
         $subareas = Sub_area::where('area_id', $id)->get();
