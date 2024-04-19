@@ -94,3 +94,7 @@
 .deleted-row {
     color: #c4c4c4 !important;
 }
+
+.tr-txt {
+    display: inline !important;
+}

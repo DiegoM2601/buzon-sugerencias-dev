@@ -17,7 +17,9 @@ class AreasController extends Controller
      */
     public function index()
     {
-        $areas = ModelsArea::all();
+        // $areas = ModelsArea::all();
+        // llevar los registros eliminado al final
+        $areas = ModelsArea::orderBy('deleted', 'asc')->get();
         return view('areas.area', [
             'areas' => $areas
         ]);
@@ -105,8 +107,18 @@ class AreasController extends Controller
         //     $sugerencia->save();
         // }
 
-        return response()->json(["onDeleteSuggestions" => count($sugerencias)]);
+        return response()->json(["onDeleteSuggestions" => count($sugerencias), "subarea" => $subarea]);
     }
+
+    public function undoDeleteSubarea(Request $request)
+    {
+        $subarea = Sub_area::find($request->subareaId);
+        $subarea->deleted = 0;
+        $subarea->save();
+
+        return response()->json($subarea);
+    }
+
 
     /**
      * Update the specified resource in storage.

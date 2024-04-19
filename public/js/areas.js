@@ -75,6 +75,14 @@ document.getElementById("table-areas").addEventListener("click", (e) => {
             ? e.target
             : e.target.parentNode;
         $("#modalDeleteSubarea").modal("show");
+    } else if (
+        e.target.classList.contains("restoreSubarea") ||
+        e.target.parentNode.classList.contains("restoreSubarea")
+    ) {
+        btnPulsado = e.target.classList.contains("restoreSubarea")
+            ? e.target
+            : e.target.parentNode;
+        $("#modalRestoreSubarea").modal("show");
     }
 });
 
@@ -84,11 +92,12 @@ const prepararModalUpdateSubarea = (btn) => {
 
     btnPulsado = btn;
 
-    updateSubareaForm[0].value = document
-        .querySelector(".nested-table-parent")
-        .querySelectorAll("td")[1].innerText;
+    updateSubareaForm[0].value = document.querySelector(
+        ".nested-table-parent > td:nth-child(2) p"
+    ).innerText;
+
     updateSubareaForm[1].value =
-        btn.parentNode.parentNode.querySelector("td").innerText;
+        btn.parentNode.parentNode.querySelector("td .tr-txt").innerText;
 
     updateSubareaForm[2].value = btn.getAttribute("id-subarea");
 
@@ -122,7 +131,7 @@ updateSubareaBtn.addEventListener("click", (e) => {
         .then((res) => {
             console.log(res.data);
             updatedRow.innerHTML = `
-                <td>${res.data.subarea}</td>
+                <td><span class="badge badge-success">ACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;<p class = "tr-txt">${res.data.subarea}</p></td>
                 <td>
                     <button class="btn btn-light-primary updateSubarea" id-subarea = "${res.data.id}">
                         <i class="fa-solid fa-pen-to-square"></i>
@@ -164,7 +173,7 @@ createSubareaBtn.addEventListener("click", async () => {
                     <table class="table table-rounded table-striped border gy-7 gs-7 table-subareas-nested">
                         <tbody>
                             <tr class = "formato-tabla" id-subarea = "${nuevaSubareaId}">
-                                <td>${subarea}</td>
+                                <td><span class="badge badge-success">ACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;<p class = "tr-txt">${subarea}</p></td>
                                 <td>
                                     <button class="btn btn-light-primary updateSubarea" id-subarea = "${nuevaSubareaId}">
                                         <i class="fa-solid fa-pen-to-square"></i>
@@ -183,7 +192,7 @@ createSubareaBtn.addEventListener("click", async () => {
         //TODO: Insertar el id de la subarea en lugar de la area
         //prettier-ignore
         newRow.innerHTML = `
-            <td>${subarea}</td>
+            <td><span class="badge badge-success">ACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;<p class = "tr-txt">${subarea}</p></td>
             <td>
                 <button class="btn btn-light-primary updateSubarea" id-subarea = "${nuevaSubareaId}">
                     <i class="fa-solid fa-pen-to-square"></i>
@@ -194,8 +203,8 @@ createSubareaBtn.addEventListener("click", async () => {
             </td>
         `;
 
-        insertAfter(
-            document.querySelector(".table-subareas-nested tr:last-child"),
+        insertBefore(
+            document.querySelector(".table-subareas-nested tr:first-child"),
             newRow
         );
     }
@@ -204,9 +213,9 @@ createSubareaBtn.addEventListener("click", async () => {
 
 deleteSubareaBtn.addEventListener("click", async () => {
     let row = btnPulsado.parentNode.parentNode;
+    let tbody = row.parentNode;
     let nestedTable = document.querySelector(".table-subareas-nested");
 
-    //TODO: Notificar al usuario cuantos registros de la tabla sugerencias se han modificado
     let res = await deleteSubarea(row.getAttribute("id-subarea"));
     console.log(res.onDeleteSuggestions);
 
@@ -217,45 +226,119 @@ deleteSubareaBtn.addEventListener("click", async () => {
     ).innerHTML = `${res.onDeleteSuggestions} sugerencias/reclamos están utilizando esta subárea.`;
     deleteSubareaToast2.show();
 
-    row.remove();
+    // row.remove();
+    // console.log(res.subarea);
 
-    // * si la nested table se halla vacia ...
-    if (nestedTable && nestedTable.querySelectorAll("tr").length === 0) {
-        document.querySelector(".nested-table").remove();
+    // Llevar la columna eliminada al final de la tabla
+    //TODO: Como ya se esta usando span al interior del elemento td para señalar el estado, que el texto vaya dentro de un p y de paso aplicamos truncate
 
-        // return;
-
+    if (tbody.querySelectorAll("tr").length > 1) {
+        row.remove();
         let newRow = document.createElement("tr");
-        newRow.classList.add("nested-table");
+        newRow.classList.add("formato-tabla");
+        newRow.setAttribute("id-subarea", res.subarea.id);
 
         //prettier-ignore
         newRow.innerHTML = `
-            <td class = "nested-add-subarea">
-                <button class="btn btn-light-primary createSubarea empty-nested-table">
-                    <i class="fa-solid fa-plus"></i>
-                </button>
-            </td>
-            <td colspan="2" style="text-align: center;">
-                <div class="alert alert-secondary" role="alert">
-                    Esta área aún no cuenta con subáreas asignadas.
-                </div>
-            </td>
+                <td>
+                    <span class="badge badge-secondary">INACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;<p class = "tr-txt">${res.subarea.subarea}</p>
+                </td>
+                <td>
+                    <button class="btn btn-light-primary restoreSubarea" id-subarea = "${res.subarea.id}">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                    </button>
+                </td>
         `;
 
-        insertAfter(document.querySelector(".nested-table-parent"), newRow);
-
-        window.getComputedStyle(newRow).opacity;
-        newRow.className += " nested-table-show";
+        insertAfter(tbody.querySelector("tr:last-child"), newRow);
+    } else {
+        //prettier-ignore
+        console.log("SOLO HAY UNA FILA");
+        row.innerHTML = `
+            <td>
+                <span class="badge badge-secondary">INACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;<p class = "tr-txt">${res.subarea.subarea}</p>
+            </td>
+            <td>
+                <button class="btn btn-light-primary restoreSubarea" id-subarea = "${res.subarea.id}">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                </button>
+            </td>
+        `;
     }
-
     $("#modalDeleteSubarea").modal("hide");
 });
+document
+    .getElementById("restoreSubareaBtn")
+    .addEventListener("click", async () => {
+        let row = btnPulsado.parentNode.parentNode;
+        let tbody = row.parentNode;
+
+        let subarea = await restoreSubarea(row.getAttribute("id-subarea"));
+
+        if (tbody.querySelectorAll("tr").length > 1) {
+            row.remove();
+            let newRow = document.createElement("tr");
+            newRow.classList.add("formato-tabla");
+            newRow.setAttribute("id-subarea", subarea.id);
+
+            //prettier-ignore
+            newRow.innerHTML = `
+                <td>
+                    <span class="badge badge-success">ACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;<p class = "tr-txt">${subarea.subarea}</p>
+                </td>
+                <td>
+                    <button class="btn btn-light-primary updateSubarea" id-subarea = "${subarea.id}">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <button class="btn btn-light-primary deleteSubarea" id-subarea = "${subarea.id}">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            `;
+
+            insertBefore(tbody.querySelector("tr:first-child"), newRow);
+        } else {
+            //prettier-ignore
+            row.innerHTML = `
+                <td>
+                    <span class="badge badge-success">ACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;<p class = "tr-txt">${subarea.subarea}</p>
+                </td>
+                <td>
+                    <button class="btn btn-light-primary updateSubarea" id-subarea = "${subarea.id}">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <button class="btn btn-light-primary deleteSubarea" id-subarea = "${subarea.id}">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            `;
+        }
+
+        // row.innerHTML = `
+        // <td>
+        //     <span class="badge badge-success">ACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;${subarea.subarea}
+        // </td>
+        // <td>
+        //     <button class="btn btn-light-primary updateSubarea" id-subarea = "${subarea.id}">
+        //         <i class="fa-solid fa-pen-to-square"></i>
+        //     </button>
+        //     <button class="btn btn-light-primary deleteSubarea" id-subarea = "${subarea.id}">
+        //         <i class="fa-solid fa-trash"></i>
+        //     </button>
+        // </td>
+        // `;
+
+        $("#modalRestoreSubarea").modal("hide");
+    });
 
 const prepararModalCreateSubarea = (btn) => {
     btnPulsado = btn;
-    createSubareaForm[0].value = document
-        .querySelector(".nested-table-parent")
-        .querySelectorAll("td")[1].innerText;
+    // createSubareaForm[0].value = document.querySelector(
+    //     ".nested-table-parent > tr:nth-child(2) .subarea-tr-text"
+    // ).innerText;
+    createSubareaForm[0].value = document.querySelector(
+        ".nested-table-parent > td:nth-child(2) p"
+    ).innerText;
 
     createSubareaForm[2].value = document
         .querySelector(".nested-table-parent")
@@ -307,15 +390,28 @@ const fetchSubareas = async (a) => {
         let subareasRows = subareas
             .map((obj) => {
                 //prettier-ignore
-                return `
-                <tr class = "formato-tabla" id-subarea = "${obj.id}">
-                    <td>${obj.subarea}</td>
+                return obj.deleted === 0 ? 
+                `<tr class = "formato-tabla" id-subarea = "${obj.id}">
+                    <td>
+                        <span class="badge badge-success">ACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;<p class = "tr-txt">${obj.subarea}</p>
+                    </td>
                     <td>
                         <button class="btn btn-light-primary updateSubarea" id-subarea = "${obj.id}">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </button>
                         <button class="btn btn-light-primary deleteSubarea" id-subarea = "${obj.id}">
                             <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>` 
+                : 
+                `<tr class = "formato-tabla" id-subarea = "${obj.id}">
+                    <td>
+                        <span class="badge badge-secondary">INACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;<p class = "tr-txt">${obj.subarea}</p>
+                    </td>
+                    <td>
+                        <button class="btn btn-light-primary restoreSubarea" id-subarea = "${obj.id}">
+                            <i class="fa-solid fa-arrows-rotate"></i>
                         </button>
                     </td>
                 </tr>`;
@@ -353,13 +449,6 @@ const fetchSubareas = async (a) => {
         let newRow = document.createElement("tr");
         newRow.classList.add("nested-table");
 
-        //FIXME: Esta línea sirve?
-        newRow.innerHTML = `
-        <div class="alert alert-secondary" role="alert">
-            Esta área aún no cuenta con subáreas asignadas.
-        </div>
-        `;
-
         //prettier-ignore
         newRow.innerHTML = `
             <td class = "nested-add-subarea">
@@ -387,6 +476,10 @@ const fetchSubareas = async (a) => {
 
 function insertAfter(referenceNode, newNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+
+function insertBefore(referenceNode, newNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode);
 }
 
 const consultarSubareas = (idArea) => {
@@ -429,6 +522,24 @@ const deleteSubarea = (subareaId) => {
     return new Promise((resolve, reject) => {
         axios
             .post("https://buzon-sugerencias.bo/delete-subarea", {
+                headers: {
+                    "X-CSRF-TOKEN": _token,
+                },
+                subareaId,
+            })
+            .then((res) => {
+                resolve(res.data);
+            })
+            .catch((err) => {
+                reject(err);
+            });
+    });
+};
+
+const restoreSubarea = (subareaId) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .post("https://buzon-sugerencias.bo/undo-delete-subarea", {
                 headers: {
                     "X-CSRF-TOKEN": _token,
                 },

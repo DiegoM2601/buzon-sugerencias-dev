@@ -100,7 +100,8 @@
                                                                             class="fa-solid fa-chevron-down rotate"></i></a>
                                                                 </td>
                                                                 <td><span
-                                                                        class="badge badge-success">ACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;{{ $a->area }}
+                                                                        class="badge badge-success">ACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                    <p class = "tr-txt">{{ $a->area }}</p>
                                                                 </td>
                                                                 <td>
                                                                     <button class="btn btn-light-primary"
@@ -117,7 +118,8 @@
                                                             <tr id-area = "{{ $a->id }}" class = "deleted-row">
                                                                 <td></td>
                                                                 <td><span
-                                                                        class="badge badge-secondary">INACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;{{ $a->area }}
+                                                                        class="badge badge-secondary">INACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                    <p class = "tr-txt">{{ $a->area }}</p>
                                                                 </td>
                                                                 <td>
                                                                     <button class="btn btn-light-primary"
@@ -339,7 +341,7 @@
                                     </div>
 
 
-                                    {{-- ! MODAL CONFIRMAR EDICIÓN SUBÁREA --}}
+                                    {{-- ! MODAL CONFIRMAR ELIMINACIÓN SUBÁREA --}}
                                     <div class="modal fade" id="modalDeleteSubarea" aria-hidden="true"
                                         data-bs-backdrop="static" data-bs-keyboard="false"
                                         aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
@@ -354,6 +356,28 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button id="deleteSubareaBtn" class="btn btn-primary">SÍ</button>
+                                                    <button class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    {{-- ! MODAL CONFIRMAR RESTAURACIÓN SUBÁREA --}}
+                                    <div class="modal fade" id="modalRestoreSubarea" aria-hidden="true"
+                                        data-bs-backdrop="static" data-bs-keyboard="false"
+                                        aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalToggleLabel2">CONFIRMACIÓN
+                                                    </h5>
+                                                </div>
+                                                <div class="modal-body fs-5">
+                                                    ¿Estás seguro de reestablecer este registro?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button id="restoreSubareaBtn" class="btn btn-primary">SÍ</button>
                                                     <button class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
                                                 </div>
                                             </div>

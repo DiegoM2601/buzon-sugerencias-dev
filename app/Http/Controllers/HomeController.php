@@ -76,7 +76,11 @@ class HomeController extends Controller
     //TODO: Trasladar una copia de la siguiente funcion a AreaController y modificar el crud areas frontend para usar esa funcion
     public function getSubareas($idArea)
     {
-        $subareas = Sub_area::where('area_id', $idArea)->get();
+        // prioorizar registros activo
+        // $subareas = Sub_area::where('area_id', $idArea)->get();
+        $subareas = Sub_area::where('area_id', $idArea)
+            ->orderBy('deleted', 'asc')
+            ->get();
         return response()->json($subareas);
     }
     public function getAreas()
