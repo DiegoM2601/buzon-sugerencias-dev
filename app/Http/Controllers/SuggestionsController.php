@@ -18,7 +18,7 @@ class SuggestionsController extends Controller
      */
     public function index()
     {
-        $areas = Area::where('state', 1)->get();
+        $areas = Area::where('deleted', 0)->get();
 
         $accessGranted = session('access_granted', false);
 
@@ -28,7 +28,6 @@ class SuggestionsController extends Controller
             'areas' => $areas,
             'accessGranted' => $accessGranted,
         ]);
-
     }
 
     /**
@@ -49,36 +48,25 @@ class SuggestionsController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
+        $suggestion = new Suggestion;
+        $suggestion->sede = $request->sede;
+        $suggestion->carrera = $request->carrera;
+        $suggestion->semestre = $request->semestre;
+        $suggestion->area_id = $request->area;
+        $suggestion->newarea = $request->newarea;
+        $suggestion->categoria = $request->categoria;
+        $suggestion->sugerencia = $request->sugerencia;
+        $suggestion->by_ = $request->by_;
+        $suggestion->key = $request->key;
+        $suggestion->ip = $request->ip;
+        $suggestion->browser = $request->browser;
+        $suggestion->device = $request->device;
+        $suggestion->country = $request->country;
+        $suggestion->latitude = $request->latitude;
+        $suggestion->longitude = $request->longitude;
+        $suggestion->os = $request->os;
+        $suggestion->save();
 
-        $movie = new Suggestion;
-        //$movie->create($request->all());
-        $movie->sede=$request->sede;
-        $movie->carrera=$request->carrera;
-        $movie->semestre=$request->semestre;
-        $movie->area=$request->area;
-        $movie->newarea=$request->newarea;
-        /*if($request->newarea){
-            $data=new Area;
-            $data->area=$request->nuevaArea;
-            $data->save();
-            $movie->area=$request->nuevaArea;
-        }else{
-            $movie->area=$request->area;
-        }*/
-        $movie->categoria=$request->categoria;
-        $movie->sugerencia=$request->sugerencia;
-        $movie->by_=$request->by_;
-        $movie->key=$request->key;
-        $movie->ip=$request->ip;
-        $movie->browser=$request->browser;
-        $movie->device=$request->device;
-        $movie->country=$request->country;
-        $movie->latitude=$request->latitude;
-        $movie->longitude=$request->longitude;
-        $movie->os=$request->os;
-        $movie->save();
-        
 
 
         return ["Success"];
