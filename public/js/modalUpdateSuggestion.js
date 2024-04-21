@@ -272,6 +272,8 @@ const prepararModal = async (e, active) => {
         );
 
         if (subareas.length > 0) {
+            elementosSelect[elementosSelect.length - 1].style.display = "block";
+
             let subareasFormato = subareas
                 .map((subarea) => {
                     return `<option value = "${subarea.id}">${subarea.subarea}</option>`;

@@ -30,11 +30,12 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $areas = Area::orderBy('id', 'ASC')->get();
+        $areas = Area::orderBy('deleted', 'asc')->get();
+
         $searchParams = [
             'sede' => $request->get('search_sede'),
             'semestre' => $request->get('search_semestre'),
-            'area' => $request->get('search_area'),
+            'area_id' => $request->get('search_area'),
             'by_' => $request->get('search_by'),
             'categoria' => $request->get('search_categoria'),
         ];
@@ -46,11 +47,15 @@ class HomeController extends Controller
             $startDate = Carbon::createFromFormat('d/m/Y', $dates[0])->startOfDay();
             $endDate = Carbon::createFromFormat('d/m/Y', $dates[1])->endOfDay();
             $query->whereBetween('created_at', [$startDate, $endDate]);
+
+            // dd($searchParams);
         }
 
         foreach ($searchParams as $key => $value) {
             if ($value) {
-                $query->where($key, 'like', '%' . $value . '%');
+                // $query->where($key, 'like', '%' . $value . '%');
+                // $query->where($key, 'like', $value);
+                $query->where($key, $value);
             }
         }
 
@@ -91,10 +96,11 @@ class HomeController extends Controller
 
     public function export(Request $request)
     {
+        // FIXME: corregiar suggestions.area para respetar el estandar de los demas parametros
         $searchParams = [
             'sede' => $request->get('search_sede'),
             'semestre' => $request->get('search_semestre'),
-            'area' => $request->get('search_area'),
+            'area_id' => $request->get('search_area'),
             'by_' => $request->get('search_by'),
             'categoria' => $request->get('search_categoria'),
         ];
@@ -109,8 +115,14 @@ class HomeController extends Controller
             $endDate = Carbon::createFromFormat('d/m/Y', $dates[1])->endOfDay();
         }
 
+        $consulta = new SuggestionExport($searchParams, $startDate, $endDate);
+
+        // dd($consulta->collection());
+
+        // return response()->json($consulta->collection());
+
         return Excel::download(
-            new SuggestionExport($searchParams, $startDate, $endDate),
+            $consulta,
             'reporte-buzon-sugerencias_' . date('Ymd') . '.xlsx'
         );
     }

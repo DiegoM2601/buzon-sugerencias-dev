@@ -62,17 +62,13 @@
                                                     <select type="search" name="search_sede" id="search_sede"
                                                         class="form-select selectSearchParam" data-placeholder="Todas">
                                                         <option value="0">Todos</option>
-                                                        <option value="LPZ"
-                                                            {{ old('search_sede', $searchParams['sede']) == 'LPZ' ? 'selected' : '' }}>
+                                                        <option value="LPZ">
                                                             La Paz</option>
-                                                        <option value="SCZ"
-                                                            {{ old('search_sede', $searchParams['sede']) == 'SCZ' ? 'selected' : '' }}>
+                                                        <option value="SCZ">
                                                             Santa Cruz</option>
-                                                        <option value="CBB"
-                                                            {{ old('search_sede', $searchParams['sede']) == 'CBB' ? 'selected' : '' }}>
+                                                        <option value="CBB">
                                                             Cochabamba</option>
-                                                        <option value="EAT"
-                                                            {{ old('search_sede', $searchParams['sede']) == 'EAT' ? 'selected' : '' }}>
+                                                        <option value="EAT">
                                                             El Alto</option>
                                                     </select>
                                                 </th>
@@ -81,38 +77,27 @@
                                                     <select type="search" name="search_semestre" id="search_semestre"
                                                         class="form-select selectSearchParam" data-placeholder="Todas">
                                                         <option value="0">Todos</option>
-                                                        <option value="1"
-                                                            {{ old('search_sede', $searchParams['semestre']) == '1' ? 'selected' : '' }}>
+                                                        <option value="1">
                                                             1</option>
-                                                        <option value="2"
-                                                            {{ old('search_sede', $searchParams['semestre']) == '2' ? 'selected' : '' }}>
+                                                        <option value="2">
                                                             2</option>
-                                                        <option value="3"
-                                                            {{ old('search_sede', $searchParams['semestre']) == '3' ? 'selected' : '' }}>
+                                                        <option value="3">
                                                             3</option>
-                                                        <option value="4"
-                                                            {{ old('search_sede', $searchParams['semestre']) == '4' ? 'selected' : '' }}>
+                                                        <option value="4">
                                                             4</option>
-                                                        <option value="5"
-                                                            {{ old('search_sede', $searchParams['semestre']) == '5' ? 'selected' : '' }}>
+                                                        <option value="5">
                                                             5</option>
-                                                        <option value="6"
-                                                            {{ old('search_sede', $searchParams['semestre']) == '6' ? 'selected' : '' }}>
+                                                        <option value="6">
                                                             6</option>
-                                                        <option value="7"
-                                                            {{ old('search_sede', $searchParams['semestre']) == '7' ? 'selected' : '' }}>
+                                                        <option value="7">
                                                             7</option>
-                                                        <option value="8"
-                                                            {{ old('search_sede', $searchParams['semestre']) == '8' ? 'selected' : '' }}>
+                                                        <option value="8">
                                                             8</option>
-                                                        <option value="9"
-                                                            {{ old('search_sede', $searchParams['semestre']) == '9' ? 'selected' : '' }}>
+                                                        <option value="9">
                                                             9</option>
-                                                        <option value="10"
-                                                            {{ old('search_sede', $searchParams['semestre']) == '10' ? 'selected' : '' }}>
+                                                        <option value="10">
                                                             10</option>
-                                                        <option value="11"
-                                                            {{ old('search_sede', $searchParams['semestre']) == '11' ? 'selected' : '' }}>
+                                                        <option value="11">
                                                             11</option>
                                                     </select>
                                                 </th>
@@ -120,14 +105,14 @@
                                                     Área
                                                     <select type="search" name="search_area" id="search_area"
                                                         class="form-select selectSearchParam" data-placeholder="Todas">
-                                                        <option value="0">Seleccionar Área</option>
+                                                        <option value="0">Todas las Áreas</option>
                                                         {{-- ! Incluir en la busqueda areas que hayan sido eliminadas lógicamente --}}
                                                         @foreach ($areas as $area)
                                                             @if ($area->deleted == 0)
-                                                                <option value="{{ $area->area }}">{{ $area->area }}
+                                                                <option value="{{ $area->id }}">{{ $area->area }}
                                                                 </option>
                                                             @else
-                                                                <option class = "text-danger" value="{{ $area->area }}">
+                                                                <option class = "text-danger" value="{{ $area->id }}">
                                                                     {{ $area->area }} (Área Deprecada)
                                                                 </option>
                                                             @endif
@@ -140,11 +125,9 @@
                                                     <select type="search" name="search_categoria" id="search_categoria"
                                                         class="form-select selectSearchParam" data-placeholder="Todas">
                                                         <option value="0">Todos</option>
-                                                        <option value="Sugerencia"
-                                                            {{ old('search_categoria', $searchParams['categoria']) == 'Sugerencia' ? 'selected' : '' }}>
+                                                        <option value="Sugerencia">
                                                             Sugerencia</option>
-                                                        <option value="Reclamo"
-                                                            {{ old('search_categoria', $searchParams['categoria']) == 'Reclamo' ? 'selected' : '' }}>
+                                                        <option value="Reclamo">
                                                             Reclamo</option>
                                                     </select>
                                                 </th>
@@ -156,11 +139,9 @@
                                                     <select type="search" name="search_by" id="search_by"
                                                         class="form-select selectSearchParam">
                                                         <option value="0">Todos</option>
-                                                        <option value="Estudiante"
-                                                            {{ old('search_by', $searchParams['by_']) == 'Estudiante' ? 'selected' : '' }}>
+                                                        <option value="Estudiante">
                                                             Estudiante</option>
-                                                        <option value="Docente"
-                                                            {{ old('search_by', $searchParams['by_']) == 'Docente' ? 'selected' : '' }}>
+                                                        <option value="Docente">
                                                             Docente</option>
                                                     </select>
                                                 </th>
@@ -168,7 +149,8 @@
                                                 <th>
                                                     Rango de fecha
                                                     <input class="form-control selectSearchParam" type="text"
-                                                        name="datefilter" id="datefilter" placeholder="Filtro por fechas" />
+                                                        name="datefilter" id="datefilter" placeholder="Filtro por fechas"
+                                                        autocomplete="off" />
                                                 </th>
                                                 <th>
                                                 </th>
@@ -570,6 +552,22 @@
                 '&search_area=' + searchArea +
                 '&datefilter=' + dateFilter;
             window.location.href = url;
+        });
+    </script>
+
+    {{-- ! LLEVAR TODOS LOS DROPDOWN A SU ESTADO INICIAL DESPUÉS DE RECARGAR LA PÁGINA --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectores = Array.from(document.querySelectorAll(".selectSearchParam"));
+
+            // excluir input fecha
+            selectores.pop();
+
+            selectores.forEach((e) => {
+                e.querySelector(
+                    `option[value="0"]`
+                ).selected = true;
+            });
         });
     </script>
 
