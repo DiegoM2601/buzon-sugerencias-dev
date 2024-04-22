@@ -219,10 +219,10 @@ class HomeController extends Controller
         $hoy = Carbon::now();
         $haceUnaSemana = $hoy->subWeek();
         $haceUnMes = $hoy->subDays(30);
-        $suggestionCount = Suggestion::count();
-        $sugerenciasUltimaSemana = Suggestion::where('created_at', '>=', $haceUnaSemana)
+        // $suggestionCount = Suggestion::where('deleted', 0)->count();
+        $sugerenciasUltimaSemana = Suggestion::where('created_at', '>=', $haceUnaSemana)->where('deleted', 0)
             ->count();
-        $sugerenciasUltimoMes = Suggestion::where('created_at', '>=', $haceUnMes)
+        $sugerenciasUltimoMes = Suggestion::where('created_at', '>=', $haceUnMes)->where('deleted', 0)
             ->count();
         //------------------------------------    
         $dateRange = $request->input('datefilter');
@@ -236,7 +236,7 @@ class HomeController extends Controller
             if ($searchBy && $searchBy !== '0') {
                 $query->where('by_', $searchBy);
             }
-            $sugerenciasPorFecha = Suggestion::select(\DB::raw('date(created_at) as fecha'), \DB::raw('count(*) as total'))
+            $sugerenciasPorFecha = Suggestion::select(\DB::raw('date(created_at) as fecha'), \DB::raw('count(*) as total'))->where('deleted', 0)
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
                     return $query->where('categoria', $searchCategoria);
@@ -248,7 +248,7 @@ class HomeController extends Controller
                 ->get();
 
 
-            $sugerenciasPorSede = Suggestion::select('sede', \DB::raw('count(*) as total'))
+            $sugerenciasPorSede = Suggestion::select('sede', \DB::raw('count(*) as total'))->where('deleted', 0)
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
                     return $query->where('categoria', $searchCategoria);
@@ -258,6 +258,18 @@ class HomeController extends Controller
                 })
                 ->groupBy('sede')
                 ->get();
+
+            $suggestionCount = Suggestion::where('deleted', 0)
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
+                    return $query->where('categoria', $searchCategoria);
+                })
+                ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
+                    return $query->where('by_', $searchBy);
+                })
+                ->count();
+
+            // return response()->json($contarSugerencias);
 
             // $sugerenciasPorArea = Suggestion::select('area', \DB::raw('count(*) as total'))
             //     ->whereBetween('created_at', [$startDate, $endDate])
@@ -306,7 +318,7 @@ class HomeController extends Controller
 
 
 
-            $sugerenciasPorCarrera = Suggestion::select(\DB::raw('COALESCE(carrera, "Docente") as carrera'), \DB::raw('count(*) as total'))
+            $sugerenciasPorCarrera = Suggestion::select(\DB::raw('COALESCE(carrera, "Docente") as carrera'), \DB::raw('count(*) as total'))->where('deleted', 0)
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
                     return $query->where('categoria', $searchCategoria);
@@ -319,7 +331,7 @@ class HomeController extends Controller
                 ->get();
 
 
-            $sugerenciasPorSemestre = Suggestion::select(\DB::raw('COALESCE(semestre, "Docente") as semestre'), \DB::raw('count(*) as total'))
+            $sugerenciasPorSemestre = Suggestion::select(\DB::raw('COALESCE(semestre, "Docente") as semestre'), \DB::raw('count(*) as total'))->where('deleted', 0)
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
                     return $query->where('categoria', $searchCategoria);
@@ -337,7 +349,7 @@ class HomeController extends Controller
             if ($searchBy && $searchBy !== '0') {
                 $query->where('by_', $searchBy);
             }
-            $sugerenciasPorFecha = Suggestion::select(\DB::raw('date(created_at) as fecha'), \DB::raw('count(*) as total'))
+            $sugerenciasPorFecha = Suggestion::select(\DB::raw('date(created_at) as fecha'), \DB::raw('count(*) as total'))->where('deleted', 0)
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
                     return $query->where('categoria', $searchCategoria);
                 })
@@ -345,7 +357,7 @@ class HomeController extends Controller
                     return $query->where('by_', $searchBy);
                 })
                 ->groupBy('fecha')->get();
-            $sugerenciasPorSede = Suggestion::select('sede', \DB::raw('count(*) as total'))
+            $sugerenciasPorSede = Suggestion::select('sede', \DB::raw('count(*) as total'))->where('deleted', 0)
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
                     return $query->where('categoria', $searchCategoria);
                 })
@@ -406,8 +418,17 @@ class HomeController extends Controller
 
             // return response()->json($sugerenciasPorArea);
 
+            $suggestionCount = Suggestion::where('deleted', 0)
+                ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
+                    return $query->where('categoria', $searchCategoria);
+                })
+                ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
+                    return $query->where('by_', $searchBy);
+                })
+                ->count();
 
-            $sugerenciasPorCarrera = Suggestion::select(\DB::raw('COALESCE(carrera, "Docente") as carrera'), \DB::raw('count(*) as total'))
+
+            $sugerenciasPorCarrera = Suggestion::select(\DB::raw('COALESCE(carrera, "Docente") as carrera'), \DB::raw('count(*) as total'))->where('deleted', 0)
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
                     return $query->where('categoria', $searchCategoria);
                 })
@@ -415,7 +436,7 @@ class HomeController extends Controller
                     return $query->where('by_', $searchBy);
                 })
                 ->groupBy('carrera')->orderBy('total')->get();
-            $sugerenciasPorSemestre = Suggestion::select(\DB::raw('COALESCE(semestre, "Docente") as semestre'), \DB::raw('count(*) as total'))
+            $sugerenciasPorSemestre = Suggestion::select(\DB::raw('COALESCE(semestre, "Docente") as semestre'), \DB::raw('count(*) as total'))->where('deleted', 0)
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
                     return $query->where('categoria', $searchCategoria);
                 })
