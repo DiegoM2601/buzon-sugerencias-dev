@@ -48,6 +48,8 @@ class HomeController extends Controller
             $endDate = Carbon::createFromFormat('d/m/Y', $dates[1])->endOfDay();
             $query->whereBetween('created_at', [$startDate, $endDate]);
 
+            // return response()->json($startDate);
+
             // dd($searchParams);
         }
 
@@ -228,8 +230,14 @@ class HomeController extends Controller
         $dateRange = $request->input('datefilter');
         if ($dateRange) {
             list($startDate, $endDate) = explode(' - ', $dateRange);
-            $startDate = Carbon::createFromFormat('d/m/Y', $startDate)->format('Y-m-d');
-            $endDate = Carbon::createFromFormat('d/m/Y', $endDate)->format('Y-m-d');
+
+            // ! CORREGIR EL DESFACE 
+            //TODO: hacer lo mismo en las consultas que hace la vista de sugerencias (y su reporte excel)
+            $startDate = Carbon::createFromFormat('d/m/Y', $startDate)->format('Y-m-d') . " " . "00:00:00";
+            $endDate = Carbon::createFromFormat('d/m/Y', $endDate)->format('Y-m-d') . " " . "23:59:59";
+
+            // return response()->json(["inicio" => $startDate, "fin" => $endDate]);
+
             if ($searchCategoria && $searchCategoria !== '0') {
                 $query->where('categoria', $searchCategoria);
             }
