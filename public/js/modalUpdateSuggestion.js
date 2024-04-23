@@ -381,7 +381,7 @@ const mostrarAlerta = (alerta, mensaje, color) => {
 const consultarSuggestion = (id) => {
     return new Promise((resolve, reject) => {
         axios
-            .get("https://buzon-sugerencias.bo/get-suggestion/" + id, {
+            .get("/get-suggestion/" + id, {
                 headers: {
                     "X-CSRF-TOKEN": _token,
                 },
@@ -398,7 +398,7 @@ const consultarSuggestion = (id) => {
 const consultarAreas = () => {
     return new Promise((resolve, reject) => {
         axios
-            .get("https://buzon-sugerencias.bo/get-areas", {
+            .get("/get-areas", {
                 headers: {
                     "X-CSRF-TOKEN": _token,
                 },
@@ -415,7 +415,7 @@ const consultarAreas = () => {
 const consultarSubareas = (idArea) => {
     return new Promise((resolve, reject) => {
         axios
-            .get("https://buzon-sugerencias.bo/get-subareas/" + idArea, {
+            .get("/get-subareas/" + idArea, {
                 headers: {
                     "X-CSRF-TOKEN": _token,
                 },
@@ -450,7 +450,7 @@ const actualizarRegistros = () => {
     console.log(valoresSubida);
 
     axios
-        .post("https://buzon-sugerencias.bo/update-suggestion", {
+        .post("/update-suggestion", {
             idSuggestion,
             valoresSubida,
             _token,
@@ -493,7 +493,7 @@ const actualizarRegistros = () => {
 
 const deshacerEliminacion = () => {
     axios
-        .post("https://buzon-sugerencias.bo/undo-delete-register", {
+        .post("/undo-delete-register", {
             idSuggestion,
             _token,
         })
@@ -559,7 +559,7 @@ document.getElementById("confirmDeletion").addEventListener("click", () => {
 
 const eliminarRegistros = () => {
     axios
-        .post("https://buzon-sugerencias.bo/delete-register", {
+        .post("/delete-register", {
             headers: {
                 "X-CSRF-TOKEN": _token,
             },

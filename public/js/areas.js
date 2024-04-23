@@ -115,13 +115,13 @@ updateSubareaBtn.addEventListener("click", (e) => {
     // * animacion
     updatedRow.innerHTML = `
         <td colspan="3">
-            <img src="https://buzon-sugerencias.bo/gifs/loading2.gif" width = "120px">
+            <img src="gifs/loading2.gif" width = "120px">
         </td>
     `;
     updatedRow.classList.toggle("center-text");
 
     axios
-        .post("https://buzon-sugerencias.bo/update-subarea", {
+        .post("/update-subarea", {
             headers: {
                 "X-CSRF-TOKEN": _token,
             },
@@ -485,7 +485,7 @@ function insertBefore(referenceNode, newNode) {
 const consultarSubareas = (idArea) => {
     return new Promise((resolve, reject) => {
         axios
-            .get("https://buzon-sugerencias.bo/get-subareas/" + idArea, {
+            .get("/get-subareas/" + idArea, {
                 headers: {
                     "X-CSRF-TOKEN": _token,
                 },
@@ -502,7 +502,7 @@ const consultarSubareas = (idArea) => {
 const createSubarea = (areaId, subarea) => {
     return new Promise((resolve, reject) => {
         axios
-            .post("https://buzon-sugerencias.bo/create-subarea", {
+            .post("/create-subarea", {
                 headers: {
                     "X-CSRF-TOKEN": _token,
                 },
@@ -521,7 +521,7 @@ const createSubarea = (areaId, subarea) => {
 const deleteSubarea = (subareaId) => {
     return new Promise((resolve, reject) => {
         axios
-            .post("https://buzon-sugerencias.bo/delete-subarea", {
+            .post("/delete-subarea", {
                 headers: {
                     "X-CSRF-TOKEN": _token,
                 },
@@ -539,7 +539,7 @@ const deleteSubarea = (subareaId) => {
 const restoreSubarea = (subareaId) => {
     return new Promise((resolve, reject) => {
         axios
-            .post("https://buzon-sugerencias.bo/undo-delete-subarea", {
+            .post("/undo-delete-subarea", {
                 headers: {
                     "X-CSRF-TOKEN": _token,
                 },

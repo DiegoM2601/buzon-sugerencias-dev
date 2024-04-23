@@ -17,7 +17,7 @@ const searchParams = () => {
     };
     console.log(consulta);
     axios
-        .get("https://buzon-sugerencias.bo/", {
+        .get("/", {
             headers: {
                 "X-CSRF-TOKEN": _token,
                 AXIOS: "",
