@@ -143,7 +143,6 @@ class AreasController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    // TODO: Cambiar stated por deleted EN LA BASE DE DATOS
     public function destroy($id)
     {
         $area = ModelsArea::find($id);

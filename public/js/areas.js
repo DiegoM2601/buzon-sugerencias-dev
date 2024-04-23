@@ -110,7 +110,6 @@ updateSubareaBtn.addEventListener("click", (e) => {
     $("#modalUpdateSubarea2").modal("hide");
     let updatedRow = btnPulsado.parentNode.parentNode;
 
-    // TODO: Actualizar la URL
     //prettier-ignore
     // * animacion
     updatedRow.innerHTML = `
@@ -189,7 +188,6 @@ createSubareaBtn.addEventListener("click", async () => {
             </td>   
         `;
     } else {
-        //TODO: Insertar el id de la subarea en lugar de la area
         //prettier-ignore
         newRow.innerHTML = `
             <td><span class="badge badge-success">ACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;<p class = "tr-txt">${subarea}</p></td>
@@ -228,9 +226,6 @@ deleteSubareaBtn.addEventListener("click", async () => {
 
     // row.remove();
     // console.log(res.subarea);
-
-    // Llevar la columna eliminada al final de la tabla
-    //TODO: Como ya se esta usando span al interior del elemento td para señalar el estado, que el texto vaya dentro de un p y de paso aplicamos truncate
 
     if (tbody.querySelectorAll("tr").length > 1) {
         row.remove();

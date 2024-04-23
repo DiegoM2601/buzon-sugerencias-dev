@@ -98,7 +98,6 @@ class HomeController extends Controller
 
     public function export(Request $request)
     {
-        // FIXME: corregiar suggestions.area para respetar el estandar de los demas parametros
         $searchParams = [
             'sede' => $request->get('search_sede'),
             'semestre' => $request->get('search_semestre'),
