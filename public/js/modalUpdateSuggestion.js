@@ -581,7 +581,7 @@ const eliminarRegistros = () => {
             `;
             deletedColumns[
                 deletedColumns.length - 2
-            ].innerHTML = `<span class="badge badge-secondary">INACTIVO</span>`;
+            ].innerHTML = `<span class="badge badge-secondary">DESCARTADO</span>`;
 
             toastDelete.show();
         })

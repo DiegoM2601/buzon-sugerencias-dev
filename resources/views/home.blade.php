@@ -377,7 +377,7 @@
                                             aria-atomic="true">
                                             <div class="d-flex">
                                                 <div class="toast-body">
-                                                    Eliminado correctamente.
+                                                    El registro fue descartado.
                                                 </div>
                                                 <button type="button" class="btn-close btn-close-white me-2 m-auto"
                                                     data-bs-dismiss="toast" aria-label="Close"></button>
@@ -411,7 +411,7 @@
                                                     </h5>
                                                 </div>
                                                 <div class="modal-body fs-5">
-                                                    ¿Estás seguro de eliminar el registro?
+                                                    ¿Estás seguro de descartar este registro?
                                                 </div>
                                                 <div class="modal-footer">
                                                     {{-- <button class="btn btn-danger"id="confirmDeletion">SÍ

@@ -95,7 +95,7 @@
                         </td>
                         <td>{{ $s->created_at }}</td>
                         <td>
-                            <span class="badge badge-secondary">INACTIVO</span>
+                            <span class="badge badge-secondary">DESCARTADO</span>
                         </td>
                         <td class="d-flex bd-highlight">
                             <button class="btn btn-light-primary restoreRegisterBtn m-1"
@@ -110,11 +110,9 @@
                         <td>{{ $s->carrera }}</td>
                         <td>{{ $s->semestre }}</td>
                         <td>
-                            @isset($s->objeto_area->area)
+                            <p class="truncate">
                                 {{ $s->objeto_area->area }}
-                            @else
-                                <span class="badge badge-primary">Sin Asignar</span>
-                            @endisset
+                            </p>
                         </td>
                         <td>
                             @isset($s->subarea_id)
@@ -128,11 +126,7 @@
                         </td>
                         <td>{{ $s->created_at }}</td>
                         <td>
-                            @if ($s->deleted == 1)
-                                <span class="badge badge-danger">INACTIVO</span>
-                            @else
-                                <span class="badge badge-success">ACTIVO</span>
-                            @endif
+                            <span class="badge badge-success">ACTIVO</span>
                         </td>
                         <td class="d-flex bd-highlight">
                             <button class="btn btn-light-primary updateRegisterBtn m-1"
