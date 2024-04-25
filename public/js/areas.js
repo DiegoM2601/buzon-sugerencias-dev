@@ -9,15 +9,19 @@ const deleteSubareaToast1 = bootstrap.Toast.getOrCreateInstance(
 const deleteSubareaToast2 = bootstrap.Toast.getOrCreateInstance(
     document.getElementById("deleteSubareaToast2")
 );
+const createSubareaToast = bootstrap.Toast.getOrCreateInstance(
+    document.getElementById("createSubareaToast")
+);
 let btnPulsado;
 
 // formulario modal update subarea
-const updateSubareaForm = document.querySelectorAll(".update-subarea-txt");
+const updateSubareaFormInput = document.querySelectorAll(".update-subarea-txt");
+const updateSubareaForm = document.getElementById("update_subarea_form");
 const updateSubareaBtn = document.getElementById("updateSubareaBtn");
 
 // formulario modal create subarea
-const createSubareaForm = document.querySelectorAll(".create-subarea-txt");
-const createSubareaBtn = document.getElementById("createSubareaBtn");
+const createSubareaFormInput = document.querySelectorAll(".create-subarea-txt");
+const createSubareaForm = document.getElementById("create_subarea_form");
 
 // modal delete subarea
 const deleteSubareaBtn = document.getElementById("deleteSubareaBtn");
@@ -87,24 +91,36 @@ document.getElementById("table-areas").addEventListener("click", (e) => {
 });
 
 const prepararModalUpdateSubarea = (btn) => {
-    // updateSubareaForm[0].value =
+    // updateSubareaFormInput[0].value =
     //     btn.parentNode.parentNode.querySelector("td").innerText;
 
     btnPulsado = btn;
 
-    updateSubareaForm[0].value = document.querySelector(
+    updateSubareaFormInput[0].value = document.querySelector(
         ".nested-table-parent > td:nth-child(2) p"
     ).innerText;
 
-    updateSubareaForm[1].value =
+    updateSubareaFormInput[1].value =
         btn.parentNode.parentNode.querySelector("td .tr-txt").innerText;
 
-    updateSubareaForm[2].value = btn.getAttribute("id-subarea");
+    updateSubareaFormInput[2].value = btn.getAttribute("id-subarea");
 
     $("#modalUpdateSubarea").modal("show");
 
     console.log("btn:" + btn.getAttribute("id-subarea"));
 };
+
+updateSubareaForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    let newSubarea = updateSubareaFormInput[1].value;
+
+    if (newSubarea && newSubarea.length > 0) {
+        $("#modalUpdateSubarea").modal("hide");
+        $("#modalUpdateSubarea2").modal("show");
+    }
+});
+
 updateSubareaBtn.addEventListener("click", (e) => {
     e.preventDefault();
     $("#modalUpdateSubarea2").modal("hide");
@@ -124,8 +140,8 @@ updateSubareaBtn.addEventListener("click", (e) => {
             headers: {
                 "X-CSRF-TOKEN": _token,
             },
-            idSubarea: updateSubareaForm[2].value,
-            subarea: updateSubareaForm[1].value,
+            idSubarea: updateSubareaFormInput[2].value,
+            subarea: updateSubareaFormInput[1].value,
         })
         .then((res) => {
             console.log(res.data);
@@ -148,20 +164,23 @@ updateSubareaBtn.addEventListener("click", (e) => {
         });
 });
 
-createSubareaBtn.addEventListener("click", async () => {
+createSubareaForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
     let newRow = document.createElement("tr");
-    let subarea = createSubareaForm[1].value;
-    let areaId = createSubareaForm[2].value;
+    let subarea = createSubareaFormInput[1].value;
+    let areaId = createSubareaFormInput[2].value;
 
-    // console.log(subarea, areaId);
+    if (subarea && subarea.length > 0) {
+        // console.log(subarea, areaId);
 
-    let nuevaSubareaId = await createSubarea(areaId, subarea);
+        let nuevaSubareaId = await createSubarea(areaId, subarea);
 
-    if (btnPulsado.classList.contains("empty-nested-table")) {
-        // console.log(btn.parentNode.parentNode);
+        if (btnPulsado.classList.contains("empty-nested-table")) {
+            // console.log(btn.parentNode.parentNode);
 
-        //prettier-ignore
-        btnPulsado.parentNode.parentNode.innerHTML = `
+            //prettier-ignore
+            btnPulsado.parentNode.parentNode.innerHTML = `
             <td class = "nested-add-subarea">
                 <button class="btn btn-light-primary createSubarea">
                     <i class="fa-solid fa-plus"></i>
@@ -187,9 +206,9 @@ createSubareaBtn.addEventListener("click", async () => {
                 </div>
             </td>   
         `;
-    } else {
-        //prettier-ignore
-        newRow.innerHTML = `
+        } else {
+            //prettier-ignore
+            newRow.innerHTML = `
             <td><span class="badge badge-success">ACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;<p class = "tr-txt">${subarea}</p></td>
             <td>
                 <button class="btn btn-light-primary updateSubarea" id-subarea = "${nuevaSubareaId}">
@@ -201,12 +220,14 @@ createSubareaBtn.addEventListener("click", async () => {
             </td>
         `;
 
-        insertBefore(
-            document.querySelector(".table-subareas-nested tr:first-child"),
-            newRow
-        );
+            insertBefore(
+                document.querySelector(".table-subareas-nested tr:first-child"),
+                newRow
+            );
+        }
+        $("#modalCreateSubarea").modal("hide");
+        createSubareaToast.show();
     }
-    $("#modalCreateSubarea").modal("hide");
 });
 
 deleteSubareaBtn.addEventListener("click", async () => {
@@ -328,14 +349,17 @@ document
 
 const prepararModalCreateSubarea = (btn) => {
     btnPulsado = btn;
-    // createSubareaForm[0].value = document.querySelector(
+    // createSubareaFormInput[0].value = document.querySelector(
     //     ".nested-table-parent > tr:nth-child(2) .subarea-tr-text"
     // ).innerText;
-    createSubareaForm[0].value = document.querySelector(
+    createSubareaFormInput[0].value = document.querySelector(
         ".nested-table-parent > td:nth-child(2) p"
     ).innerText;
 
-    createSubareaForm[2].value = document
+    // limpiar input
+    createSubareaFormInput[1].value = "";
+
+    createSubareaFormInput[2].value = document
         .querySelector(".nested-table-parent")
         .getAttribute("id-area");
 
