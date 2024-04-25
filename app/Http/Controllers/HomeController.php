@@ -175,7 +175,7 @@ class HomeController extends Controller
         $sugerencia->save();
 
         $sugerencia->load('subarea');
-        $sugerencia->load('objeto_area');
+        $sugerencia->load('area');
 
         return response()->json($sugerencia);
     }

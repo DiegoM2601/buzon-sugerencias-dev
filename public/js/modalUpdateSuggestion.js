@@ -467,7 +467,7 @@ const actualizarRegistros = () => {
             <td>${response.data.by_}</td>
             <td>${response.data.carrera === null ? "" : response.data.carrera}</td>
             <td>${response.data.semestre === null ? "" : response.data.semestre}</td>
-            <td>${response.data.objeto_area.area}</td>
+            <td>${response.data.area.area}</td>
             <td>${response.data.subarea ? response.data.subarea.subarea : `<span class="badge badge-primary">Sin Asignar</span>`}</td>
             <td>
                 <p class = "truncate">${response.data.sugerencia}</p>

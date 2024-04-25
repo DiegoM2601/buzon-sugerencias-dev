@@ -78,7 +78,7 @@
                         <td>{{ $s->semestre }}</td>
                         <td>
                             <p class="truncate">
-                                {{ $s->objeto_area->area }}
+                                {{ $s->area->area }}
                             </p>
                         </td>
                         <td>
@@ -111,7 +111,7 @@
                         <td>{{ $s->semestre }}</td>
                         <td>
                             <p class="truncate">
-                                {{ $s->objeto_area->area }}
+                                {{ $s->area->area }}
                             </p>
                         </td>
                         <td>

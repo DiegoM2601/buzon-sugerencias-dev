@@ -16,8 +16,7 @@ class Suggestion extends Model
         return $this->belongsTo(Sub_area::class, "subarea_id");
     }
 
-    //TODO: Arreglar el nombre de este método para obedecer la convención de Laravel
-    public function objeto_area()
+    public function area()
     {
         return $this->belongsTo(Area::class, "area_id");
     }
