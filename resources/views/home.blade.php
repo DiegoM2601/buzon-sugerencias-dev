@@ -155,11 +155,6 @@
                                                 <th>
                                                 </th>
                                                 <th>
-                                                    {{-- <button id="searchButton" class="btn btn-primary" type="submit"><i
-                                                            class="fa-solid fa-magnifying-glass"></i> Buscar</button> --}}
-
-                                                    {{-- <button id="buscarBtn" class="btn btn-light-primary"><i
-                                                            class="fa-solid fa-magnifying-glass"></i>Buscar</button> --}}
                                                 </th>
                                             </tr>
                                         </thead>
@@ -172,7 +167,6 @@
                                 <div id="kt_permissions_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                                     @include('table-home')
                                     {{-- Modal Actualizar --}}
-                                    <!-- Modal -->
                                     <div class="modal fade" id="modalUpdateSuggestion" data-bs-backdrop="static"
                                         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
                                         aria-hidden="true">
@@ -308,8 +302,6 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    {{-- <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">REESTABLECER</button> --}}
                                                     <button type="button" class="btn btn-primary"
                                                         id = "updateSuggestionBtn">ACTUALIZAR</button>
                                                     <button type="button" class="btn btn-primary"
@@ -333,29 +325,12 @@
                                                     ¿Estás seguro de modificar el registro?
                                                 </div>
                                                 <div class="modal-footer">
-                                                    {{-- <button class="btn btn-danger"id="confirmUpdate">SÍ
-                                                    </button>
-                                                    <button class="btn btn-primary" id="dismissUpdate">NO</button> --}}
                                                     <button id="confirmUpdate" class="btn btn-primary">SÍ</button>
                                                     <button class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                    {{-- <div class="position-fixed bottom-0 end-0 p-3">
-                                            <div id="updateSuggestionToast"
-                                                class="toast hide align-items-center text-white bg-primary border-0"
-                                                role="alert" aria-live="assertive" aria-atomic="true">
-                                                <div class="d-flex">
-                                                    <div class="toast-body">
-                                                        Registro actualizado correctamente.
-                                                    </div>
-                                                    <button type="button" class="btn-close btn-close-white me-2 m-auto"
-                                                        data-bs-dismiss="toast" aria-label="Close"></button>
-                                                </div>
-                                            </div>
-                                        </div> --}}
 
                                     <div class="position-fixed bottom-0 end-0 p-3" style="z-index:99999;">
                                         <div class="toast align-items-center text-white bg-primary border-0 p-3 fs-5"
@@ -414,10 +389,6 @@
                                                     ¿Estás seguro de descartar este registro?
                                                 </div>
                                                 <div class="modal-footer">
-                                                    {{-- <button class="btn btn-danger"id="confirmDeletion">SÍ
-                                                    </button>
-                                                    <button class="btn btn-primary" id="dismissDeletion">NO</button> --}}
-
                                                     <button id="confirmDeletion" class="btn btn-primary">SÍ</button>
                                                     <button class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
                                                 </div>
@@ -490,23 +461,6 @@
                 // provocar el evento 'change' en el input
                 document.querySelector("#datefilter").dispatchEvent(eventoChange);
             });
-
-
-            // date picker
-            // new tempusDominus.TempusDominus(document.getElementById("datepicker1"), {
-            //     display: {
-            //         viewMode: "calendar",
-            //         components: {
-            //             decades: true,
-            //             year: true,
-            //             month: true,
-            //             date: true,
-            //             hours: false,
-            //             minutes: false,
-            //             seconds: false
-            //         }
-            //     }
-            // });
 
             // ! Datepicker 
             new tempusDominus.TempusDominus(document.getElementById("datepicker1"), {

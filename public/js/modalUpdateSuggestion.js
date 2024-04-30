@@ -1,8 +1,10 @@
 const _token = document.querySelector("input[name=_token]").value;
+
 let btnpulsado;
 let idSuggestion;
 let valoresSubida;
 
+// ! ADVERTENCIAS FORMULARIO EDITAR SUGERENCIA
 const alertaUpdateSuggesion = document.getElementById(
     "alerta-updateSuggestion"
 );
@@ -34,6 +36,7 @@ document
                 true
             );
         }
+        // Boton reestablecer
         if (
             e.target.classList.contains("restoreRegisterBtn") ||
             e.target.parentNode.classList.contains("restoreRegisterBtn")
@@ -58,7 +61,7 @@ document
         }
     });
 
-// ! ************************************************************ MODAL EDITAR
+// ! ************************************************************ MODAL EDITAR / REESTABLECER **************************************************************
 const prepararModal = async (e, active) => {
     btnpulsado = e;
     idSuggestion = e.getAttribute("id-suggestion");
@@ -103,7 +106,7 @@ const prepararModal = async (e, active) => {
     document.getElementById("suggestionTextarea").value =
         values[values.length - 2];
 
-    // ! areas
+    // ! *********************************************  AREAS PLOBLAR DROPDOWN Y VALIDAR TODOS LOS ESTADOS  ******************************************************************
     let areas = await consultarAreas();
     let areasActivas = areas.filter((area) => {
         if (area.deleted === 0) {
@@ -160,11 +163,9 @@ const prepararModal = async (e, active) => {
         elementosSelect[elementosSelect.length - 2].innerHTML = `
         <option class = "text-danger" value = "${areaInactiva.id}" selected>${areaInactiva.area} (Área Deprecada)</option>
         `;
-
-        console.log("ejecutado 3er if");
     }
 
-    // ! subareas
+    // ! *********************************************  SUBAREAS PLOBLAR DROPDOWN Y VALIDAR TODOS LOS ESTADOS  **********************************************************
 
     if (suggestion.subarea_id) {
         // * poblar drowpdown
@@ -334,7 +335,7 @@ const prepararModal = async (e, active) => {
     $("#modalUpdateSuggestion").modal("show");
 };
 
-// * poblar dropdown en tiempo real
+// ! *********************************************  POBLAR DROPWDOWN SUBAREAS EN TIEMPO REAL SEGÚN EL ÁREA ********************************************************
 document
     .getElementById("modalUpdateSelectArea")
     .addEventListener("change", async (e) => {
@@ -371,64 +372,7 @@ document
         }
     });
 
-const mostrarAlerta = (alerta, mensaje, color) => {
-    alerta.innerText = mensaje;
-    alerta.className = "";
-    alerta.classList.add("alert", `alert-${color}`);
-    alerta.style.display = "block";
-};
-
-const consultarSuggestion = (id) => {
-    return new Promise((resolve, reject) => {
-        axios
-            .get("/get-suggestion/" + id, {
-                headers: {
-                    "X-CSRF-TOKEN": _token,
-                },
-            })
-            .then(function (response) {
-                resolve(response.data);
-            })
-            .catch(function (error) {
-                reject(error);
-            });
-    });
-};
-
-const consultarAreas = () => {
-    return new Promise((resolve, reject) => {
-        axios
-            .get("/get-areas", {
-                headers: {
-                    "X-CSRF-TOKEN": _token,
-                },
-            })
-            .then(function (response) {
-                resolve(response.data);
-            })
-            .catch(function (error) {
-                reject(error);
-            });
-    });
-};
-
-const consultarSubareas = (idArea) => {
-    return new Promise((resolve, reject) => {
-        axios
-            .get("/get-subareas/" + idArea, {
-                headers: {
-                    "X-CSRF-TOKEN": _token,
-                },
-            })
-            .then(function (response) {
-                resolve(response.data);
-            })
-            .catch(function (error) {
-                reject(error);
-            });
-    });
-};
-
+// ! *********************************************  ACTUALIZAR EL REGISTRO ********************************************************
 const actualizarRegistros = () => {
     let valoresActualizados = [];
     valoresSubida = [];
@@ -491,6 +435,41 @@ const actualizarRegistros = () => {
         });
 };
 
+// ! *********************************************  ELIMINAR EL REGISTRO ********************************************************
+const eliminarRegistros = () => {
+    axios
+        .post("/delete-register", {
+            headers: {
+                "X-CSRF-TOKEN": _token,
+            },
+            idSuggestion: btnpulsado.getAttribute("id-suggestion"),
+        })
+        .then(function (response) {
+            console.log(response.data);
+            // btnpulsado.parentNode.parentNode.remove();
+
+            let deletedRow = btnpulsado.parentNode.parentNode;
+            deletedRow.classList.toggle("deleted-row");
+            let deletedColumns = deletedRow.querySelectorAll("td");
+
+            //prettier-ignore
+            deletedColumns[deletedColumns.length - 1].innerHTML = `
+            <button class="btn btn-light-primary restoreRegisterBtn m-1 table-suggestions-btn" id-suggestion = "${btnpulsado.getAttribute("id-suggestion")}">
+                <i class="fa-solid fa-arrows-rotate"></i>
+            </button> 
+            `;
+            deletedColumns[
+                deletedColumns.length - 2
+            ].innerHTML = `<span class="badge badge-secondary">DESCARTADO</span>`;
+
+            toastDelete.show();
+        })
+        .catch(function (error) {
+            console.error("Error:", error);
+        });
+};
+
+// ! *********************************************  REESTABLECER EL REGISTRO ********************************************************
 const deshacerEliminacion = () => {
     axios
         .post("/undo-delete-register", {
@@ -557,37 +536,56 @@ document.getElementById("confirmDeletion").addEventListener("click", () => {
     eliminarRegistros();
 });
 
-const eliminarRegistros = () => {
-    axios
-        .post("/delete-register", {
-            headers: {
-                "X-CSRF-TOKEN": _token,
-            },
-            idSuggestion: btnpulsado.getAttribute("id-suggestion"),
-        })
-        .then(function (response) {
-            console.log(response.data);
-            // btnpulsado.parentNode.parentNode.remove();
+// ! *********************************************  AXIOS ********************************************************
+const consultarSuggestion = (id) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .get("/get-suggestion/" + id, {
+                headers: {
+                    "X-CSRF-TOKEN": _token,
+                },
+            })
+            .then(function (response) {
+                resolve(response.data);
+            })
+            .catch(function (error) {
+                reject(error);
+            });
+    });
+};
 
-            let deletedRow = btnpulsado.parentNode.parentNode;
-            deletedRow.classList.toggle("deleted-row");
-            let deletedColumns = deletedRow.querySelectorAll("td");
+const consultarAreas = () => {
+    return new Promise((resolve, reject) => {
+        axios
+            .get("/get-areas", {
+                headers: {
+                    "X-CSRF-TOKEN": _token,
+                },
+            })
+            .then(function (response) {
+                resolve(response.data);
+            })
+            .catch(function (error) {
+                reject(error);
+            });
+    });
+};
 
-            //prettier-ignore
-            deletedColumns[deletedColumns.length - 1].innerHTML = `
-            <button class="btn btn-light-primary restoreRegisterBtn m-1 table-suggestions-btn" id-suggestion = "${btnpulsado.getAttribute("id-suggestion")}">
-                <i class="fa-solid fa-arrows-rotate"></i>
-            </button> 
-            `;
-            deletedColumns[
-                deletedColumns.length - 2
-            ].innerHTML = `<span class="badge badge-secondary">DESCARTADO</span>`;
-
-            toastDelete.show();
-        })
-        .catch(function (error) {
-            console.error("Error:", error);
-        });
+const consultarSubareas = (idArea) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .get("/get-subareas/" + idArea, {
+                headers: {
+                    "X-CSRF-TOKEN": _token,
+                },
+            })
+            .then(function (response) {
+                resolve(response.data);
+            })
+            .catch(function (error) {
+                reject(error);
+            });
+    });
 };
 
 // ! **************************************************************** UTILIDADES
@@ -619,3 +617,10 @@ function fechaLegible(fecha) {
 function insertAfter(referenceNode, newNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
+
+const mostrarAlerta = (alerta, mensaje, color) => {
+    alerta.innerText = mensaje;
+    alerta.className = "";
+    alerta.classList.add("alert", `alert-${color}`);
+    alerta.style.display = "block";
+};

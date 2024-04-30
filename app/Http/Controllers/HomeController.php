@@ -47,22 +47,13 @@ class HomeController extends Controller
             $startDate = Carbon::createFromFormat('d/m/Y', $dates[0])->startOfDay();
             $endDate = Carbon::createFromFormat('d/m/Y', $dates[1])->endOfDay();
             $query->whereBetween('created_at', [$startDate, $endDate]);
-
-            // return response()->json($startDate);
-
-            // dd($searchParams);
         }
 
         foreach ($searchParams as $key => $value) {
             if ($value) {
-                // $query->where($key, 'like', '%' . $value . '%');
-                // $query->where($key, 'like', $value);
                 $query->where($key, $value);
             }
         }
-
-        //comprobar el estado de los registros
-        // $query->where("deleted", 0);
 
         $suggestions = $query->paginate(5);
 
@@ -83,8 +74,7 @@ class HomeController extends Controller
     //TODO: Trasladar una copia de la siguiente funcion a AreaController y modificar el crud areas frontend para usar esa funcion
     public function getSubareas($idArea)
     {
-        // prioorizar registros activo
-        // $subareas = Sub_area::where('area_id', $idArea)->get();
+        // prioorizar registros activos
         $subareas = Sub_area::where('area_id', $idArea)
             ->orderBy('deleted', 'asc')
             ->get();
@@ -118,10 +108,6 @@ class HomeController extends Controller
 
         $consulta = new SuggestionExport($searchParams, $startDate, $endDate);
 
-        // dd($consulta->collection());
-
-        // return response()->json($consulta->collection());
-
         return Excel::download(
             $consulta,
             'reporte-buzon-sugerencias_' . date('Ymd') . '.xlsx'
@@ -134,28 +120,6 @@ class HomeController extends Controller
         return view('areas.area', [
             'areas' => $areas
         ]);
-    }
-
-    public function prueba($idRegistro)
-    {
-        $sugerencia = Suggestion::find($idRegistro);
-        // sede, categoria, participante, carrera, semestre, area, sugerencia, fecha
-
-
-        // if ($sugerencia->sede === "CBB") {
-        //     $sugerencia->sede = "LPZ";
-        //     $sugerencia->save();
-        // } else if ($sugerencia->sede === "LPZ") {
-        //     $sugerencia->sede = "CBB";
-        //     $sugerencia->save();
-        // }
-
-        // ! respuesta: {ejemplo: "LPZ"}
-        // return response()->json(['ejemplo' => $sugerencia->sede]); 
-        // ! respuesta: {sede: "LPZ", participante: "Docente", carrera: "...", ...}
-        // return response()->json($sugerencia);
-        // ! [{sede: "LPZ", participante: "Docente", carrera: "...", ...}, ...]
-        // return response()->json([$sugerencia]);
     }
 
     public function updateSuggestion(Request $request)
@@ -196,21 +160,6 @@ class HomeController extends Controller
         return response()->json($request->idSuggestion);
     }
 
-    public function pruebaEjemplo($id)
-    {
-        // FUNCIONA
-        // $sugerencias = Sub_area::find($id)->suggestions;
-        // dd([$sugerencias[0]->sede, $sugerencias[0]->area]);
-
-        // $subarea = Suggestion::find($id);
-        $subarea = Suggestion::with('subarea')
-            ->find($id);
-
-        // dd($subarea);
-        return response()->json($subarea);
-    }
-
-
     public function dashboard(Request $request)
     {
         $searchCategoria = $request->input('search_categoria');
@@ -231,11 +180,8 @@ class HomeController extends Controller
             list($startDate, $endDate) = explode(' - ', $dateRange);
 
             // ! CORREGIR EL DESFACE 
-            //TODO: hacer lo mismo en las consultas que hace la vista de sugerencias (y su reporte excel)
             $startDate = Carbon::createFromFormat('d/m/Y', $startDate)->format('Y-m-d') . " " . "00:00:00";
             $endDate = Carbon::createFromFormat('d/m/Y', $endDate)->format('Y-m-d') . " " . "23:59:59";
-
-            // return response()->json(["inicio" => $startDate, "fin" => $endDate]);
 
             if ($searchCategoria && $searchCategoria !== '0') {
                 $query->where('categoria', $searchCategoria);
@@ -275,21 +221,6 @@ class HomeController extends Controller
                     return $query->where('by_', $searchBy);
                 })
                 ->count();
-
-            // return response()->json($contarSugerencias);
-
-            // $sugerenciasPorArea = Suggestion::select('area', \DB::raw('count(*) as total'))
-            //     ->whereBetween('created_at', [$startDate, $endDate])
-            //     ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
-            //         return $query->where('categoria', $searchCategoria);
-            //     })
-            //     ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
-            //         return $query->where('by_', $searchBy);
-            //     })
-            //     ->groupBy('area')
-            //     ->orderByDesc('total')
-            //     ->get();
-
 
             // ! SOLO MOSTRAR EN EL CHART LAS AREAS QUE TENGAN REGISTROS ASOCIADOS A SUGERENCIAS
             $sugerenciasPorArea = DB::table('areas')
@@ -373,18 +304,6 @@ class HomeController extends Controller
                 })
                 ->groupBy('sede')->get();
 
-            // $sugerenciasPorArea = Suggestion::select('area', \DB::raw('count(*) as total'))
-            //     ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
-            //         return $query->where('categoria', $searchCategoria);
-            //     })
-            //     ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
-            //         return $query->where('by_', $searchBy);
-            //     })
-            //     ->groupBy('area')->orderByDesc('total')->get();
-
-            // $x = Suggestion::join('areas', 'suggestions.area_id', '=', 'areas.id')
-            //     ->select('areas.area', 'suggestions.id', DB::raw('COUNT(*) as cantidad'))->groupBy('areas.id')->get();
-
             // ! TODAS LAS AREAS
             // $sugerenciasPorArea = DB::table('areas')
             //     ->leftJoin('suggestions', 'areas.id', '=', 'suggestions.area_id')
@@ -422,8 +341,6 @@ class HomeController extends Controller
              * *      {"area":"Cl\u00ednica UNIFRANZ","total":7},{"area":"Fundaci\u00f3n UNIFRANZ","total":10},
              * * ]
              */
-
-            // return response()->json($sugerenciasPorArea);
 
             $suggestionCount = Suggestion::where('deleted', 0)
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {

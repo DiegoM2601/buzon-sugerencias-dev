@@ -52,7 +52,7 @@ selectores.forEach((selector) => {
     selector.addEventListener("change", (e) => {
         searchParams();
         /**
-         * El evento change en el datetimepicker se configura directo en home.blade.php
+         * ! El evento change en el datetimepicker se configura directo en el script de home.blade.php
          */
     });
 });

@@ -102,11 +102,6 @@ class AreasController extends Controller
 
         $sugerencias = Suggestion::where('subarea_id', $request->subareaId)->get();
 
-        // foreach ($sugerencias as $sugerencia) {
-        //     $sugerencia->subarea_id = null;
-        //     $sugerencia->save();
-        // }
-
         return response()->json(["onDeleteSuggestions" => count($sugerencias), "subarea" => $subarea]);
     }
 

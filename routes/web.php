@@ -35,9 +35,6 @@ Route::resource('areas', App\Http\Controllers\AreasController::class);
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 Route::get('/export', [App\Http\Controllers\HomeController::class, 'export'])->name('export');
-
-// ! Modificado para emplear el controlador AreasController
-// Route::get('/area', [App\Http\Controllers\HomeController::class, 'area'])->name('area');
 Route::get('/area', [App\Http\Controllers\AreasController::class, 'index'])->name('area');
 
 Route::get('/acceso-restringido', function () {
@@ -47,7 +44,6 @@ Route::get('/acceso-restringido', function () {
 Route::get('/google/redirect', [App\Http\Controllers\GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('/google/callback', [App\Http\Controllers\GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
 
-// ! MIS RUTAS
 Route::post('/update-suggestion', [App\Http\Controllers\HomeController::class, 'updateSuggestion'])->name("updateSuggestion");
 Route::post('/delete-register', [App\Http\Controllers\HomeController::class, 'deleteSuggestion'])->name("deleteSuggestion");
 Route::post('/undo-delete-register', [App\Http\Controllers\HomeController::class, 'undoDeleteSuggestion']);
@@ -63,7 +59,3 @@ Route::post('/undo-delete-area', [App\Http\Controllers\AreasController::class, '
 Route::get('/registro', function () {
     return view('auth.register');
 });
-
-
-//! PRUEBAS
-Route::get("/prueba/{id}", [App\Http\Controllers\HomeController::class, 'pruebaEjemplo']);

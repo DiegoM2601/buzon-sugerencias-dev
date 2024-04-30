@@ -1,5 +1,6 @@
-const ancla = document.getElementById("ancla");
 const _token = document.querySelector("input[name=_token]").value;
+let btnPulsado;
+
 const updateSubareaToast = bootstrap.Toast.getOrCreateInstance(
     document.getElementById("updateSubareaToast")
 );
@@ -12,7 +13,6 @@ const deleteSubareaToast2 = bootstrap.Toast.getOrCreateInstance(
 const createSubareaToast = bootstrap.Toast.getOrCreateInstance(
     document.getElementById("createSubareaToast")
 );
-let btnPulsado;
 
 // formulario modal update subarea
 const updateSubareaFormInput = document.querySelectorAll(".update-subarea-txt");
@@ -26,6 +26,7 @@ const createSubareaForm = document.getElementById("create_subarea_form");
 // modal delete subarea
 const deleteSubareaBtn = document.getElementById("deleteSubareaBtn");
 
+// ! EVENTOS NESTED TABLE
 document.getElementById("table-areas").addEventListener("click", (e) => {
     // ! DESPLEGAR SUBAREAS
     if (
@@ -62,7 +63,9 @@ document.getElementById("table-areas").addEventListener("click", (e) => {
                 ? e.target
                 : e.target.parentNode
         );
-    } else if (
+    }
+    // ! BOTON CREAR SUBAREA
+    else if (
         e.target.classList.contains("createSubarea") ||
         e.target.parentNode.classList.contains("createSubarea")
     ) {
@@ -71,7 +74,9 @@ document.getElementById("table-areas").addEventListener("click", (e) => {
                 ? e.target
                 : e.target.parentNode
         );
-    } else if (
+    }
+    // ! BOTON ELIMINAR SUBAREA
+    else if (
         e.target.classList.contains("deleteSubarea") ||
         e.target.parentNode.classList.contains("deleteSubarea")
     ) {
@@ -79,7 +84,9 @@ document.getElementById("table-areas").addEventListener("click", (e) => {
             ? e.target
             : e.target.parentNode;
         $("#modalDeleteSubarea").modal("show");
-    } else if (
+    }
+    // ! BOTON REESTABLECER SUBAREA
+    else if (
         e.target.classList.contains("restoreSubarea") ||
         e.target.parentNode.classList.contains("restoreSubarea")
     ) {
@@ -90,10 +97,8 @@ document.getElementById("table-areas").addEventListener("click", (e) => {
     }
 });
 
+// ! *********************************************  ACTUALIZAR SUBAREA  ******************************************************************
 const prepararModalUpdateSubarea = (btn) => {
-    // updateSubareaFormInput[0].value =
-    //     btn.parentNode.parentNode.querySelector("td").innerText;
-
     btnPulsado = btn;
 
     updateSubareaFormInput[0].value = document.querySelector(
@@ -110,6 +115,7 @@ const prepararModalUpdateSubarea = (btn) => {
     console.log("btn:" + btn.getAttribute("id-subarea"));
 };
 
+// ! VALIDAR FORMULARIO
 updateSubareaForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -121,6 +127,7 @@ updateSubareaForm.addEventListener("submit", (e) => {
     }
 });
 
+// ! CONFIRMAR EDICION
 updateSubareaBtn.addEventListener("click", (e) => {
     e.preventDefault();
     $("#modalUpdateSubarea2").modal("hide");
@@ -164,6 +171,24 @@ updateSubareaBtn.addEventListener("click", (e) => {
         });
 });
 
+// ! *********************************************  CREAR SUBAREA  ******************************************************************
+const prepararModalCreateSubarea = (btn) => {
+    btnPulsado = btn;
+    // createSubareaFo
+    createSubareaFormInput[0].value = document.querySelector(
+        ".nested-table-parent > td:nth-child(2) p"
+    ).innerText;
+
+    // limpiar input
+    createSubareaFormInput[1].value = "";
+
+    createSubareaFormInput[2].value = document
+        .querySelector(".nested-table-parent")
+        .getAttribute("id-area");
+
+    $("#modalCreateSubarea").modal("show");
+};
+// ! VALIDAR FORMULARIO Y CREAR REGISTRO
 createSubareaForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -230,6 +255,7 @@ createSubareaForm.addEventListener("submit", async (e) => {
     }
 });
 
+// ! *********************************************  DESCARTAR SUBAREA  ******************************************************************
 deleteSubareaBtn.addEventListener("click", async () => {
     let row = btnPulsado.parentNode.parentNode;
     let tbody = row.parentNode;
@@ -244,9 +270,6 @@ deleteSubareaBtn.addEventListener("click", async () => {
         "#deleteSubareaToast2 .toast-body"
     ).innerHTML = `${res.onDeleteSuggestions} sugerencias/reclamos están utilizando esta subárea.`;
     deleteSubareaToast2.show();
-
-    // row.remove();
-    // console.log(res.subarea);
 
     if (tbody.querySelectorAll("tr").length > 1) {
         row.remove();
@@ -283,6 +306,8 @@ deleteSubareaBtn.addEventListener("click", async () => {
     }
     $("#modalDeleteSubarea").modal("hide");
 });
+
+// ! *********************************************  REESTABLECER SUBAREA  ******************************************************************
 document
     .getElementById("restoreSubareaBtn")
     .addEventListener("click", async () => {
@@ -330,41 +355,8 @@ document
             `;
         }
 
-        // row.innerHTML = `
-        // <td>
-        //     <span class="badge badge-success">ACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;${subarea.subarea}
-        // </td>
-        // <td>
-        //     <button class="btn btn-light-primary updateSubarea" id-subarea = "${subarea.id}">
-        //         <i class="fa-solid fa-pen-to-square"></i>
-        //     </button>
-        //     <button class="btn btn-light-primary deleteSubarea" id-subarea = "${subarea.id}">
-        //         <i class="fa-solid fa-trash"></i>
-        //     </button>
-        // </td>
-        // `;
-
         $("#modalRestoreSubarea").modal("hide");
     });
-
-const prepararModalCreateSubarea = (btn) => {
-    btnPulsado = btn;
-    // createSubareaFormInput[0].value = document.querySelector(
-    //     ".nested-table-parent > tr:nth-child(2) .subarea-tr-text"
-    // ).innerText;
-    createSubareaFormInput[0].value = document.querySelector(
-        ".nested-table-parent > td:nth-child(2) p"
-    ).innerText;
-
-    // limpiar input
-    createSubareaFormInput[1].value = "";
-
-    createSubareaFormInput[2].value = document
-        .querySelector(".nested-table-parent")
-        .getAttribute("id-area");
-
-    $("#modalCreateSubarea").modal("show");
-};
 
 // ! COLAPSAR TODAS LAS TABLAS ANIDADAS
 const collapseAll = () => {
@@ -398,6 +390,7 @@ const collapseAll = () => {
     }
 };
 
+// ! RECUPERAR TODAS LAS SUBAREAS ASOCIADAS AL AREA SELECCIONADA Y POBLAR LA TABLA
 const fetchSubareas = async (a) => {
     //rotar icono
     a.querySelector("i").classList.toggle("rotate-180");
@@ -464,7 +457,6 @@ const fetchSubareas = async (a) => {
         window.getComputedStyle(newRow).opacity;
         newRow.className += " nested-table-show";
     } else {
-        //TODO: llevar el siguiente código a una función, el mismo se ejecuta también al momento de eliminar filas cuando la nested-table queda vacía
         let newRow = document.createElement("tr");
         newRow.classList.add("nested-table");
 
@@ -488,10 +480,9 @@ const fetchSubareas = async (a) => {
         window.getComputedStyle(newRow).opacity;
         newRow.className += " nested-table-show";
     }
-
-    // newRow.innerHTML = `<td>ejemplo</td><td>ejemplo</td><td>ejemplo</td>`;
-    // insertAfter(a.parentNode.parentNode, newRow);
 };
+
+// ! UTILIDADES
 
 function insertAfter(referenceNode, newNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
@@ -501,6 +492,7 @@ function insertBefore(referenceNode, newNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode);
 }
 
+// ! AXIOS
 const consultarSubareas = (idArea) => {
     return new Promise((resolve, reject) => {
         axios
