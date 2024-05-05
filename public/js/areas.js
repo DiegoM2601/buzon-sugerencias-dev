@@ -1,5 +1,6 @@
-const ancla = document.getElementById("ancla");
 const _token = document.querySelector("input[name=_token]").value;
+let btnPulsado;
+
 const updateSubareaToast = bootstrap.Toast.getOrCreateInstance(
     document.getElementById("updateSubareaToast")
 );
@@ -9,19 +10,23 @@ const deleteSubareaToast1 = bootstrap.Toast.getOrCreateInstance(
 const deleteSubareaToast2 = bootstrap.Toast.getOrCreateInstance(
     document.getElementById("deleteSubareaToast2")
 );
-let btnPulsado;
+const createSubareaToast = bootstrap.Toast.getOrCreateInstance(
+    document.getElementById("createSubareaToast")
+);
 
 // formulario modal update subarea
-const updateSubareaForm = document.querySelectorAll(".update-subarea-txt");
+const updateSubareaFormInput = document.querySelectorAll(".update-subarea-txt");
+const updateSubareaForm = document.getElementById("update_subarea_form");
 const updateSubareaBtn = document.getElementById("updateSubareaBtn");
 
 // formulario modal create subarea
-const createSubareaForm = document.querySelectorAll(".create-subarea-txt");
-const createSubareaBtn = document.getElementById("createSubareaBtn");
+const createSubareaFormInput = document.querySelectorAll(".create-subarea-txt");
+const createSubareaForm = document.getElementById("create_subarea_form");
 
 // modal delete subarea
 const deleteSubareaBtn = document.getElementById("deleteSubareaBtn");
 
+// ! EVENTOS NESTED TABLE
 document.getElementById("table-areas").addEventListener("click", (e) => {
     // ! DESPLEGAR SUBAREAS
     if (
@@ -58,7 +63,9 @@ document.getElementById("table-areas").addEventListener("click", (e) => {
                 ? e.target
                 : e.target.parentNode
         );
-    } else if (
+    }
+    // ! BOTON CREAR SUBAREA
+    else if (
         e.target.classList.contains("createSubarea") ||
         e.target.parentNode.classList.contains("createSubarea")
     ) {
@@ -67,7 +74,9 @@ document.getElementById("table-areas").addEventListener("click", (e) => {
                 ? e.target
                 : e.target.parentNode
         );
-    } else if (
+    }
+    // ! BOTON ELIMINAR SUBAREA
+    else if (
         e.target.classList.contains("deleteSubarea") ||
         e.target.parentNode.classList.contains("deleteSubarea")
     ) {
@@ -75,7 +84,9 @@ document.getElementById("table-areas").addEventListener("click", (e) => {
             ? e.target
             : e.target.parentNode;
         $("#modalDeleteSubarea").modal("show");
-    } else if (
+    }
+    // ! BOTON REESTABLECER SUBAREA
+    else if (
         e.target.classList.contains("restoreSubarea") ||
         e.target.parentNode.classList.contains("restoreSubarea")
     ) {
@@ -86,47 +97,58 @@ document.getElementById("table-areas").addEventListener("click", (e) => {
     }
 });
 
+// ! *********************************************  ACTUALIZAR SUBAREA  ******************************************************************
 const prepararModalUpdateSubarea = (btn) => {
-    // updateSubareaForm[0].value =
-    //     btn.parentNode.parentNode.querySelector("td").innerText;
-
     btnPulsado = btn;
 
-    updateSubareaForm[0].value = document.querySelector(
+    updateSubareaFormInput[0].value = document.querySelector(
         ".nested-table-parent > td:nth-child(2) p"
     ).innerText;
 
-    updateSubareaForm[1].value =
+    updateSubareaFormInput[1].value =
         btn.parentNode.parentNode.querySelector("td .tr-txt").innerText;
 
-    updateSubareaForm[2].value = btn.getAttribute("id-subarea");
+    updateSubareaFormInput[2].value = btn.getAttribute("id-subarea");
 
     $("#modalUpdateSubarea").modal("show");
 
     console.log("btn:" + btn.getAttribute("id-subarea"));
 };
+
+// ! VALIDAR FORMULARIO
+updateSubareaForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    let newSubarea = updateSubareaFormInput[1].value;
+
+    if (newSubarea && newSubarea.length > 0) {
+        $("#modalUpdateSubarea").modal("hide");
+        $("#modalUpdateSubarea2").modal("show");
+    }
+});
+
+// ! CONFIRMAR EDICION
 updateSubareaBtn.addEventListener("click", (e) => {
     e.preventDefault();
     $("#modalUpdateSubarea2").modal("hide");
     let updatedRow = btnPulsado.parentNode.parentNode;
 
-    // TODO: Actualizar la URL
     //prettier-ignore
     // * animacion
     updatedRow.innerHTML = `
         <td colspan="3">
-            <img src="https://buzon-sugerencias.bo/gifs/loading2.gif" width = "120px">
+            <img src="gifs/loading2.gif" width = "120px">
         </td>
     `;
     updatedRow.classList.toggle("center-text");
 
     axios
-        .post("https://buzon-sugerencias.bo/update-subarea", {
+        .post("/update-subarea", {
             headers: {
                 "X-CSRF-TOKEN": _token,
             },
-            idSubarea: updateSubareaForm[2].value,
-            subarea: updateSubareaForm[1].value,
+            idSubarea: updateSubareaFormInput[2].value,
+            subarea: updateSubareaFormInput[1].value,
         })
         .then((res) => {
             console.log(res.data);
@@ -149,20 +171,41 @@ updateSubareaBtn.addEventListener("click", (e) => {
         });
 });
 
-createSubareaBtn.addEventListener("click", async () => {
+// ! *********************************************  CREAR SUBAREA  ******************************************************************
+const prepararModalCreateSubarea = (btn) => {
+    btnPulsado = btn;
+    // createSubareaFo
+    createSubareaFormInput[0].value = document.querySelector(
+        ".nested-table-parent > td:nth-child(2) p"
+    ).innerText;
+
+    // limpiar input
+    createSubareaFormInput[1].value = "";
+
+    createSubareaFormInput[2].value = document
+        .querySelector(".nested-table-parent")
+        .getAttribute("id-area");
+
+    $("#modalCreateSubarea").modal("show");
+};
+// ! VALIDAR FORMULARIO Y CREAR REGISTRO
+createSubareaForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
     let newRow = document.createElement("tr");
-    let subarea = createSubareaForm[1].value;
-    let areaId = createSubareaForm[2].value;
+    let subarea = createSubareaFormInput[1].value;
+    let areaId = createSubareaFormInput[2].value;
 
-    // console.log(subarea, areaId);
+    if (subarea && subarea.length > 0) {
+        // console.log(subarea, areaId);
 
-    let nuevaSubareaId = await createSubarea(areaId, subarea);
+        let nuevaSubareaId = await createSubarea(areaId, subarea);
 
-    if (btnPulsado.classList.contains("empty-nested-table")) {
-        // console.log(btn.parentNode.parentNode);
+        if (btnPulsado.classList.contains("empty-nested-table")) {
+            // console.log(btn.parentNode.parentNode);
 
-        //prettier-ignore
-        btnPulsado.parentNode.parentNode.innerHTML = `
+            //prettier-ignore
+            btnPulsado.parentNode.parentNode.innerHTML = `
             <td class = "nested-add-subarea">
                 <button class="btn btn-light-primary createSubarea">
                     <i class="fa-solid fa-plus"></i>
@@ -188,10 +231,9 @@ createSubareaBtn.addEventListener("click", async () => {
                 </div>
             </td>   
         `;
-    } else {
-        //TODO: Insertar el id de la subarea en lugar de la area
-        //prettier-ignore
-        newRow.innerHTML = `
+        } else {
+            //prettier-ignore
+            newRow.innerHTML = `
             <td><span class="badge badge-success">ACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;<p class = "tr-txt">${subarea}</p></td>
             <td>
                 <button class="btn btn-light-primary updateSubarea" id-subarea = "${nuevaSubareaId}">
@@ -203,14 +245,17 @@ createSubareaBtn.addEventListener("click", async () => {
             </td>
         `;
 
-        insertBefore(
-            document.querySelector(".table-subareas-nested tr:first-child"),
-            newRow
-        );
+            insertBefore(
+                document.querySelector(".table-subareas-nested tr:first-child"),
+                newRow
+            );
+        }
+        $("#modalCreateSubarea").modal("hide");
+        createSubareaToast.show();
     }
-    $("#modalCreateSubarea").modal("hide");
 });
 
+// ! *********************************************  DESCARTAR SUBAREA  ******************************************************************
 deleteSubareaBtn.addEventListener("click", async () => {
     let row = btnPulsado.parentNode.parentNode;
     let tbody = row.parentNode;
@@ -225,12 +270,6 @@ deleteSubareaBtn.addEventListener("click", async () => {
         "#deleteSubareaToast2 .toast-body"
     ).innerHTML = `${res.onDeleteSuggestions} sugerencias/reclamos están utilizando esta subárea.`;
     deleteSubareaToast2.show();
-
-    // row.remove();
-    // console.log(res.subarea);
-
-    // Llevar la columna eliminada al final de la tabla
-    //TODO: Como ya se esta usando span al interior del elemento td para señalar el estado, que el texto vaya dentro de un p y de paso aplicamos truncate
 
     if (tbody.querySelectorAll("tr").length > 1) {
         row.remove();
@@ -267,6 +306,8 @@ deleteSubareaBtn.addEventListener("click", async () => {
     }
     $("#modalDeleteSubarea").modal("hide");
 });
+
+// ! *********************************************  REESTABLECER SUBAREA  ******************************************************************
 document
     .getElementById("restoreSubareaBtn")
     .addEventListener("click", async () => {
@@ -314,38 +355,8 @@ document
             `;
         }
 
-        // row.innerHTML = `
-        // <td>
-        //     <span class="badge badge-success">ACTIVO</span>&nbsp;&nbsp;&nbsp;&nbsp;${subarea.subarea}
-        // </td>
-        // <td>
-        //     <button class="btn btn-light-primary updateSubarea" id-subarea = "${subarea.id}">
-        //         <i class="fa-solid fa-pen-to-square"></i>
-        //     </button>
-        //     <button class="btn btn-light-primary deleteSubarea" id-subarea = "${subarea.id}">
-        //         <i class="fa-solid fa-trash"></i>
-        //     </button>
-        // </td>
-        // `;
-
         $("#modalRestoreSubarea").modal("hide");
     });
-
-const prepararModalCreateSubarea = (btn) => {
-    btnPulsado = btn;
-    // createSubareaForm[0].value = document.querySelector(
-    //     ".nested-table-parent > tr:nth-child(2) .subarea-tr-text"
-    // ).innerText;
-    createSubareaForm[0].value = document.querySelector(
-        ".nested-table-parent > td:nth-child(2) p"
-    ).innerText;
-
-    createSubareaForm[2].value = document
-        .querySelector(".nested-table-parent")
-        .getAttribute("id-area");
-
-    $("#modalCreateSubarea").modal("show");
-};
 
 // ! COLAPSAR TODAS LAS TABLAS ANIDADAS
 const collapseAll = () => {
@@ -379,6 +390,7 @@ const collapseAll = () => {
     }
 };
 
+// ! RECUPERAR TODAS LAS SUBAREAS ASOCIADAS AL AREA SELECCIONADA Y POBLAR LA TABLA
 const fetchSubareas = async (a) => {
     //rotar icono
     a.querySelector("i").classList.toggle("rotate-180");
@@ -445,7 +457,6 @@ const fetchSubareas = async (a) => {
         window.getComputedStyle(newRow).opacity;
         newRow.className += " nested-table-show";
     } else {
-        //TODO: llevar el siguiente código a una función, el mismo se ejecuta también al momento de eliminar filas cuando la nested-table queda vacía
         let newRow = document.createElement("tr");
         newRow.classList.add("nested-table");
 
@@ -469,10 +480,9 @@ const fetchSubareas = async (a) => {
         window.getComputedStyle(newRow).opacity;
         newRow.className += " nested-table-show";
     }
-
-    // newRow.innerHTML = `<td>ejemplo</td><td>ejemplo</td><td>ejemplo</td>`;
-    // insertAfter(a.parentNode.parentNode, newRow);
 };
+
+// ! UTILIDADES
 
 function insertAfter(referenceNode, newNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
@@ -482,10 +492,11 @@ function insertBefore(referenceNode, newNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode);
 }
 
+// ! AXIOS
 const consultarSubareas = (idArea) => {
     return new Promise((resolve, reject) => {
         axios
-            .get("https://buzon-sugerencias.bo/get-subareas/" + idArea, {
+            .get("/get-subareas/" + idArea, {
                 headers: {
                     "X-CSRF-TOKEN": _token,
                 },
@@ -502,7 +513,7 @@ const consultarSubareas = (idArea) => {
 const createSubarea = (areaId, subarea) => {
     return new Promise((resolve, reject) => {
         axios
-            .post("https://buzon-sugerencias.bo/create-subarea", {
+            .post("/create-subarea", {
                 headers: {
                     "X-CSRF-TOKEN": _token,
                 },
@@ -521,7 +532,7 @@ const createSubarea = (areaId, subarea) => {
 const deleteSubarea = (subareaId) => {
     return new Promise((resolve, reject) => {
         axios
-            .post("https://buzon-sugerencias.bo/delete-subarea", {
+            .post("/delete-subarea", {
                 headers: {
                     "X-CSRF-TOKEN": _token,
                 },
@@ -539,7 +550,7 @@ const deleteSubarea = (subareaId) => {
 const restoreSubarea = (subareaId) => {
     return new Promise((resolve, reject) => {
         axios
-            .post("https://buzon-sugerencias.bo/undo-delete-subarea", {
+            .post("/undo-delete-subarea", {
                 headers: {
                     "X-CSRF-TOKEN": _token,
                 },

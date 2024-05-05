@@ -102,11 +102,6 @@ class AreasController extends Controller
 
         $sugerencias = Suggestion::where('subarea_id', $request->subareaId)->get();
 
-        // foreach ($sugerencias as $sugerencia) {
-        //     $sugerencia->subarea_id = null;
-        //     $sugerencia->save();
-        // }
-
         return response()->json(["onDeleteSuggestions" => count($sugerencias), "subarea" => $subarea]);
     }
 
@@ -143,7 +138,6 @@ class AreasController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    // TODO: Cambiar stated por deleted EN LA BASE DE DATOS
     public function destroy($id)
     {
         $area = ModelsArea::find($id);

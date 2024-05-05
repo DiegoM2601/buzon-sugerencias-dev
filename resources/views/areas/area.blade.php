@@ -290,30 +290,33 @@
                                                     <h3 class="modal-title">Modificar Subárea</h3>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <div class="mb-10">
-                                                        <label for="exampleFormControlInput1" class="form-label">Área
-                                                            a la que pertence:</label>
-                                                        <div class="position-relative mb-3">
-                                                            <input type="text"
-                                                                class="form-control form-control-solid update-subarea-txt"
-                                                                readonly disabled />
+                                                    <form id = "update_subarea_form">
+                                                        <div class="mb-10">
+                                                            <label for="exampleFormControlInput1" class="form-label">Área
+                                                                a la que pertence:</label>
+                                                            <div class="position-relative mb-3">
+                                                                <input type="text"
+                                                                    class="form-control form-control-solid update-subarea-txt"
+                                                                    readonly disabled />
+                                                            </div>
+                                                            <label for="exampleFormControlInput1"
+                                                                class="form-label">Editar
+                                                                Subárea:</label>
+                                                            <div class="position-relative">
+                                                                <div class="required position-absolute top-0"></div>
+                                                                <input type="text"
+                                                                    class="form-control form-control-solid update-subarea-txt"
+                                                                    name="area" autocomplete="off" required />
+                                                            </div>
+                                                            <input type="hidden" class = "update-subarea-txt">
                                                         </div>
-                                                        <label for="exampleFormControlInput1" class="form-label">Editar
-                                                            Subárea:</label>
-                                                        <div class="position-relative">
-                                                            <input type="text"
-                                                                class="form-control form-control-solid update-subarea-txt"
-                                                                name="area" autocomplete="off" />
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-light"
+                                                                data-bs-dismiss="modal">Cerrar</button>
+                                                            <button class="btn btn-primary"
+                                                                type = "submit">Actualizar</button>
                                                         </div>
-                                                        <input type="hidden" class = "update-subarea-txt">
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-light"
-                                                            data-bs-dismiss="modal">Cerrar</button>
-                                                        <button class="btn btn-primary"
-                                                            data-bs-target="#modalUpdateSubarea2"
-                                                            data-bs-toggle="modal">Actualizar</button>
-                                                    </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -392,29 +395,32 @@
                                                     <h3 class="modal-title">Nueva Subárea</h3>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <div class="mb-10">
-                                                        <label for="exampleFormControlInput1" class="form-label">Área
-                                                            a la que pertence:</label>
-                                                        <div class="position-relative mb-3">
-                                                            <input type="text"
-                                                                class="form-control form-control-solid create-subarea-txt"
-                                                                value = "Fundación UNIFRANZ" readonly disabled />
+                                                    <form id = "create_subarea_form">
+                                                        <div class="mb-10">
+                                                            <label for="exampleFormControlInput1" class="form-label">Área
+                                                                a la que pertence:</label>
+                                                            <div class="position-relative mb-3">
+                                                                <input type="text"
+                                                                    class="form-control form-control-solid create-subarea-txt"
+                                                                    value = "Fundación UNIFRANZ" readonly disabled />
+                                                            </div>
+                                                            <label for="exampleFormControlInput1" class="form-label">Nueva
+                                                                Subárea:</label>
+                                                            <div class="position-relative">
+                                                                <div class="required position-absolute top-0"></div>
+                                                                <input type="text"
+                                                                    class="form-control form-control-solid create-subarea-txt"
+                                                                    name="area" autocomplete="off" required />
+                                                            </div>
+                                                            <input type="hidden" class = "create-subarea-txt">
                                                         </div>
-                                                        <label for="exampleFormControlInput1" class="form-label">Nueva
-                                                            Subárea:</label>
-                                                        <div class="position-relative">
-                                                            <input type="text"
-                                                                class="form-control form-control-solid create-subarea-txt"
-                                                                name="area" autocomplete="off" />
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-light"
+                                                                data-bs-dismiss="modal">Cerrar</button>
+                                                            <button type="submit"
+                                                                class="btn btn-primary">Guardar</button>
                                                         </div>
-                                                        <input type="hidden" class = "create-subarea-txt">
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-light"
-                                                            data-bs-dismiss="modal">Cerrar</button>
-                                                        <button class="btn btn-primary"
-                                                            id = "createSubareaBtn">Guardar</button>
-                                                    </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -435,19 +441,19 @@
                                         </div>
                                     </div>
 
-                                    {{-- <div class="position-fixed bottom-0 end-0 p-3" style="z-index:99999;">
-                                        <div class="toast align-items-center text-white bg-primary border-0 p-3 fs-6"
-                                            id = "deleteSubareaToast" role="alert" aria-live="assertive"
+                                    <div class="position-fixed bottom-0 end-0 p-3" style="z-index:99999;">
+                                        <div class="toast align-items-center text-white bg-success border-0 p-3 fs-5"
+                                            id = "createSubareaToast" role="alert" aria-live="assertive"
                                             aria-atomic="true">
                                             <div class="d-flex">
                                                 <div class="toast-body">
-                                                    Actualizado correctamente.
+                                                    Creado exitosamente.
                                                 </div>
                                                 <button type="button" class="btn-close btn-close-white me-2 m-auto"
                                                     data-bs-dismiss="toast" aria-label="Close"></button>
                                             </div>
                                         </div>
-                                    </div> --}}
+                                    </div>
 
                                     <div class="toast-container position-static position-fixed bottom-0 end-0 p-3"
                                         style="z-index:99999;">
@@ -456,7 +462,7 @@
                                             aria-atomic="true">
                                             <div class="d-flex">
                                                 <div class="toast-body">
-                                                    Actualizado correctamente.
+                                                    Descartado correctamente.
                                                 </div>
                                                 <button type="button" class="btn-close btn-close-white me-2 m-auto"
                                                     data-bs-dismiss="toast" aria-label="Close"></button>
