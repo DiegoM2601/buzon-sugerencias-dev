@@ -166,15 +166,22 @@ class HomeController extends Controller
         $searchBy = $request->input('search_by');
         $query = Suggestion::query();
 
+
         $hoy = Carbon::now();
-        $haceUnaSemana = $hoy->subWeek();
-        $haceUnMes = $hoy->subDays(30);
-        // $suggestionCount = Suggestion::where('deleted', 0)->count();
-        $sugerenciasUltimaSemana = Suggestion::where('created_at', '>=', $haceUnaSemana)->where('deleted', 0)
-            ->count();
+        $haceUnaSemana = Carbon::now()->subWeek();
+        $haceUnMes = Carbon::now()->subDays(30);
+
+        // dd($haceUnaSemana);
+
         $sugerenciasUltimoMes = Suggestion::where('created_at', '>=', $haceUnMes)->where('deleted', 0)
             ->count();
-        //------------------------------------    
+        $sugerenciasUltimaSemana = Suggestion::where('created_at', '>=', $haceUnaSemana)->where('deleted', 0)
+            ->count();
+
+        // dd($sugerenciasUltimoMes->toSql());
+        // dd($haceUnMes);
+
+
         $dateRange = $request->input('datefilter');
         if ($dateRange) {
             list($startDate, $endDate) = explode(' - ', $dateRange);
@@ -183,12 +190,26 @@ class HomeController extends Controller
             $startDate = Carbon::createFromFormat('d/m/Y', $startDate)->format('Y-m-d') . " " . "00:00:00";
             $endDate = Carbon::createFromFormat('d/m/Y', $endDate)->format('Y-m-d') . " " . "23:59:59";
 
+            // ! REPORTES GENERALES
             if ($searchCategoria && $searchCategoria !== '0') {
                 $query->where('categoria', $searchCategoria);
+
+                $sugerenciasUltimoMes = Suggestion::where('created_at', '>=', $haceUnMes)->where('deleted', 0)->where('categoria', $searchCategoria)
+                    ->count();
+                $sugerenciasUltimaSemana = Suggestion::where('created_at', '>=', $haceUnaSemana)->where('deleted', 0)->where('categoria', $searchCategoria)
+                    ->count();
             }
             if ($searchBy && $searchBy !== '0') {
                 $query->where('by_', $searchBy);
+
+                $sugerenciasUltimoMes = Suggestion::where('created_at', '>=', $haceUnMes)->where('deleted', 0)->where('categoria', $searchCategoria)
+                    ->count();
+                $sugerenciasUltimaSemana = Suggestion::where('created_at', '>=', $haceUnaSemana)->where('deleted', 0)->where('categoria', $searchCategoria)
+                    ->count();
             }
+
+
+
             $sugerenciasPorFecha = Suggestion::select(\DB::raw('date(created_at) as fecha'), \DB::raw('count(*) as total'))->where('deleted', 0)
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
@@ -281,11 +302,22 @@ class HomeController extends Controller
                 ->orderBy('total')
                 ->get();
         } else {
+            // ! REPORTES GENERALES
             if ($searchCategoria && $searchCategoria !== '0') {
                 $query->where('categoria', $searchCategoria);
+
+                $sugerenciasUltimoMes = Suggestion::where('created_at', '>=', $haceUnMes)->where('deleted', 0)->where('categoria', $searchCategoria)
+                    ->count();
+                $sugerenciasUltimaSemana = Suggestion::where('created_at', '>=', $haceUnaSemana)->where('deleted', 0)->where('categoria', $searchCategoria)
+                    ->count();
             }
             if ($searchBy && $searchBy !== '0') {
                 $query->where('by_', $searchBy);
+
+                $sugerenciasUltimoMes = Suggestion::where('created_at', '>=', $haceUnMes)->where('deleted', 0)->where('categoria', $searchCategoria)
+                    ->count();
+                $sugerenciasUltimaSemana = Suggestion::where('created_at', '>=', $haceUnaSemana)->where('deleted', 0)->where('categoria', $searchCategoria)
+                    ->count();
             }
             $sugerenciasPorFecha = Suggestion::select(\DB::raw('date(created_at) as fecha'), \DB::raw('count(*) as total'))->where('deleted', 0)
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {

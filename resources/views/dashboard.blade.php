@@ -1,6 +1,6 @@
 @extends('template.app')
 @section('show-1', 'show')
-@section('title-content', 'inicio')
+@section('title-content', 'Inicio')
 
 @section('breadcrumb')
     <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
@@ -45,7 +45,7 @@
                         <div class="card-body">
                             <div class="card-header">
                                 <h4 class="card-title" style="color: rgb(25, 9, 255);">Semanales</h4>
-                                <p class="card-category">Sugerencias de la última semana</p>
+                                <p class="card-category">Registros de la última semana</p>
                             </div>
                             <h3 class="mb-0" style="text-align: center; font-weight: bold;">{{ $sugerenciasUltimaSemana }}
                             </h3>
@@ -57,7 +57,9 @@
                         <div class="card-body">
                             <div class="card-header">
                                 <h4 class="card-title" style="color: rgb(74, 233, 53);">Mensuales</h4>
-                                <p class="card-category">Sugerencias del último mes</p>
+                                <p class="card-category">Registros del último
+                                    mes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </p>
                             </div>
                             <h3 class="mb-0" style="text-align: center; font-weight: bold;">{{ $sugerenciasUltimoMes }}
                             </h3>
