@@ -73,6 +73,67 @@
                                 <h4 class="card-title">Frecuencia de sugerencias</h4>
                                 <table class="table gs-7 gy-7 gx-7">
                                     <thead>
+                                        <tr class="fw-semibold fs-6 text-gray-800">
+                                            <th>
+                                                Sede
+                                                <select type="search" name="search_categoria" id="search_sede"
+                                                    class="form-select" data-control="select2" data-placeholder="Todas">
+                                                    <option value="0">Todos</option>
+                                                    <option value="LPZ">
+                                                        La Paz</option>
+                                                    <option value="SCZ">
+                                                        Santa Cruz</option>
+                                                    <option value="CBB">
+                                                        Cochabamba</option>
+                                                    <option value="EAT">
+                                                        El Alto</option>
+                                                </select>
+                                            </th>
+                                            <th>
+                                                Semestre
+                                                <select type="search" name="search_by" id="search_semestre"
+                                                    class="form-select" data-control="select2" data-placeholder="Todas">
+                                                    <option value="0">Todos</option>
+                                                    <option value="1">
+                                                        1</option>
+                                                    <option value="2">
+                                                        2</option>
+                                                    <option value="3">
+                                                        3</option>
+                                                    <option value="4">
+                                                        4</option>
+                                                    <option value="5">
+                                                        5</option>
+                                                    <option value="6">
+                                                        6</option>
+                                                    <option value="7">
+                                                        7</option>
+                                                    <option value="8">
+                                                        8</option>
+                                                    <option value="9">
+                                                        9</option>
+                                                    <option value="10">
+                                                        10</option>
+                                                    <option value="11">
+                                                        11</option>
+                                                </select>
+                                            </th>
+                                            {{-- TODO: Hacer que esta columna ocupe el espacio de 2 --}}
+                                            <th>
+                                                Área
+                                                <select type="search" name="search_by" id="search_area" class="form-select"
+                                                    data-control="select2" data-placeholder="Todas">
+                                                    <option value="0">Todas las Áreas</option>
+                                                    {{-- ! Solo areas activas --}}
+                                                    @foreach ($areas as $area)
+                                                        @if ($area->deleted == 0)
+                                                            <option value="{{ $area->id }}">{{ $area->area }}
+                                                            </option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </th>
+                                        </tr>
                                         <tr class="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
                                             <th>
                                                 Categoría
@@ -93,13 +154,14 @@
                                                 </select>
                                             </th>
                                             <th>
-                                                <input class="form-control" type="text" name="datefilter" id="datefilter"
-                                                    placeholder="Filtro por fechas" />
+                                                <input class="form-control" type="text" name="datefilter"
+                                                    id="datefilter" placeholder="Filtro por fechas" />
                                             </th>
                                             <th>
                                                 <button id="searchButtonDate" name="searchButtonDate"
-                                                    class="btn btn-primary" type="submit"><i
-                                                        class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+                                                    class="btn btn-primary" type="submit">
+                                                    <i class="fa-solid fa-magnifying-glass"></i> Buscar
+                                                </button>
                                             </th>
                                         </tr>
                                     </thead>
@@ -161,16 +223,28 @@
         </div>
     </body>
 @endsection
-
+{{-- TODO: Guardar los nuevos valores de busqueda como cookies para mantener los valores al momento de recargar la pagina --}}
 @section('script')
     <script>
         $("#searchButtonDate").click(function() {
             var searchBy = $("#search_by").val();
             var searchCategoria = $("#search_categoria").val();
             var dateRange = $('input[name="datefilter"]').val();
-            var url = 'dashboard?datefilter=' + dateRange +
-                '&search_by=' + searchBy +
-                '&search_categoria=' + searchCategoria;
+
+            var searchSede = $('#search_sede').val();
+            var searchSemestre = $('#search_semestre').val();
+            var searchArea = $('#search_area').val();
+
+            //prettier-ignore
+            var url = 'dashboard?datefilter=' + dateRange + '&search_by=' + searchBy + '&search_categoria=' +
+                searchCategoria + '&search_sede=' + searchSede + '&search_semestre=' + searchSemestre +
+                '&search_area=' + searchArea;
+            // var url = 'dashboard?datefilter=' + dateRange +
+            //     '&search_by=' + searchBy +
+            //     '&search_categoria=' + searchCategoria + '&search_sede=' + searchSede +
+            //     '&search_semestre='
+            // searchSemestre +
+            //     '&search_area=' + searchArea;
             window.location.href = url;
         });
     </script>
