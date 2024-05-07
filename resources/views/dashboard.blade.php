@@ -239,12 +239,6 @@
             var url = 'dashboard?datefilter=' + dateRange + '&search_by=' + searchBy + '&search_categoria=' +
                 searchCategoria + '&search_sede=' + searchSede + '&search_semestre=' + searchSemestre +
                 '&search_area=' + searchArea;
-            // var url = 'dashboard?datefilter=' + dateRange +
-            //     '&search_by=' + searchBy +
-            //     '&search_categoria=' + searchCategoria + '&search_sede=' + searchSede +
-            //     '&search_semestre='
-            // searchSemestre +
-            //     '&search_area=' + searchArea;
             window.location.href = url;
         });
     </script>
@@ -253,9 +247,24 @@
         function setSelectValuesInCookies() {
             var searchCategoriaValue = $('#search_categoria').val();
             var searchByValue = $('#search_by').val();
+            var searchSedeValue = $('#search_sede').val();
+            var searchSemestreValue = $('#search_semestre').val();
+            var searchAreaValue = $('#search_area').val();
+
+
             document.cookie = 'searchCategoria=' + searchCategoriaValue + '; expires=' + new Date(Date.now() + 7 * 24 * 60 *
                 60 * 1000).toUTCString();
             document.cookie = 'searchBy=' + searchByValue + '; expires=' + new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+                .toUTCString();
+            document.cookie = 'searchSede=' + searchSedeValue + '; expires=' + new Date(Date.now() + 7 * 24 * 60 * 60 *
+                    1000)
+                .toUTCString();
+            document.cookie = 'searchSemestre=' + searchSemestreValue + '; expires=' + new Date(Date.now() + 7 * 24 * 60 *
+                    60 *
+                    1000)
+                .toUTCString();
+            document.cookie = 'searchArea=' + searchAreaValue + '; expires=' + new Date(Date.now() + 7 * 24 * 60 * 60 *
+                    1000)
                 .toUTCString();
         }
 
@@ -263,11 +272,26 @@
             var searchCategoriaCookie = document.cookie.replace(/(?:(?:^|.*;\s*)searchCategoria\s*=\s*([^;]*).*$)|^.*$/,
                 "$1");
             var searchByCookie = document.cookie.replace(/(?:(?:^|.*;\s*)searchBy\s*=\s*([^;]*).*$)|^.*$/, "$1");
+            var searchSedeCookie = document.cookie.replace(/(?:(?:^|.*;\s*)searchSede\s*=\s*([^;]*).*$)|^.*$/, "$1");;
+            var searchSemestreCookie = document.cookie.replace(/(?:(?:^|.*;\s*)searchSemestre\s*=\s*([^;]*).*$)|^.*$/,
+                "$1");;
+            var searchAreaCookie = document.cookie.replace(/(?:(?:^|.*;\s*)searchArea\s*=\s*([^;]*).*$)|^.*$/, "$1");;
+
+
             if (searchCategoriaCookie) {
                 $('#search_categoria').val(searchCategoriaCookie).trigger('change');
             }
             if (searchByCookie) {
                 $('#search_by').val(searchByCookie).trigger('change');
+            }
+            if (searchSedeCookie) {
+                $('#search_sede').val(searchSedeCookie).trigger('change');
+            }
+            if (searchSemestreCookie) {
+                $('#search_semestre').val(searchSemestreCookie).trigger('change');
+            }
+            if (searchAreaCookie) {
+                $('#search_area').val(searchAreaCookie).trigger('change');
             }
         }
         $(document).ready(function() {
