@@ -33,7 +33,7 @@
                                 <h4 class="card-title" style="color: rgb(255, 24, 24);">
                                     Total&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </h4>
-                                <p class="card-category">Cantidad total de sugerencias</p>
+                                <p class="card-category">Cantidad total de registros</p>
                             </div>
                             <h3 class="mb-0" style="text-align: center; font-weight: bold;">{{ $suggestionCount }}
                             </h3>
