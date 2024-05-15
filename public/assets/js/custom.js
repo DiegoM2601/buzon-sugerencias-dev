@@ -62,6 +62,13 @@ $(document).ready(function () {
     var now = 0; // currently shown div
     divs.hide().first().show(); // hide all divs except first
 
+    $("#btnGeoContinuar").click(function () {
+        $("#geo-0").hide();
+        // $("#step-0").show();
+
+        activarGeolocalizacion();
+    });
+
     $("#btnContinuar").click(function () {
         $("#step-0").hide();
         $("#step-1").show();

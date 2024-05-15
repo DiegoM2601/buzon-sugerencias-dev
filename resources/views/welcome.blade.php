@@ -56,26 +56,30 @@
                                         necesitamos que enciendas el
                                         GPS de tu dispositivo móvil. Por favor, sigue cuidadosamente los siguientes
                                         pasos: </p>
+                                    <p class = "mt-5"><span class="step">1</span>Dirígete al panel de
+                                        notificaciones y
+                                        activa la
+                                        opción de Ubicación.</p>
                                     <div class = "video-container mt-5">
-                                        <p><span class="step">1</span>Dirígete al panel de notificaciones y activa la
-                                            opción de Ubicación.</p>
                                         <video width="300" height="510" autoplay loop muted>
                                             <source src="{{ asset('videos/1.mp4') }}" type="video/mp4">
                                             Tu navegador no soporta el elemento de video.
                                         </video>
                                     </div>
+                                    <p class = "mt-5"><span class="step">2</span>Una vez que accedas al formulario
+                                        debes dar
+                                        permiso al navegador para acceder a tu ubicación.</p>
                                     <div class="video-container mt-5">
                                         <video width="300" height="510" autoplay loop muted>
                                             <source src="{{ asset('videos/2.mp4') }}" type="video/mp4">
                                             <!-- Fallback para navegadores que no soportan el elemento <video> -->
                                             Tu navegador no soporta el elemento de video.
                                         </video>
-                                        <p><span class="step">2</span>Una vez que accedas al formulario debes dar
-                                            permiso al navegador para acceder a tu ubicación.</p>
                                     </div>
+                                    <p class = "mt-5"><span class="step">3</span>A continuación, la aplicación debe
+                                        ser capaz de
+                                        acceder a tu ubicación precisa.</p>
                                     <div class="video-container mt-5">
-                                        <p><span class="step">3</span>A continuación, la aplicación debe ser capaz de
-                                            acceder a tu ubicación precisa.</p>
                                         <video width="300" height="510" autoplay loop muted>
                                             <source src="{{ asset('videos/3.mp4') }}" type="video/mp4">
                                             <!-- Fallback para navegadores que no soportan el elemento <video> -->
@@ -94,9 +98,30 @@
                                             <!-- <button class="btn btn-default">Centered button</button> -->
                                             <div class="form-buttons-center text-center">
                                                 <button type="button" class="next"
-                                                    id="btnContinuar">Continuar</i></button>
+                                                    id="btnGeoContinuar">Continuar</button>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <!-- next-prev-btn -->
+                            </div>
+                        </section>
+                        <section class="steps-inner pop-slide" id="geo-error">
+                            <div class="wrapper">
+                                <div class="step-heading">
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <img src="./assets/images/logo.png" alt="">
+                                            <h2 class="mt-5">Buzón de Sugerencias</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h1 id="MIERDA"></h1>
+                                <div class="step-heading mt-4">
+                                    <p class="text-center">EL PERMISO DE ACCESO A LA UBICACIÓN FUE DENEGADO, POR FAVOR
+                                        INTÉNTALO NUEVAMENTE EN <b id = "conteo">5</b></p>
+                                    <div class="video-container">
+                                        <img src="{{ asset('gifs/permiso-denegado.gif') }}" width="250px">
                                     </div>
                                 </div>
                                 <!-- next-prev-btn -->
@@ -576,9 +601,10 @@
             </div>
         </section>
 
-        <script>
+        {{-- TODO: Este script es necesario para la reproducción automática? --}}
+        {{-- <script>
             document.getElementById('vid').play();
-        </script>
+        </script> --}}
 
 
         <!-- bootstrap JS -->
@@ -589,6 +615,7 @@
 
         <!-- custom JS -->
         <script type="text/javascript" src="assets/js/custom.js?ver=1.0.1"></script>
+        <script src="{{ asset('js/geolocalizacion.js') }}"></script>
 
         <script>
             $.ajaxSetup({
