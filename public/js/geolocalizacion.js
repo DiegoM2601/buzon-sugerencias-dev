@@ -1,4 +1,8 @@
-const txtConteo = document.getElementById("conteo");
+const laPaz = turf.polygon([sedeLaPaz.features[0].geometry.coordinates[0]]);
+const elAlto = turf.polygon([sedeElAlto.features[0].geometry.coordinates[0]]);
+
+// const txtConteo = document.getElementById("conteo");
+// const txtConteo = document.querySelector(".conteo");
 
 function activarGeolocalizacion(mensaje) {
     var options = {
@@ -16,9 +20,10 @@ function activarGeolocalizacion(mensaje) {
 }
 
 // ! GEOLOCALIZACION
-const geoSuccess = (posicion) => {
+const geoSuccess = async (posicion) => {
     $("#geo-error").hide();
-    $("#step-0").show();
+    // $("#step-0").show();
+    $("#geo-load").show();
 
     //TODO: Agarrar la ip ni bien se ejecute esta función, almacenarla en la base de datos quizás y comparar
     //TODO: Ejecutar la función WATCHID cada cierto intervalo?????????
@@ -27,6 +32,36 @@ const geoSuccess = (posicion) => {
     /**
      * Cuando una aplicación está utilizando el GPS, recién el ícono aparece en el pantel de notificaciones. Eso pasa con Opera, sin embargo, con Firefox el ícono nunca aparece.
      */
+
+    let ubicacion = await determinarSedeActual(posicion);
+    if (ubicacion) {
+        document.getElementById("geo-sede-detectada").innerText =
+            "ESTÁS EN LA SEDE " + ubicacion.sede;
+
+        document.getElementById(
+            "geo-animacion"
+        ).innerHTML = `<img src="/gifs/check-list.gif" width="200px">`;
+
+        document.getElementById("geo-load-msj").innerText = "";
+
+        await delay(3000);
+
+        $("#geo-load").hide();
+        $("#step-0").show();
+    } else {
+        document.getElementById("geo-sede-detectada").innerText =
+            "NINGUNA SEDE DETECTADA";
+        document.getElementById("geo-load-msj").innerText = "";
+        document.getElementById(
+            "geo-error-msj"
+        ).innerHTML = `LO SENTIMOS, DEBES HALLARTE AL INTERIOR DE UNA SEDE PARA ACCEDER AL FORMULARIO, INTÉNTALO NUEVAMENTE EN <b class = "conteo">5</b>`;
+
+        await delay(3000);
+
+        $("#geo-load").hide();
+        $("#geo-error").show();
+        conteoRegresivo();
+    }
 
     console.log("ejemplo");
 };
@@ -44,8 +79,44 @@ const geoError = (error) => {
     }
 };
 
+const determinarSedeActual = async (posicion) => {
+    let latitud = posicion.coords.latitude;
+    let longitud = posicion.coords.longitude;
+
+    //* establecer la ubicacion del usuario
+    var pt = turf.point([latitud, longitud].reverse());
+
+    let ubicacionesPosibles = [
+        //0
+        {
+            sede: "LA PAZ",
+            ubicacionDentro: turf.booleanPointInPolygon(pt, laPaz),
+        },
+        //1
+        {
+            sede: "EL ALTO",
+            ubicacionDentro: turf.booleanPointInPolygon(pt, elAlto),
+        },
+    ];
+
+    let ubicacionActual = null;
+
+    for (let i = 0; i < ubicacionesPosibles.length; i++) {
+        if (ubicacionesPosibles[i].ubicacionDentro) {
+            ubicacionActual = ubicacionesPosibles[i];
+            break;
+        }
+    }
+
+    await delay(3000);
+
+    return ubicacionActual != null ? ubicacionActual : false;
+};
+
 function conteoRegresivo() {
     var segundos = 5;
+
+    let txtConteo = document.querySelector(".conteo");
 
     var conteo = setInterval(function () {
         segundos--;
@@ -54,6 +125,12 @@ function conteoRegresivo() {
             location.reload();
         } else {
             txtConteo.textContent = segundos;
+            // document.querySelector(".conteo").textContent = segundos;
         }
     }, 1000);
+}
+
+// UTILIDADES
+function delay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
 }

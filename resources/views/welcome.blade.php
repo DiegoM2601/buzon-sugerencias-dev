@@ -106,6 +106,31 @@
                                 <!-- next-prev-btn -->
                             </div>
                         </section>
+                        <section class="steps-inner pop-slide" id="geo-load">
+                            <div class="wrapper">
+                                <div class="step-heading">
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <img src="./assets/images/logo.png" alt="">
+                                            <h2 class="mt-5">Buzón de Sugerencias</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row col-12 text-center">
+                                    {{-- <h4>SEDE LA PAZ DETECTADA</h4> --}}
+                                    <h4 id = "geo-sede-detectada"></h4>
+                                </div>
+                                <div class="video-container" id = "geo-animacion">
+                                    {{-- <img src="{{ asset('gifs/check-list.gif') }}" width="200px"> --}}
+                                    <img src="{{ asset('gifs/cargando-geolocalizacion.gif') }}" width = "300px">
+                                </div>
+                                <div class="step-heading mt-4">
+                                    <p class="text-center" id = "geo-load-msj">Por favor, aguarda mientras detectamos tu
+                                        ubicación.</p>
+                                </div>
+                                <!-- next-prev-btn -->
+                            </div>
+                        </section>
                         <section class="steps-inner pop-slide" id="geo-error">
                             <div class="wrapper">
                                 <div class="step-heading">
@@ -116,10 +141,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <h1 id="MIERDA"></h1>
                                 <div class="step-heading mt-4">
-                                    <p class="text-center">EL PERMISO DE ACCESO A LA UBICACIÓN FUE DENEGADO, POR FAVOR
-                                        INTÉNTALO NUEVAMENTE EN <b id = "conteo">5</b></p>
+                                    {{-- <p class="text-center">EL PERMISO DE ACCESO A LA UBICACIÓN FUE DENEGADO, POR FAVOR
+                                        INTÉNTALO NUEVAMENTE EN <b id = "conteo">5</b></p> --}}
+                                    <p class="text-center" id = "geo-error-msj">EL PERMISO DE ACCESO A LA UBICACIÓN
+                                        FUE DENEGADO, POR FAVOR
+                                        INTÉNTALO NUEVAMENTE EN <b class = "conteo">5</b></p>
                                     <div class="video-container">
                                         <img src="{{ asset('gifs/permiso-denegado.gif') }}" width="250px">
                                     </div>
@@ -615,6 +642,9 @@
 
         <!-- custom JS -->
         <script type="text/javascript" src="assets/js/custom.js?ver=1.0.1"></script>
+        {{-- <script src="{{ asset('js/sedes.js') }}" type="module"></script> --}}
+        <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+        <script src="{{ asset('js/sedesUnifranz.js') }}"></script>
         <script src="{{ asset('js/geolocalizacion.js') }}"></script>
 
         <script>
