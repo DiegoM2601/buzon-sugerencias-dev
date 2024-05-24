@@ -148,18 +148,25 @@
                 <img src="{{ asset('img/denegado-geo.png') }}" alt="Error de Acceso" class="error-image">
             </div>
             <div class="col-12 col-md-6 error-content order-md-1">
-                <h1>Acceso Restringido</h1>
-                <div class="mb-4">
-                    {{-- <p>Por favor, conéctate al WiFi</p>
-                        <p>de la universidad para utilizar</p>
-                        <p>esta plataforma.</p> --}}
-                    <p>Por favor, debes hallarte</p>
-                    <p>al interior de una sede</p>
-                    <p>Unifranz para acceder al </p>
-                    <p>formulario.</p>
-                </div>
+                @isset($gps_denegado)
+                    <h1>Negaste el Permiso de Ubicación</h1>
+                    <div class="mb-4">
+                        <p>Por favor, debes habilitar</p>
+                        <p>el permiso de Ubicación</p>
+                        <p>para acceder al </p>
+                        <p>formulario.</p>
+                    </div>
+                @else
+                    <h1>Acceso Restringido</h1>
+                    <div class="mb-4">
+                        <p>Por favor, debes hallarte</p>
+                        <p>al interior de una sede</p>
+                        <p>Unifranz para acceder al </p>
+                        <p>formulario.</p>
+                    </div>
+                @endisset
                 <a href="{{ request()->url() }}" class="btn btn-primary">Intentar nuevamente</a>
-                <a href="{{ request()->url() }}" class="btn btn-primary mt-3">¿Necesitas ayuda?</a>
+                <a href="{{ request()->url() }}?help" class="btn btn-primary mt-3">¿Necesitas ayuda?</a>
             </div>
         </div>
     </div>

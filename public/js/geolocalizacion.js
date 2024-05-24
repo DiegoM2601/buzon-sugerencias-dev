@@ -58,19 +58,6 @@ const geoSuccess = async (posicion) => {
 
         // TODO: OCULTAR TODAS VENTANAS ANTES DE MOSTRAR LA VENTANA DE TUTORIAL
     } else {
-        // document.getElementById("geo-sede-detectada").innerText =
-        //     "NINGUNA SEDE DETECTADA";
-        // document.getElementById("geo-load-msj").innerText = "";
-        // document.getElementById(
-        //     "geo-error-msj"
-        // ).innerHTML = `LO SENTIMOS, DEBES HALLARTE AL INTERIOR DE UNA SEDE PARA ACCEDER AL FORMULARIO, INTÉNTALO NUEVAMENTE EN <b class = "conteo">5</b>`;
-
-        // await delay(3000);
-
-        // $("#geo-load").hide();
-        // $("#geo-error").show();
-        // conteoRegresivo();
-
         $.ajax({
             url: window.location.href,
             method: "GET",
@@ -100,7 +87,9 @@ $("#btnAyuda").click(function () {
     $("#geo-0").show();
 });
 $("#btnGeoInstrucciones").click(function () {
-    location.reload();
+    // location.reload();
+
+    window.location = window.location.href.split("?")[0];
 });
 
 const ocultarSteps = () => {
@@ -113,18 +102,25 @@ const ocultarSteps = () => {
 };
 
 const geoError = (error) => {
-    // $("#geo-0").hide();
-    // $("#geo-error").show();
-    // conteoRegresivo();
-
-    // //comprobar si el usuario denegó el permiso en mitad del proceso
-    // if (error.PERMISSION_DENIED) {
-    //     //TODO: Ocultar TODAS las vistas mediante un bucle o mediante querySelector
-    //     $("#geo-0").hide();
-    //     $("#geo-error").show();
-    //     conteoRegresivo();
-    // }
-    alert("SIN AUTORIZACION");
+    $.ajax({
+        url: window.location.href,
+        method: "GET",
+        headers: {
+            "GPS-DENEGADO": "GPS-DENEGADO",
+        },
+        success: function (data) {
+            document.open();
+            document.write(data);
+            document.close();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error(
+                "Error en la solicitud AJAX:",
+                textStatus,
+                errorThrown
+            );
+        },
+    });
 };
 
 const determinarSedeActual = async (posicion) => {

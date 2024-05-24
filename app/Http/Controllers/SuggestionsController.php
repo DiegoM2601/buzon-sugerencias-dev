@@ -29,8 +29,18 @@ class SuggestionsController extends Controller
         //     'accessGranted' => $accessGranted,
         // ]);
 
+        if ($request->has('help')) {
+            return view('welcome', [
+                'help' => true,
+            ]);
+        }
         if ($request->hasHeader("DENEGADO")) {
             return view('error');
+        }
+        if ($request->hasHeader("GPS-DENEGADO")) {
+            return view('error', [
+                'gps_denegado' => true,
+            ]);
         }
         return view('welcome', [
             'areas' => $areas,
