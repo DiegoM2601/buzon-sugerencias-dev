@@ -16,17 +16,24 @@ class SuggestionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $areas = Area::where('deleted', 0)->get();
 
-        $accessGranted = session('access_granted', false);
+        // $accessGranted = session('access_granted', false);
 
         // return $accessGranted
 
+        // return view('welcome', [
+        //     'areas' => $areas,
+        //     'accessGranted' => $accessGranted,
+        // ]);
+
+        if ($request->hasHeader("DENEGADO")) {
+            return view('error');
+        }
         return view('welcome', [
             'areas' => $areas,
-            'accessGranted' => $accessGranted,
         ]);
     }
 

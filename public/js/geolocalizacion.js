@@ -12,7 +12,14 @@ function activarGeolocalizacion(mensaje) {
     };
 
     // Solicitar la ubicación
-    var watchID = navigator.geolocation.watchPosition(
+    // * Vigilar la ubicación actual del usuario de manera permanente
+    // var watchID = navigator.geolocation.watchPosition(
+    //     geoSuccess,
+    //     geoError,
+    //     options
+    // );
+    // * capturar por una única vez la ubicación actual del usuario
+    var watchID = navigator.geolocation.getCurrentPosition(
         geoSuccess,
         geoError,
         options
@@ -47,36 +54,77 @@ const geoSuccess = async (posicion) => {
         await delay(3000);
 
         $("#geo-load").hide();
-        $("#step-0").show();
+        $("#step-1").show();
+
+        // TODO: OCULTAR TODAS VENTANAS ANTES DE MOSTRAR LA VENTANA DE TUTORIAL
     } else {
-        document.getElementById("geo-sede-detectada").innerText =
-            "NINGUNA SEDE DETECTADA";
-        document.getElementById("geo-load-msj").innerText = "";
-        document.getElementById(
-            "geo-error-msj"
-        ).innerHTML = `LO SENTIMOS, DEBES HALLARTE AL INTERIOR DE UNA SEDE PARA ACCEDER AL FORMULARIO, INTÉNTALO NUEVAMENTE EN <b class = "conteo">5</b>`;
+        // document.getElementById("geo-sede-detectada").innerText =
+        //     "NINGUNA SEDE DETECTADA";
+        // document.getElementById("geo-load-msj").innerText = "";
+        // document.getElementById(
+        //     "geo-error-msj"
+        // ).innerHTML = `LO SENTIMOS, DEBES HALLARTE AL INTERIOR DE UNA SEDE PARA ACCEDER AL FORMULARIO, INTÉNTALO NUEVAMENTE EN <b class = "conteo">5</b>`;
 
-        await delay(3000);
+        // await delay(3000);
 
-        $("#geo-load").hide();
-        $("#geo-error").show();
-        conteoRegresivo();
+        // $("#geo-load").hide();
+        // $("#geo-error").show();
+        // conteoRegresivo();
+
+        $.ajax({
+            url: window.location.href,
+            method: "GET",
+            headers: {
+                DENEGADO: "DENEGADO",
+            },
+            success: function (data) {
+                document.open();
+                document.write(data);
+                document.close();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error(
+                    "Error en la solicitud AJAX:",
+                    textStatus,
+                    errorThrown
+                );
+            },
+        });
     }
 
     console.log("ejemplo");
 };
-const geoError = (error) => {
-    $("#geo-0").hide();
-    $("#geo-error").show();
-    conteoRegresivo();
 
-    //comprobar si el usuario denegó el permiso en mitad del proceso
-    if (error.PERMISSION_DENIED) {
-        //TODO: Ocultar TODAS las vistas mediante un bucle o mediante querySelector
-        $("#geo-0").hide();
-        $("#geo-error").show();
-        conteoRegresivo();
-    }
+$("#btnAyuda").click(function () {
+    ocultarSteps();
+    $("#geo-0").show();
+});
+$("#btnGeoInstrucciones").click(function () {
+    location.reload();
+});
+
+const ocultarSteps = () => {
+    var steps = $(".steps-inner");
+    steps.hide();
+
+    // steps.each(function (index, step) {
+    //     step.hide();
+    // });
+};
+
+const geoError = (error) => {
+    // $("#geo-0").hide();
+    // $("#geo-error").show();
+    // conteoRegresivo();
+
+    // //comprobar si el usuario denegó el permiso en mitad del proceso
+    // if (error.PERMISSION_DENIED) {
+    //     //TODO: Ocultar TODAS las vistas mediante un bucle o mediante querySelector
+    //     $("#geo-0").hide();
+    //     $("#geo-error").show();
+    //     conteoRegresivo();
+    // }
+    alert("SIN AUTORIZACION");
 };
 
 const determinarSedeActual = async (posicion) => {

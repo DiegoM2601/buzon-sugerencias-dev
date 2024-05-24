@@ -19,13 +19,13 @@ use Illuminate\Http\Request;
 //     return view('welcome');
 // });
 
-
-Route::middleware(['check-ip'])->group(function () {
-    Route::get('/cochabamba', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');
-    Route::get('/el-alto', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');
-    Route::get('/la-paz', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');
-    Route::get('/santa-cruz', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');
-});
+// TODO: Deshabilitar middleware de validacion de ip
+// Route::middleware(['check-ip'])->group(function () {
+// });
+Route::get('/cochabamba', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');
+Route::get('/el-alto', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');
+Route::get('/la-paz', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');
+Route::get('/santa-cruz', [App\Http\Controllers\SuggestionsController::class, 'index'])->name('index');
 
 Auth::routes();
 
