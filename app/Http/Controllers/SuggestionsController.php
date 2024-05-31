@@ -20,15 +20,6 @@ class SuggestionsController extends Controller
     {
         $areas = Area::where('deleted', 0)->get();
 
-        // $accessGranted = session('access_granted', false);
-
-        // return $accessGranted
-
-        // return view('welcome', [
-        //     'areas' => $areas,
-        //     'accessGranted' => $accessGranted,
-        // ]);
-
         if ($request->has('help')) {
             return view('welcome', [
                 'help' => true,
@@ -44,6 +35,29 @@ class SuggestionsController extends Controller
         }
         return view('welcome', [
             'areas' => $areas,
+        ]);
+    }
+
+    public function help()
+    {
+        return view("instrucciones-help");
+    }
+
+    public function error(Request $request)
+    {
+        if ($request->has('permiso')) {
+            return view('acceso-restringido', [
+                'type' => 'permiso',
+            ]);
+        }
+        if ($request->has('sede')) {
+            return view('acceso-restringido', [
+                'type' => 'sede',
+            ]);
+        }
+
+        return view('acceso-restringido', [
+            'type' => 'default',
         ]);
     }
 

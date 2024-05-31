@@ -1,23 +1,13 @@
 const laPaz = turf.polygon([sedeLaPaz.features[0].geometry.coordinates[0]]);
 const elAlto = turf.polygon([sedeElAlto.features[0].geometry.coordinates[0]]);
 
-// const txtConteo = document.getElementById("conteo");
-// const txtConteo = document.querySelector(".conteo");
-
-function activarGeolocalizacion(mensaje) {
+function activarGeolocalizacion() {
     var options = {
         enableHighAccuracy: true,
         timeout: 5000,
         maximumAge: 0,
     };
 
-    // Solicitar la ubicación
-    // * Vigilar la ubicación actual del usuario de manera permanente
-    // var watchID = navigator.geolocation.watchPosition(
-    //     geoSuccess,
-    //     geoError,
-    //     options
-    // );
     // * capturar por una única vez la ubicación actual del usuario
     var watchID = navigator.geolocation.getCurrentPosition(
         geoSuccess,
@@ -28,12 +18,9 @@ function activarGeolocalizacion(mensaje) {
 
 // ! GEOLOCALIZACION
 const geoSuccess = async (posicion) => {
-    $("#geo-error").hide();
-    // $("#step-0").show();
+    ocultarSteps();
     $("#geo-load").show();
 
-    //TODO: Agarrar la ip ni bien se ejecute esta función, almacenarla en la base de datos quizás y comparar
-    //TODO: Ejecutar la función WATCHID cada cierto intervalo?????????
     //TODO: Usar un gif de cargando en lo que se ejecuta esta función porque aveces la pantalla queda en blanco mucho tiempo
     //TODO: Por alguna razon en firefox movil detecta que el permiso de ubicación se desactiva a cada rato, esto no pasa en Opera, tampoco en Chrome
     /**
@@ -41,6 +28,8 @@ const geoSuccess = async (posicion) => {
      */
 
     let ubicacion = await determinarSedeActual(posicion);
+
+    // ! EL USUARIO SE HALLA AL INTERIOR DE UNA SEDE
     if (ubicacion) {
         document.getElementById("geo-sede-detectada").innerText =
             "ESTÁS EN LA SEDE " + ubicacion.sede;
@@ -53,76 +42,33 @@ const geoSuccess = async (posicion) => {
 
         await delay(3000);
 
-        $("#geo-load").hide();
+        ocultarSteps();
         $("#step-1").show();
 
         // TODO: OCULTAR TODAS VENTANAS ANTES DE MOSTRAR LA VENTANA DE TUTORIAL
-    } else {
-        $.ajax({
-            url: window.location.href,
-            method: "GET",
-            headers: {
-                DENEGADO: "DENEGADO",
-            },
-            success: function (data) {
-                document.open();
-                document.write(data);
-                document.close();
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.error(
-                    "Error en la solicitud AJAX:",
-                    textStatus,
-                    errorThrown
-                );
-            },
-        });
     }
-
-    console.log("ejemplo");
+    // ! EL USUARIO ***NO*** SE HALLA EN NINGUNA SEDE
+    else {
+        window.location.href = "/error?sede";
+    }
 };
 
+// ! REDIRIGIR A /HELP
 $("#btnAyuda").click(function () {
-    ocultarSteps();
-    $("#geo-0").show();
+    window.location.href = "/help";
 });
-$("#btnGeoInstrucciones").click(function () {
-    // location.reload();
 
+// ! VOLVER AL FORMULARIO
+$("#btnGeoInstrucciones").click(function () {
     window.location = window.location.href.split("?")[0];
 });
 
-const ocultarSteps = () => {
-    var steps = $(".steps-inner");
-    steps.hide();
-
-    // steps.each(function (index, step) {
-    //     step.hide();
-    // });
-};
-
+// ! EL USUARIO HA NEGADO EL ACCESO A LA UBICACION
 const geoError = (error) => {
-    $.ajax({
-        url: window.location.href,
-        method: "GET",
-        headers: {
-            "GPS-DENEGADO": "GPS-DENEGADO",
-        },
-        success: function (data) {
-            document.open();
-            document.write(data);
-            document.close();
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error(
-                "Error en la solicitud AJAX:",
-                textStatus,
-                errorThrown
-            );
-        },
-    });
+    window.location.href = "/error?permiso";
 };
 
+// ! DETERMINAR EN QUE SEDE UNIFRANZ SE HALLA EL USUARIO
 const determinarSedeActual = async (posicion) => {
     let latitud = posicion.coords.latitude;
     let longitud = posicion.coords.longitude;
@@ -157,24 +103,12 @@ const determinarSedeActual = async (posicion) => {
     return ubicacionActual != null ? ubicacionActual : false;
 };
 
-function conteoRegresivo() {
-    var segundos = 5;
-
-    let txtConteo = document.querySelector(".conteo");
-
-    var conteo = setInterval(function () {
-        segundos--;
-        if (segundos < 0) {
-            clearInterval(conteo);
-            location.reload();
-        } else {
-            txtConteo.textContent = segundos;
-            // document.querySelector(".conteo").textContent = segundos;
-        }
-    }, 1000);
-}
-
-// UTILIDADES
+// ! UTILIDADES
 function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+const ocultarSteps = () => {
+    var steps = $(".steps-inner");
+    steps.hide();
+};

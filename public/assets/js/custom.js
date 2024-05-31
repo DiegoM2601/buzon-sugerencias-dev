@@ -71,10 +71,7 @@ $(document).ready(function () {
 
     $("#btnContinuar").click(function () {
         $("#step-0").hide();
-        // $("#step-1").show();
-
         activarGeolocalizacion();
-        // console.log(document.querySelectorAll(".steps-inner"));
     });
 
     $("#btnBy").click(function () {
