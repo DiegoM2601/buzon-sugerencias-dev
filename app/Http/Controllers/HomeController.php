@@ -55,7 +55,7 @@ class HomeController extends Controller
             }
         }
 
-        $suggestions = $query->paginate(5);
+        $suggestions = $query->paginate(10);
 
         if ($request->hasHeader("AXIOS")) {
             return view('table-home', compact('suggestions'));
@@ -193,6 +193,8 @@ class HomeController extends Controller
         // TODO: Es posible prescindir del siguiente if y usar when() en su lugar?
         $dateRange = $request->input('datefilter');
         if ($dateRange) {
+            $filtroFecha = true;
+
             list($startDate, $endDate) = explode(' - ', $dateRange);
 
             // ! CORREGIR EL DESFACE 
@@ -411,6 +413,7 @@ class HomeController extends Controller
             //     $sugerenciasUltimaSemana = Suggestion::where('created_at', '>=', $haceUnaSemana)->where('deleted', 0)->where('categoria', $searchCategoria)
             //         ->count();
             // }
+            $filtroFecha = false;
 
             $sugerenciasUltimaSemana = Suggestion::where('created_at', '>=', $haceUnaSemana)
                 ->where('deleted', 0)
@@ -634,6 +637,8 @@ class HomeController extends Controller
             'sugerenciasPorCarrera' => $sugerenciasPorCarrera,
             'sugerenciasPorSemestre' => $sugerenciasPorSemestre,
             'areas' => $areas,
+            // prescindir reporte mensual y semanal
+            'filtroFecha' => $filtroFecha,
         ]);
     }
 }

@@ -2,6 +2,8 @@
 $(document).ready(function () {
     // Save key
 
+    deleteCookie("sedeUnifranz");
+
     if (!localStorage.getItem("key")) {
         localStorage.setItem("key", makeid(20));
     }
@@ -44,16 +46,23 @@ $(document).ready(function () {
     );
 
     function getSede() {
-        var Str = window.location.pathname;
-        var sede = Str.replace("/", "");
-        if (sede == "cochabamba") {
-            return "CBB";
-        } else if (sede == "el-alto") {
-            return "EAT";
-        } else if (sede == "la-paz") {
-            return "LPZ";
+        var sede = getCookie("sedeUnifranz");
+        // alert("get sede ejecutado: " + sede);
+        // var Str = window.location.pathname;
+        // var sede = Str.replace("/", "");
+
+        if (sede) {
+            if (sede == "COCHABAMBA") {
+                return "CBB";
+            } else if (sede == "EL ALTO") {
+                return "EAT";
+            } else if (sede == "LA PAZ") {
+                return "LPZ";
+            } else {
+                return "SCZ";
+            }
         } else {
-            return "SCZ";
+            window.location.href = "/error?sede";
         }
     }
     // console.log(sede)
@@ -61,13 +70,6 @@ $(document).ready(function () {
     var divs = $(".show-section>.steps-inner");
     var now = 0; // currently shown div
     divs.hide().first().show(); // hide all divs except first
-
-    // $("#btnGeoContinuar").click(function () {
-    //     $("#geo-0").hide();
-    //     // $("#step-0").show();
-
-    //     activarGeolocalizacion();
-    // });
 
     $("#btnContinuar").click(function () {
         $("#step-0").hide();

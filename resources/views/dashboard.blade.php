@@ -26,200 +26,205 @@
     <body class="g-sidenav-show  bg-gray-200">
         <div class="container-fluid py-3">
             <div class="row">
-                <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+                <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4 @if ($filtroFecha) mx-auto @endif">
                     <div class="card card-bordered">
                         <div class="card-body">
                             <div class="card-header">
                                 <h4 class="card-title" style="color: rgb(255, 24, 24);">
                                     Total&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </h4>
-                                <p class="card-category">Cantidad total de registros</p>
+                                <br>
+                                <p class="card-category" style = "width: 100%">Cantidad total de registros</p>
                             </div>
                             <h3 class="mb-0" style="text-align: center; font-weight: bold;">{{ $suggestionCount }}
                             </h3>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+                @if (!$filtroFecha)
+                    <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4" id = "semanal-container">
+                        <div class="card card-bordered">
+                            <div class="card-body">
+                                <div class="card-header">
+                                    <h4 class="card-title" style="color: rgb(25, 9, 255);">Semanales</h4>
+                                    <p class="card-category">Registros de la última semana</p>
+                                </div>
+                                <h3 class="mb-0" style="text-align: center; font-weight: bold;">
+                                    {{ $sugerenciasUltimaSemana }}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4" id = "mensual-container">
+                        <div class="card card-bordered">
+                            <div class="card-body">
+                                <div class="card-header">
+                                    <h4 class="card-title" style="color: rgb(74, 233, 53);">Mensuales</h4>
+                                    <p class="card-category">Registros del último
+                                        mes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </p>
+                                </div>
+                                <h3 class="mb-0" style="text-align: center; font-weight: bold;">
+                                    {{ $sugerenciasUltimoMes }}
+                                </h3>
+                            </div>
+                        </div>
+                @endif
+            </div>
+            <div class="row mt-4">
+                <div class="card card-bordered">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <h4 class="card-title">Frecuencia de sugerencias</h4>
+                            <table class="table gs-7 gy-7 gx-7">
+                                <thead>
+                                    <tr class="fw-semibold fs-6 text-gray-800">
+                                        <th>
+                                            Sede
+                                            <select type="search" name="search_categoria" id="search_sede"
+                                                class="form-select" data-control="select2" data-placeholder="Todas">
+                                                <option value="0">Todos</option>
+                                                <option value="LPZ">
+                                                    La Paz</option>
+                                                <option value="SCZ">
+                                                    Santa Cruz</option>
+                                                <option value="CBB">
+                                                    Cochabamba</option>
+                                                <option value="EAT">
+                                                    El Alto</option>
+                                            </select>
+                                        </th>
+                                        <th>
+                                            Semestre
+                                            <select type="search" name="search_by" id="search_semestre" class="form-select"
+                                                data-control="select2" data-placeholder="Todas">
+                                                <option value="0">Todos</option>
+                                                <option value="1">
+                                                    1</option>
+                                                <option value="2">
+                                                    2</option>
+                                                <option value="3">
+                                                    3</option>
+                                                <option value="4">
+                                                    4</option>
+                                                <option value="5">
+                                                    5</option>
+                                                <option value="6">
+                                                    6</option>
+                                                <option value="7">
+                                                    7</option>
+                                                <option value="8">
+                                                    8</option>
+                                                <option value="9">
+                                                    9</option>
+                                                <option value="10">
+                                                    10</option>
+                                                <option value="11">
+                                                    11</option>
+                                            </select>
+                                        </th>
+                                        {{-- TODO: Hacer que esta columna ocupe el espacio de 2 --}}
+                                        <th>
+                                            Área
+                                            <select type="search" name="search_by" id="search_area" class="form-select"
+                                                data-control="select2" data-placeholder="Todas">
+                                                <option value="0">Todas las Áreas</option>
+                                                {{-- ! Solo areas activas --}}
+                                                @foreach ($areas as $area)
+                                                    @if ($area->deleted == 0)
+                                                        <option value="{{ $area->id }}">{{ $area->area }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </th>
+                                    </tr>
+                                    <tr class="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
+                                        <th>
+                                            Categoría
+                                            <select type="search" name="search_categoria" id="search_categoria"
+                                                class="form-select" data-control="select2" data-placeholder="Todas">
+                                                <option value="0">Todos</option>
+                                                <option value="Sugerencia">Sugerencia</option>
+                                                <option value="Reclamo">Reclamo</option>
+                                            </select>
+                                        </th>
+                                        <th>
+                                            Participantes
+                                            <select type="search" name="search_by" id="search_by" class="form-select"
+                                                data-control="select2" data-placeholder="Todas">
+                                                <option value="0">Todos</option>
+                                                <option value="Estudiante">Estudiante</option>
+                                                <option value="Docente">Docente</option>
+                                            </select>
+                                        </th>
+                                        <th>
+                                            <input class="form-control" type="text" name="datefilter" id="datefilter"
+                                                placeholder="Filtro por fechas" />
+                                        </th>
+                                        <th>
+                                            <button id="searchButtonDate" name="searchButtonDate" class="btn btn-primary"
+                                                type="submit">
+                                                <i class="fa-solid fa-magnifying-glass"></i> Buscar
+                                            </button>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div id="chartFechas" style="height: 350px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-xl-5 col-sm-6 mb-xl-0 mb-4">
                     <div class="card card-bordered">
                         <div class="card-body">
                             <div class="card-header">
-                                <h4 class="card-title" style="color: rgb(25, 9, 255);">Semanales</h4>
-                                <p class="card-category">Registros de la última semana</p>
+                                <h4 class="card-title">Sugerencias por Sede</h4>
+                                <p class="card-category">Rendimiento de la última campaña</p>
                             </div>
-                            <h3 class="mb-0" style="text-align: center; font-weight: bold;">{{ $sugerenciasUltimaSemana }}
-                            </h3>
+                            <div id="chartSede" style="height: 350px;"></div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+                <div class="col-xl-7 col-sm-6 mb-xl-0 mb-4">
                     <div class="card card-bordered">
                         <div class="card-body">
                             <div class="card-header">
-                                <h4 class="card-title" style="color: rgb(74, 233, 53);">Mensuales</h4>
-                                <p class="card-category">Registros del último
-                                    mes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                </p>
+                                <h4 class="card-title">Sugerencias por Área</h4>
+                                <p class="card-category">Rendimiento de la última campaña</p>
                             </div>
-                            <h3 class="mb-0" style="text-align: center; font-weight: bold;">{{ $sugerenciasUltimoMes }}
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="card card-bordered">
-                        <div class="card-body">
-                            <div class="card-header">
-                                <h4 class="card-title">Frecuencia de sugerencias</h4>
-                                <table class="table gs-7 gy-7 gx-7">
-                                    <thead>
-                                        <tr class="fw-semibold fs-6 text-gray-800">
-                                            <th>
-                                                Sede
-                                                <select type="search" name="search_categoria" id="search_sede"
-                                                    class="form-select" data-control="select2" data-placeholder="Todas">
-                                                    <option value="0">Todos</option>
-                                                    <option value="LPZ">
-                                                        La Paz</option>
-                                                    <option value="SCZ">
-                                                        Santa Cruz</option>
-                                                    <option value="CBB">
-                                                        Cochabamba</option>
-                                                    <option value="EAT">
-                                                        El Alto</option>
-                                                </select>
-                                            </th>
-                                            <th>
-                                                Semestre
-                                                <select type="search" name="search_by" id="search_semestre"
-                                                    class="form-select" data-control="select2" data-placeholder="Todas">
-                                                    <option value="0">Todos</option>
-                                                    <option value="1">
-                                                        1</option>
-                                                    <option value="2">
-                                                        2</option>
-                                                    <option value="3">
-                                                        3</option>
-                                                    <option value="4">
-                                                        4</option>
-                                                    <option value="5">
-                                                        5</option>
-                                                    <option value="6">
-                                                        6</option>
-                                                    <option value="7">
-                                                        7</option>
-                                                    <option value="8">
-                                                        8</option>
-                                                    <option value="9">
-                                                        9</option>
-                                                    <option value="10">
-                                                        10</option>
-                                                    <option value="11">
-                                                        11</option>
-                                                </select>
-                                            </th>
-                                            {{-- TODO: Hacer que esta columna ocupe el espacio de 2 --}}
-                                            <th>
-                                                Área
-                                                <select type="search" name="search_by" id="search_area" class="form-select"
-                                                    data-control="select2" data-placeholder="Todas">
-                                                    <option value="0">Todas las Áreas</option>
-                                                    {{-- ! Solo areas activas --}}
-                                                    @foreach ($areas as $area)
-                                                        @if ($area->deleted == 0)
-                                                            <option value="{{ $area->id }}">{{ $area->area }}
-                                                            </option>
-                                                        @endif
-                                                    @endforeach
-                                                </select>
-                                            </th>
-                                        </tr>
-                                        <tr class="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
-                                            <th>
-                                                Categoría
-                                                <select type="search" name="search_categoria" id="search_categoria"
-                                                    class="form-select" data-control="select2" data-placeholder="Todas">
-                                                    <option value="0">Todos</option>
-                                                    <option value="Sugerencia">Sugerencia</option>
-                                                    <option value="Reclamo">Reclamo</option>
-                                                </select>
-                                            </th>
-                                            <th>
-                                                Participantes
-                                                <select type="search" name="search_by" id="search_by" class="form-select"
-                                                    data-control="select2" data-placeholder="Todas">
-                                                    <option value="0">Todos</option>
-                                                    <option value="Estudiante">Estudiante</option>
-                                                    <option value="Docente">Docente</option>
-                                                </select>
-                                            </th>
-                                            <th>
-                                                <input class="form-control" type="text" name="datefilter"
-                                                    id="datefilter" placeholder="Filtro por fechas" />
-                                            </th>
-                                            <th>
-                                                <button id="searchButtonDate" name="searchButtonDate"
-                                                    class="btn btn-primary" type="submit">
-                                                    <i class="fa-solid fa-magnifying-glass"></i> Buscar
-                                                </button>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                            <div id="chartFechas" style="height: 350px;"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-xl-5 col-sm-6 mb-xl-0 mb-4">
-                        <div class="card card-bordered">
-                            <div class="card-body">
-                                <div class="card-header">
-                                    <h4 class="card-title">Sugerencias por Sede</h4>
-                                    <p class="card-category">Rendimiento de la última campaña</p>
-                                </div>
-                                <div id="chartSede" style="height: 350px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-7 col-sm-6 mb-xl-0 mb-4">
-                        <div class="card card-bordered">
-                            <div class="card-body">
-                                <div class="card-header">
-                                    <h4 class="card-title">Sugerencias por Área</h4>
-                                    <p class="card-category">Rendimiento de la última campaña</p>
-                                </div>
-                                <div id="chartArea" style="height: 350px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
-                        <div class="card card-bordered">
-                            <div class="card-body">
-                                <div class="card-header">
-                                    <h4 class="card-title">Sugerencias por Carrera</h4>
-                                    <p class="card-category">Rendimiento de la última campaña</p>
-                                </div>
-                                <div id="chartCarrera" style="height: 350px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
-                        <div class="card card-bordered">
-                            <div class="card-body">
-                                <div class="card-header">
-                                    <h4 class="card-title">Sugerencias por Semestre</h4>
-                                    <p class="card-category">Rendimiento de la última campaña</p>
-                                </div>
-                                <div id="chartSemestre" style="height: 350px;"></div>
-                            </div>
+                            <div id="chartArea" style="height: 350px;"></div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="row mt-3">
+                <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card card-bordered">
+                        <div class="card-body">
+                            <div class="card-header">
+                                <h4 class="card-title">Sugerencias por Carrera</h4>
+                                <p class="card-category">Rendimiento de la última campaña</p>
+                            </div>
+                            <div id="chartCarrera" style="height: 350px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card card-bordered">
+                        <div class="card-body">
+                            <div class="card-header">
+                                <h4 class="card-title">Sugerencias por Semestre</h4>
+                                <p class="card-category">Rendimiento de la última campaña</p>
+                            </div>
+                            <div id="chartSemestre" style="height: 350px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </body>
 @endsection
@@ -308,6 +313,11 @@
             var savedStartDate = Cookies.get('savedStartDate');
             var savedEndDate = Cookies.get('savedEndDate');
             if (savedStartDate && savedEndDate) {
+
+                // ! si se utiliza el filtro por fechas, se prescinde del reporte mensual y semanal
+                // $("#semanal-container").css("display", "none");
+                // $("#mensual-container").css("display", "none");
+
                 $('input[name="datefilter"]').daterangepicker({
                     autoUpdateInput: false,
                     locale: {

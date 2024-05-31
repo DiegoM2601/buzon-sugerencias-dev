@@ -8,6 +8,9 @@ function activarGeolocalizacion() {
         maximumAge: 0,
     };
 
+    ocultarSteps();
+    $("#geo-load").show();
+
     // * capturar por una única vez la ubicación actual del usuario
     var watchID = navigator.geolocation.getCurrentPosition(
         geoSuccess,
@@ -18,15 +21,6 @@ function activarGeolocalizacion() {
 
 // ! GEOLOCALIZACION
 const geoSuccess = async (posicion) => {
-    ocultarSteps();
-    $("#geo-load").show();
-
-    //TODO: Usar un gif de cargando en lo que se ejecuta esta función porque aveces la pantalla queda en blanco mucho tiempo
-    //TODO: Por alguna razon en firefox movil detecta que el permiso de ubicación se desactiva a cada rato, esto no pasa en Opera, tampoco en Chrome
-    /**
-     * Cuando una aplicación está utilizando el GPS, recién el ícono aparece en el pantel de notificaciones. Eso pasa con Opera, sin embargo, con Firefox el ícono nunca aparece.
-     */
-
     let ubicacion = await determinarSedeActual(posicion);
 
     // ! EL USUARIO SE HALLA AL INTERIOR DE UNA SEDE
@@ -41,6 +35,9 @@ const geoSuccess = async (posicion) => {
         document.getElementById("geo-load-msj").innerText = "";
 
         await delay(3000);
+
+        // almacenar ubicacion del usuario
+        setCookie("sedeUnifranz", ubicacion.sede);
 
         ocultarSteps();
         $("#step-1").show();
@@ -112,3 +109,24 @@ const ocultarSteps = () => {
     var steps = $(".steps-inner");
     steps.hide();
 };
+
+function setCookie(name, value) {
+    var date = new Date();
+
+    //vigencia de una hora
+    date.setTime(date.getTime() + 1 * 60 * 60 * 1000);
+    var expires = "; expires=" + date.toUTCString();
+
+    document.cookie =
+        name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+}
+
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+}
+
+function deleteCookie(name) {
+    document.cookie = name + "=; Max-Age=-99999999; path=/";
+}
