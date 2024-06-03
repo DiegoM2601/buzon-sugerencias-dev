@@ -1,5 +1,12 @@
 const laPaz = turf.polygon([sedeLaPaz.features[0].geometry.coordinates[0]]);
+const laPaz2 = turf.polygon([sedeLaPaz2.features[0].geometry.coordinates[0]]);
 const elAlto = turf.polygon([sedeElAlto.features[0].geometry.coordinates[0]]);
+const cochabamba = turf.polygon([
+    sedeCochabamba.features[0].geometry.coordinates[0],
+]);
+const santaCruz = turf.polygon([
+    sedeSantaCruz.features[0].geometry.coordinates[0],
+]);
 
 function activarGeolocalizacion() {
     var options = {
@@ -81,8 +88,23 @@ const determinarSedeActual = async (posicion) => {
         },
         //1
         {
+            sede: "LA PAZ",
+            ubicacionDentro: turf.booleanPointInPolygon(pt, laPaz2),
+        },
+        //2
+        {
             sede: "EL ALTO",
             ubicacionDentro: turf.booleanPointInPolygon(pt, elAlto),
+        },
+        //3
+        {
+            sede: "COCHABAMBA",
+            ubicacionDentro: turf.booleanPointInPolygon(pt, cochabamba),
+        },
+        //4
+        {
+            sede: "SANTA CRUZ",
+            ubicacionDentro: turf.booleanPointInPolygon(pt, santaCruz),
         },
     ];
 
