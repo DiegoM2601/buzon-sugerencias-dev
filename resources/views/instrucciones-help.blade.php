@@ -60,7 +60,7 @@
                                     activa la
                                     opción de Ubicación.</p>
                                 <div class = "video-container mt-5">
-                                    <video width="300" height="510" autoplay loop muted>
+                                    <video width="300" height="510" autoplay loop muted disableRemotePlayback>
                                         <source src="{{ asset('videos/1.mp4') }}" type="video/mp4">
                                         Tu navegador no soporta el elemento de video.
                                     </video>
@@ -69,7 +69,7 @@
                                     debes dar
                                     permiso al navegador para acceder a tu ubicación.</p>
                                 <div class="video-container mt-5">
-                                    <video width="300" height="510" autoplay loop muted>
+                                    <video width="300" height="510" autoplay loop muted disableRemotePlayback>
                                         <source src="{{ asset('videos/2.mp4') }}" type="video/mp4">
                                         <!-- Fallback para navegadores que no soportan el elemento <video> -->
                                         Tu navegador no soporta el elemento de video.
@@ -79,7 +79,7 @@
                                     ser capaz de
                                     acceder a tu ubicación precisa.</p>
                                 <div class="video-container mt-5">
-                                    <video width="300" height="510" autoplay loop muted>
+                                    <video width="300" height="510" autoplay loop muted disableRemotePlayback>
                                         <source src="{{ asset('videos/3.mp4') }}" type="video/mp4">
                                         <!-- Fallback para navegadores que no soportan el elemento <video> -->
                                         Tu navegador no soporta el elemento de video.

@@ -17,3 +17,8 @@ span.step {
     justify-content: center;
     align-items: center;
 }
+
+/* desactivar boton chromecast */
+video::-internal-media-controls-overlay-cast-button {
+    display: none;
+}

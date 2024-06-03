@@ -403,8 +403,9 @@ $(document).ready(function () {
     // btnSugerencia
 
     $("#prev-1").click(function () {
-        $("#step-1").hide();
-        $("#step-0").show();
+        // $("#step-1").hide();
+        // $("#step-0").show();
+        location.reload();
     });
 
     $("#prev-2").click(function () {
