@@ -48,8 +48,6 @@ const geoSuccess = async (posicion) => {
 
         ocultarSteps();
         $("#step-1").show();
-
-        // TODO: OCULTAR TODAS VENTANAS ANTES DE MOSTRAR LA VENTANA DE TUTORIAL
     }
     // ! EL USUARIO ***NO*** SE HALLA EN NINGUNA SEDE
     else {

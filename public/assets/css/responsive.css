@@ -1,78 +1,57 @@
 /*L-desktop*/
 
-@media (min-device-width:  1600px)
-{
-	
+@media (min-device-width: 1600px) {
 }
 
 /*L-laptops*/
-@media only screen and (min-device-width: 1200px) and (max-device-width: 1440px)
-{
-    .thankyou-page-inner .wrapper
-	{
-		padding: 100px;
-	}
-    .next-prev-btn .back
-    {
+@media only screen and (min-device-width: 1200px) and (max-device-width: 1440px) {
+    .thankyou-page-inner .wrapper {
+        padding: 100px;
+    }
+    .next-prev-btn .back {
         text-align: center;
     }
 }
 
 /*laptops/tablets*/
-@media only screen and (min-device-width: 576px) and (max-device-width: 1024px)
-{
-        .wrapper
-        {
-            padding: 50px 80px;
-        }
-        .form-heading
-        {
-            font-size: 24px;
-        }
-        .form-buttons button
-        {
-            font-size: 12px;
-            height: 55px;
-        }
-        .form-buttons button i
-        {
-            font-size: 12px;
-        }
-        .thankyou-page
-	{
-		border-radius: 0;
-		padding: 20px;
-	}
-	.thankyou-page-inner
-	{
-		top: 5%;
-	}
-	.thankyou-page-inner .wrapper
-	{
-		padding: 50px;
-		
-	}
-	.thankyou-page-inner h2
-	{
-		font-size: 30px;
-	}
-}
-
-
-/*tablets*/
-@media only screen and (min-device-width: 576px) and (max-device-width: 768px)
-{
-
-    .steps-inner
-    {
-        margin-top: 100px;
-    }
-    .wrapper
-    {
+@media only screen and (min-device-width: 576px) and (max-device-width: 1024px) {
+    .wrapper {
         padding: 50px 80px;
     }
-    .timer
-    {
+    .form-heading {
+        font-size: 24px;
+    }
+    .form-buttons button {
+        font-size: 12px;
+        height: 55px;
+    }
+    .form-buttons button i {
+        font-size: 12px;
+    }
+    .thankyou-page {
+        border-radius: 0;
+        padding: 20px;
+    }
+    .thankyou-page-inner {
+        top: 5%;
+    }
+    .thankyou-page-inner .wrapper {
+        padding: 50px;
+    }
+    .thankyou-page-inner h2 {
+        font-size: 30px;
+    }
+}
+
+/*tablets*/
+@media only screen and (min-device-width: 576px) and (max-device-width: 768px) {
+    .steps-inner {
+        margin-top: 100px;
+    }
+    .wrapper {
+        padding: 50px 80px;
+    }
+    .timer {
         top: 0;
         bottom: auto;
         left: 0;
@@ -85,90 +64,78 @@
         width: 100%;
         justify-content: center;
     }
-    .timer-heading
-    {
+    .timer-heading {
         margin: 0 20px;
     }
-    .sm-sticky
-    {
+    .sm-sticky {
         position: fixed;
         top: 0 !important;
         z-index: 10;
         width: 100%;
     }
-
 }
 
-
 /*Smart phone*/
-@media only screen and (min-device-width: 320px) and (max-device-width: 576px)
-{
+@media only screen and (min-device-width: 320px) and (max-device-width: 576px) {
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; /* Desactiva solo el scroll horizontal */
+        width: 100%; /* Asegura que el body ocupe el 100% del ancho de la ventana */
+    }
 
-
-    .title-ml h2{
+    .title-ml h2 {
         font-size: 25px;
     }
-    .title-ml p{
-        font-size: 16px!important;
+    .title-ml p {
+        font-size: 16px !important;
     }
-    .title-ml img{
-        width: 100px!important;
+    .title-ml img {
+        width: 100px !important;
     }
-    
 
-    .steps-inner
-    {
+    .steps-inner {
         margin-top: 50px;
     }
-    .wrapper
-    {
+    .wrapper {
         padding: 30px 10px;
     }
-    .form-heading
-    {
+    .form-heading {
         font-size: 20px;
     }
-    .step-heading p
-    {
+    .step-heading p {
         font-size: 18px;
     }
-    .step-bar .step-counter
-    {
+    .step-bar .step-counter {
         font-size: 18px;
     }
-    .form-input
-    {
+    .form-input {
         font-size: 15px;
     }
-    .form-input input
-    {
+    .form-input input {
         width: 25px;
         height: 25px;
 
         margin-right: 15px;
     }
-    .form-input input:checked::after
-    {
+    .form-input input:checked::after {
         line-height: 22px;
         font-size: 12px;
     }
-    .form-buttons
-    {
+    .form-buttons {
         display: block;
     }
-    .form-buttons button
-    {
+    .form-buttons button {
         font-size: 12px;
         height: 45px;
         width: 40%;
         margin-top: 10px;
     }
-    .form-buttons button i
-    {
+    .form-buttons button i {
         font-size: 12px;
     }
-    .timer
-    {
+    .timer {
         top: 0;
         bottom: auto;
         left: 0;
@@ -181,40 +148,30 @@
         width: 100%;
         justify-content: center;
     }
-    .timer-heading
-    {
+    .timer-heading {
         margin: 0 20px;
     }
-    .sm-sticky
-    {
+    .sm-sticky {
         position: fixed;
         top: 0 !important;
         z-index: 10;
         width: 100%;
     }
-    .thankyou-page
-	{
-		border-radius: 0;
-		padding: 20px;
-	}
-	.thankyou-page-inner
-	{
-		top: 15%;
-		border-radius: 10px;
-	}
-	.thankyou-page-inner .wrapper
-	{
-		padding: 50px;
-		
-	}
-	.thankyou-page-inner h2
-	{
-		font-size: 30px;
-	}
-    .next-prev-btn .back
-    {
+    .thankyou-page {
+        border-radius: 0;
+        padding: 20px;
+    }
+    .thankyou-page-inner {
+        top: 15%;
+        border-radius: 10px;
+    }
+    .thankyou-page-inner .wrapper {
+        padding: 50px;
+    }
+    .thankyou-page-inner h2 {
+        font-size: 30px;
+    }
+    .next-prev-btn .back {
         width: 100%;
     }
 }
-
-

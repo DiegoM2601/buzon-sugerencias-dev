@@ -55,15 +55,11 @@
                                         directa que tienes con la Universidad. Está pensado para que puedas hacernos
                                         llegar tus sugerencias de manera anónima. Queremos conocer tus ideas.</p>
                                     <p class="text-center mt-3">Gracias por dedicarnos tu tiempo.</p>
-                                    <div style = "display: flex;
-                                            justify-content: center;
-                                            align-items: center; gap: 1em;"
-                                        class = "mt-5">
-                                        <p style = "font-size: 55px; color: #FA4729;"><i
-                                                class="fas fa-map-marker-alt"></i>
+                                    <div class = "mt-5 recordatorio-geo">
+                                        <p><i class="fas fa-map-marker-alt icono-geo"></i>
                                         </p>
-                                        <div>
-                                            <p style = "text-align: left; font-size: 18px;">Recuerda que durante el
+                                        <div class = "txt-recordatorio-geo">
+                                            <p>Recuerda que durante el
                                                 llenado del
                                                 siguiente formulario el GPS de tu dispositivo debe
                                                 permanecer siempre activado.</p>

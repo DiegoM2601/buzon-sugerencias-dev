@@ -71,7 +71,6 @@ class HomeController extends Controller
         return response()->json($sugerencia);
     }
 
-    //TODO: Trasladar una copia de la siguiente funcion a AreaController y modificar el crud areas frontend para usar esa funcion
     public function getSubareas($idArea)
     {
         // prioorizar registros activos
@@ -189,8 +188,6 @@ class HomeController extends Controller
         // dd($sugerenciasUltimoMes->toSql());
         // dd($haceUnMes);
 
-
-        // TODO: Es posible prescindir del siguiente if y usar when() en su lugar?
         $dateRange = $request->input('datefilter');
         if ($dateRange) {
             $filtroFecha = true;
@@ -305,7 +302,6 @@ class HomeController extends Controller
                 ->count();
 
 
-            // FIXME: El siguiente query esta tomando en cuenta registros eliminados por alguna razon
             // ! SOLO MOSTRAR EN EL CHART LAS AREAS QUE TENGAN REGISTROS ASOCIADOS A SUGERENCIAS
             $sugerenciasPorArea = DB::table('areas')
                 ->leftJoin('suggestions', 'areas.id', '=', 'suggestions.area_id')
@@ -397,7 +393,6 @@ class HomeController extends Controller
         } else {
             // ! REPORTES GENERALES
             // if ($searchCategoria && $searchCategoria !== '0') {
-            // FIXME: Que hace la siguiente linea de coidigo ????????????????????????
             //     $query->where('categoria', $searchCategoria);
 
             //     $sugerenciasUltimoMes = Suggestion::where('created_at', '>=', $haceUnMes)->where('deleted', 0)->where('categoria', $searchCategoria)

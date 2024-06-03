@@ -12,6 +12,20 @@ span.step {
     width: 1.6em;
 }
 
+html {
+    overflow: none;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
+body {
+    width: 100vw;
+    max-width: 100%;
+}
+
 .video-container {
     display: flex;
     justify-content: center;
@@ -21,4 +35,21 @@ span.step {
 /* desactivar boton chromecast */
 video::-internal-media-controls-overlay-cast-button {
     display: none;
+}
+
+.recordatorio-geo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+i.icono-geo {
+    font-size: 55px;
+    color: #fa4729;
+}
+
+.txt-recordatorio-geo p {
+    text-align: left;
+    font-size: 18px;
 }
