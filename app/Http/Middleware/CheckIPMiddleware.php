@@ -49,11 +49,13 @@ class CheckIPMiddleware
         //     return redirect('/acceso-restringido');
         // }
 
-        if (in_array($request->ip(), $allowedIps)) {
-            session(['access_granted' => true]);
-        } else {
-            session(['access_granted' => false]);
-        }
+        // if (in_array($request->ip(), $allowedIps)) {
+        //     session(['access_granted' => true]);
+        // } else {
+        //     session(['access_granted' => false]);
+        // }
+
+        session(['access_granted' => true]);
 
         return $next($request);
     }

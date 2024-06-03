@@ -22,7 +22,7 @@
                             </span>
                         </div> --}}
                         <a data-kt-menu-placement="bottom-start"
-                            class="menu-item here now menu-lg-down-accordion me-lg-1" href="{{ '/' }}">
+                            class="menu-item here now menu-lg-down-accordion me-lg-1" href="{{ '/home' }}">
                             <span class="menu-link py-3">
                                 <span class="menu-title"><span
                                         style = "text-decoration: none; color: inherit;">Sugerencias</span>

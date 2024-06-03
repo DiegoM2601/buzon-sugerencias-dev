@@ -16,17 +16,48 @@ class SuggestionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $areas = Area::where('deleted', 0)->get();
 
-        $accessGranted = session('access_granted', false);
-
-        // return $accessGranted
-
+        if ($request->has('help')) {
+            return view('welcome', [
+                'help' => true,
+            ]);
+        }
+        if ($request->hasHeader("DENEGADO")) {
+            return view('error');
+        }
+        if ($request->hasHeader("GPS-DENEGADO")) {
+            return view('error', [
+                'gps_denegado' => true,
+            ]);
+        }
         return view('welcome', [
             'areas' => $areas,
-            'accessGranted' => $accessGranted,
+        ]);
+    }
+
+    public function help()
+    {
+        return view("instrucciones-help");
+    }
+
+    public function error(Request $request)
+    {
+        if ($request->has('permiso')) {
+            return view('acceso-restringido', [
+                'type' => 'permiso',
+            ]);
+        }
+        if ($request->has('sede')) {
+            return view('acceso-restringido', [
+                'type' => 'sede',
+            ]);
+        }
+
+        return view('acceso-restringido', [
+            'type' => 'default',
         ]);
     }
 

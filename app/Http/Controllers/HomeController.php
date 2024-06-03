@@ -55,7 +55,7 @@ class HomeController extends Controller
             }
         }
 
-        $suggestions = $query->paginate(5);
+        $suggestions = $query->paginate(10);
 
         if ($request->hasHeader("AXIOS")) {
             return view('table-home', compact('suggestions'));
@@ -71,7 +71,6 @@ class HomeController extends Controller
         return response()->json($sugerencia);
     }
 
-    //TODO: Trasladar una copia de la siguiente funcion a AreaController y modificar el crud areas frontend para usar esa funcion
     public function getSubareas($idArea)
     {
         // prioorizar registros activos
@@ -162,33 +161,86 @@ class HomeController extends Controller
 
     public function dashboard(Request $request)
     {
+
+        $areas = Area::orderBy('deleted', 'asc')->get();
+
         $searchCategoria = $request->input('search_categoria');
         $searchBy = $request->input('search_by');
+        $searchSemestre = $request->input("search_semestre");
+        $searchSede = $request->input("search_sede");
+        $searchArea = $request->input("search_area");
+
+
         $query = Suggestion::query();
 
+
         $hoy = Carbon::now();
-        $haceUnaSemana = $hoy->subWeek();
-        $haceUnMes = $hoy->subDays(30);
-        // $suggestionCount = Suggestion::where('deleted', 0)->count();
-        $sugerenciasUltimaSemana = Suggestion::where('created_at', '>=', $haceUnaSemana)->where('deleted', 0)
-            ->count();
+        $haceUnaSemana = Carbon::now()->subWeek();
+        $haceUnMes = Carbon::now()->subDays(30);
+
+        // dd($haceUnaSemana);
+
         $sugerenciasUltimoMes = Suggestion::where('created_at', '>=', $haceUnMes)->where('deleted', 0)
             ->count();
-        //------------------------------------    
+        $sugerenciasUltimaSemana = Suggestion::where('created_at', '>=', $haceUnaSemana)->where('deleted', 0)
+            ->count();
+
+        // dd($sugerenciasUltimoMes->toSql());
+        // dd($haceUnMes);
+
         $dateRange = $request->input('datefilter');
         if ($dateRange) {
+            $filtroFecha = true;
+
             list($startDate, $endDate) = explode(' - ', $dateRange);
 
             // ! CORREGIR EL DESFACE 
             $startDate = Carbon::createFromFormat('d/m/Y', $startDate)->format('Y-m-d') . " " . "00:00:00";
             $endDate = Carbon::createFromFormat('d/m/Y', $endDate)->format('Y-m-d') . " " . "23:59:59";
 
-            if ($searchCategoria && $searchCategoria !== '0') {
-                $query->where('categoria', $searchCategoria);
-            }
-            if ($searchBy && $searchBy !== '0') {
-                $query->where('by_', $searchBy);
-            }
+            // ! REPORTES GENERALES
+            $sugerenciasUltimaSemana = Suggestion::where('created_at', '>=', $haceUnaSemana)
+                ->where('deleted', 0)
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
+                    return $query->where('categoria', $searchCategoria);
+                })
+                ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
+                    return $query->where('by_', $searchBy);
+                })
+                ->when($searchSede && $searchSede !== '0', function ($query) use ($searchSede) {
+                    return $query->where('sede', $searchSede);
+                })
+                ->when($searchSemestre && $searchSemestre !== '0', function ($query) use ($searchSemestre) {
+                    return $query->where('semestre', $searchSemestre);
+                })
+                ->when($searchArea && $searchArea !== '0', function ($query) use ($searchArea) {
+                    return $query->where('area_id', $searchArea);
+                })
+                ->count();
+
+            $sugerenciasUltimoMes = Suggestion::where('created_at', '>=', $haceUnMes)
+                ->where('deleted', 0)
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
+                    return $query->where('categoria', $searchCategoria);
+                })
+                ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
+                    return $query->where('by_', $searchBy);
+                })
+                ->when($searchSede && $searchSede !== '0', function ($query) use ($searchSede) {
+                    return $query->where('sede', $searchSede);
+                })
+                ->when($searchSemestre && $searchSemestre !== '0', function ($query) use ($searchSemestre) {
+                    return $query->where('semestre', $searchSemestre);
+                })
+                ->when($searchArea && $searchArea !== '0', function ($query) use ($searchArea) {
+                    return $query->where('area_id', $searchArea);
+                })
+                ->count();
+
+
+
             $sugerenciasPorFecha = Suggestion::select(\DB::raw('date(created_at) as fecha'), \DB::raw('count(*) as total'))->where('deleted', 0)
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
@@ -196,6 +248,15 @@ class HomeController extends Controller
                 })
                 ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
                     return $query->where('by_', $searchBy);
+                })
+                ->when($searchSede && $searchSede !== '0', function ($query) use ($searchSede) {
+                    return $query->where('sede', $searchSede);
+                })
+                ->when($searchSemestre && $searchSemestre !== '0', function ($query) use ($searchSemestre) {
+                    return $query->where('semestre', $searchSemestre);
+                })
+                ->when($searchArea && $searchArea !== '0', function ($query) use ($searchArea) {
+                    return $query->where('area_id', $searchArea);
                 })
                 ->groupBy('fecha')
                 ->get();
@@ -209,6 +270,15 @@ class HomeController extends Controller
                 ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
                     return $query->where('by_', $searchBy);
                 })
+                ->when($searchSede && $searchSede !== '0', function ($query) use ($searchSede) {
+                    return $query->where('sede', $searchSede);
+                })
+                ->when($searchSemestre && $searchSemestre !== '0', function ($query) use ($searchSemestre) {
+                    return $query->where('semestre', $searchSemestre);
+                })
+                ->when($searchArea && $searchArea !== '0', function ($query) use ($searchArea) {
+                    return $query->where('area_id', $searchArea);
+                })
                 ->groupBy('sede')
                 ->get();
 
@@ -220,22 +290,44 @@ class HomeController extends Controller
                 ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
                     return $query->where('by_', $searchBy);
                 })
+                ->when($searchSede && $searchSede !== '0', function ($query) use ($searchSede) {
+                    return $query->where('sede', $searchSede);
+                })
+                ->when($searchSemestre && $searchSemestre !== '0', function ($query) use ($searchSemestre) {
+                    return $query->where('semestre', $searchSemestre);
+                })
+                ->when($searchArea && $searchArea !== '0', function ($query) use ($searchArea) {
+                    return $query->where('area_id', $searchArea);
+                })
                 ->count();
+
 
             // ! SOLO MOSTRAR EN EL CHART LAS AREAS QUE TENGAN REGISTROS ASOCIADOS A SUGERENCIAS
             $sugerenciasPorArea = DB::table('areas')
                 ->leftJoin('suggestions', 'areas.id', '=', 'suggestions.area_id')
                 ->whereBetween('suggestions.created_at', [$startDate, $endDate])
                 ->where('areas.deleted', '=', 0)
+                ->where('suggestions.deleted', '=', 0)
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
                     return $query->where('categoria', $searchCategoria);
                 })
                 ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
                     return $query->where('by_', $searchBy);
                 })
+                ->when($searchSede && $searchSede !== '0', function ($query) use ($searchSede) {
+                    return $query->where('sede', $searchSede);
+                })
+                ->when($searchSemestre && $searchSemestre !== '0', function ($query) use ($searchSemestre) {
+                    return $query->where('semestre', $searchSemestre);
+                })
+                ->when($searchArea && $searchArea !== '0', function ($query) use ($searchArea) {
+                    return $query->where('area_id', $searchArea);
+                })
                 ->select('areas.area', DB::raw('COUNT(suggestions.id) as total'))
                 ->groupBy('areas.area')
                 ->get();
+
+            // dd($sugerenciasPorArea->toSql());
 
             // ! MOSTRAR TODAS LAS AREAS, INCLUYENDO LAS QUE TENGAN 0 REGISTROS ASOCIADOS A SUGERENCIAS
             // $sugerenciasPorArea = DB::table('areas')
@@ -264,6 +356,15 @@ class HomeController extends Controller
                 ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
                     return $query->where('by_', $searchBy);
                 })
+                ->when($searchSede && $searchSede !== '0', function ($query) use ($searchSede) {
+                    return $query->where('sede', $searchSede);
+                })
+                ->when($searchSemestre && $searchSemestre !== '0', function ($query) use ($searchSemestre) {
+                    return $query->where('semestre', $searchSemestre);
+                })
+                ->when($searchArea && $searchArea !== '0', function ($query) use ($searchArea) {
+                    return $query->where('area_id', $searchArea);
+                })
                 ->groupBy('carrera')
                 ->orderBy('total')
                 ->get();
@@ -277,16 +378,104 @@ class HomeController extends Controller
                 ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
                     return $query->where('by_', $searchBy);
                 })
+                ->when($searchSede && $searchSede !== '0', function ($query) use ($searchSede) {
+                    return $query->where('sede', $searchSede);
+                })
+                ->when($searchSemestre && $searchSemestre !== '0', function ($query) use ($searchSemestre) {
+                    return $query->where('semestre', $searchSemestre);
+                })
+                ->when($searchArea && $searchArea !== '0', function ($query) use ($searchArea) {
+                    return $query->where('area_id', $searchArea);
+                })
                 ->groupBy('semestre')
                 ->orderBy('total')
                 ->get();
         } else {
-            if ($searchCategoria && $searchCategoria !== '0') {
-                $query->where('categoria', $searchCategoria);
-            }
-            if ($searchBy && $searchBy !== '0') {
-                $query->where('by_', $searchBy);
-            }
+            // ! REPORTES GENERALES
+            // if ($searchCategoria && $searchCategoria !== '0') {
+            //     $query->where('categoria', $searchCategoria);
+
+            //     $sugerenciasUltimoMes = Suggestion::where('created_at', '>=', $haceUnMes)->where('deleted', 0)->where('categoria', $searchCategoria)
+            //         ->count();
+            //     $sugerenciasUltimaSemana = Suggestion::where('created_at', '>=', $haceUnaSemana)->where('deleted', 0)->where('categoria', $searchCategoria)
+            //         ->count();
+            // }
+            // if ($searchBy && $searchBy !== '0') {
+            //     $query->where('by_', $searchBy);
+
+            //     $sugerenciasUltimoMes = Suggestion::where('created_at', '>=', $haceUnMes)->where('deleted', 0)->where('categoria', $searchCategoria)
+            //         ->count();
+            //     $sugerenciasUltimaSemana = Suggestion::where('created_at', '>=', $haceUnaSemana)->where('deleted', 0)->where('categoria', $searchCategoria)
+            //         ->count();
+            // }
+            $filtroFecha = false;
+
+            $sugerenciasUltimaSemana = Suggestion::where('created_at', '>=', $haceUnaSemana)
+                ->where('deleted', 0)
+                ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
+                    return $query->where('categoria', $searchCategoria);
+                })
+                ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
+                    return $query->where('by_', $searchBy);
+                })
+                ->when($searchSede && $searchSede !== '0', function ($query) use ($searchSede) {
+                    return $query->where('sede', $searchSede);
+                })
+                ->when($searchSemestre && $searchSemestre !== '0', function ($query) use ($searchSemestre) {
+                    return $query->where('semestre', $searchSemestre);
+                })
+                ->when($searchArea && $searchArea !== '0', function ($query) use ($searchArea) {
+                    return $query->where('area_id', $searchArea);
+                })
+                ->count();
+
+            $sugerenciasUltimoMes = Suggestion::where('created_at', '>=', $haceUnMes)
+                ->where('deleted', 0)
+                ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
+                    return $query->where('categoria', $searchCategoria);
+                })
+                ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
+                    return $query->where('by_', $searchBy);
+                })
+                ->when($searchSede && $searchSede !== '0', function ($query) use ($searchSede) {
+                    return $query->where('sede', $searchSede);
+                })
+                ->when($searchSemestre && $searchSemestre !== '0', function ($query) use ($searchSemestre) {
+                    return $query->where('semestre', $searchSemestre);
+                })
+                ->when($searchArea && $searchArea !== '0', function ($query) use ($searchArea) {
+                    return $query->where('area_id', $searchArea);
+                })
+                ->count();
+
+
+            // if ($searchSede && $searchSede !== '0') {
+            //     $query->where('sede', $searchSede);
+
+            //     $sugerenciasUltimoMes = Suggestion::where('created_at', '>=', $haceUnMes)->where('deleted', 0)->where('categoria', $searchCategoria)
+            //         ->count();
+            //     $sugerenciasUltimaSemana = Suggestion::where('created_at', '>=', $haceUnaSemana)->where('deleted', 0)->where('categoria', $searchCategoria)
+            //         ->count();
+            // }
+            // if ($searchSemestre && $searchSemestre !== '0') {
+            //     $query->where('semestre', $searchSemestre);
+
+            //     $sugerenciasUltimoMes = Suggestion::where('created_at', '>=', $haceUnMes)->where('deleted', 0)->where('categoria', $searchCategoria)
+            //         ->count();
+            //     $sugerenciasUltimaSemana = Suggestion::where('created_at', '>=', $haceUnaSemana)->where('deleted', 0)->where('categoria', $searchCategoria)
+            //         ->count();
+            // }
+            // if ($searchArea && $searchArea !== '0') {
+            //     $query->where('area_id', $searchArea);
+
+            //     $sugerenciasUltimoMes = Suggestion::where('created_at', '>=', $haceUnMes)->where('deleted', 0)->where('categoria', $searchCategoria)
+            //         ->count();
+            //     $sugerenciasUltimaSemana = Suggestion::where('created_at', '>=', $haceUnaSemana)->where('deleted', 0)->where('categoria', $searchCategoria)
+            //         ->count();
+            // }
+
+
+            // ! SUGERENCIAS POR FECHA
             $sugerenciasPorFecha = Suggestion::select(\DB::raw('date(created_at) as fecha'), \DB::raw('count(*) as total'))->where('deleted', 0)
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
                     return $query->where('categoria', $searchCategoria);
@@ -294,13 +483,34 @@ class HomeController extends Controller
                 ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
                     return $query->where('by_', $searchBy);
                 })
+                ->when($searchSede && $searchSede !== '0', function ($query) use ($searchSede) {
+                    return $query->where('sede', $searchSede);
+                })
+                ->when($searchSemestre && $searchSemestre !== '0', function ($query) use ($searchSemestre) {
+                    return $query->where('semestre', $searchSemestre);
+                })
+                ->when($searchArea && $searchArea !== '0', function ($query) use ($searchArea) {
+                    return $query->where('area_id', $searchArea);
+                })
                 ->groupBy('fecha')->get();
+
+
+            // ! SUGERENCIAS POR SEDE
             $sugerenciasPorSede = Suggestion::select('sede', \DB::raw('count(*) as total'))->where('deleted', 0)
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
                     return $query->where('categoria', $searchCategoria);
                 })
                 ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
                     return $query->where('by_', $searchBy);
+                })
+                ->when($searchSede && $searchSede !== '0', function ($query) use ($searchSede) {
+                    return $query->where('sede', $searchSede);
+                })
+                ->when($searchSemestre && $searchSemestre !== '0', function ($query) use ($searchSemestre) {
+                    return $query->where('semestre', $searchSemestre);
+                })
+                ->when($searchArea && $searchArea !== '0', function ($query) use ($searchArea) {
+                    return $query->where('area_id', $searchArea);
                 })
                 ->groupBy('sede')->get();
 
@@ -321,12 +531,23 @@ class HomeController extends Controller
             // ! SOLO AREAS ASOCIADAS CON SUGERENCIAS
             $sugerenciasPorArea = DB::table('areas')
                 ->join('suggestions', 'areas.id', '=', 'suggestions.area_id')
+                // TODO: deberiamos priorizar registros activos o areas activas????????????????
                 ->where('areas.deleted', '=', 0)
+                ->where('suggestions.deleted', '=', 0)
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
                     return $query->where('categoria', $searchCategoria);
                 })
                 ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
                     return $query->where('by_', $searchBy);
+                })
+                ->when($searchSede && $searchSede !== '0', function ($query) use ($searchSede) {
+                    return $query->where('sede', $searchSede);
+                })
+                ->when($searchSemestre && $searchSemestre !== '0', function ($query) use ($searchSemestre) {
+                    return $query->where('semestre', $searchSemestre);
+                })
+                ->when($searchArea && $searchArea !== '0', function ($query) use ($searchArea) {
+                    return $query->where('area_id', $searchArea);
                 })
                 ->select('areas.area', DB::raw('COUNT(suggestions.id) as total'))
                 ->groupBy('areas.area')
@@ -342,6 +563,7 @@ class HomeController extends Controller
              * * ]
              */
 
+            // ! CONTEO GENERAL DE COINCIDENCIAS
             $suggestionCount = Suggestion::where('deleted', 0)
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
                     return $query->where('categoria', $searchCategoria);
@@ -349,9 +571,19 @@ class HomeController extends Controller
                 ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
                     return $query->where('by_', $searchBy);
                 })
+                ->when($searchSede && $searchSede !== '0', function ($query) use ($searchSede) {
+                    return $query->where('sede', $searchSede);
+                })
+                ->when($searchSemestre && $searchSemestre !== '0', function ($query) use ($searchSemestre) {
+                    return $query->where('semestre', $searchSemestre);
+                })
+                ->when($searchArea && $searchArea !== '0', function ($query) use ($searchArea) {
+                    return $query->where('area_id', $searchArea);
+                })
                 ->count();
 
 
+            // ! REPORTE POR CARRERAS
             $sugerenciasPorCarrera = Suggestion::select(\DB::raw('COALESCE(carrera, "Docente") as carrera'), \DB::raw('count(*) as total'))->where('deleted', 0)
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
                     return $query->where('categoria', $searchCategoria);
@@ -359,13 +591,34 @@ class HomeController extends Controller
                 ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
                     return $query->where('by_', $searchBy);
                 })
+                ->when($searchSede && $searchSede !== '0', function ($query) use ($searchSede) {
+                    return $query->where('sede', $searchSede);
+                })
+                ->when($searchSemestre && $searchSemestre !== '0', function ($query) use ($searchSemestre) {
+                    return $query->where('semestre', $searchSemestre);
+                })
+                ->when($searchArea && $searchArea !== '0', function ($query) use ($searchArea) {
+                    return $query->where('area_id', $searchArea);
+                })
                 ->groupBy('carrera')->orderBy('total')->get();
+
+
+            // ! REPORTE POR SEMESTRE
             $sugerenciasPorSemestre = Suggestion::select(\DB::raw('COALESCE(semestre, "Docente") as semestre'), \DB::raw('count(*) as total'))->where('deleted', 0)
                 ->when($searchCategoria && $searchCategoria !== '0', function ($query) use ($searchCategoria) {
                     return $query->where('categoria', $searchCategoria);
                 })
                 ->when($searchBy && $searchBy !== '0', function ($query) use ($searchBy) {
                     return $query->where('by_', $searchBy);
+                })
+                ->when($searchSede && $searchSede !== '0', function ($query) use ($searchSede) {
+                    return $query->where('sede', $searchSede);
+                })
+                ->when($searchSemestre && $searchSemestre !== '0', function ($query) use ($searchSemestre) {
+                    return $query->where('semestre', $searchSemestre);
+                })
+                ->when($searchArea && $searchArea !== '0', function ($query) use ($searchArea) {
+                    return $query->where('area_id', $searchArea);
                 })
                 ->groupBy('semestre')->orderBy('total')->get();
         }
@@ -378,7 +631,9 @@ class HomeController extends Controller
             'sugerenciasPorFecha' => $sugerenciasPorFecha,
             'sugerenciasPorCarrera' => $sugerenciasPorCarrera,
             'sugerenciasPorSemestre' => $sugerenciasPorSemestre,
-
+            'areas' => $areas,
+            // prescindir reporte mensual y semanal
+            'filtroFecha' => $filtroFecha,
         ]);
     }
 }

@@ -17,7 +17,7 @@ const searchParams = () => {
     };
     console.log(consulta);
     axios
-        .get("/", {
+        .get("/home", {
             headers: {
                 "X-CSRF-TOKEN": _token,
                 AXIOS: "",

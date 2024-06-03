@@ -1,6 +1,6 @@
 @extends('template.app')
 @section('show-1', 'show')
-@section('title-content', 'inicio')
+@section('title-content', 'Inicio')
 
 @section('breadcrumb')
     <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
@@ -26,149 +26,224 @@
     <body class="g-sidenav-show  bg-gray-200">
         <div class="container-fluid py-3">
             <div class="row">
-                <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+                <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4 @if ($filtroFecha) mx-auto @endif">
                     <div class="card card-bordered">
                         <div class="card-body">
                             <div class="card-header">
                                 <h4 class="card-title" style="color: rgb(255, 24, 24);">
                                     Total&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </h4>
-                                <p class="card-category">Cantidad total de sugerencias</p>
+                                <br>
+                                <p class="card-category" style = "width: 100%">Cantidad total de registros</p>
                             </div>
                             <h3 class="mb-0" style="text-align: center; font-weight: bold;">{{ $suggestionCount }}
                             </h3>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+                @if (!$filtroFecha)
+                    <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4" id = "semanal-container">
+                        <div class="card card-bordered">
+                            <div class="card-body">
+                                <div class="card-header">
+                                    <h4 class="card-title" style="color: rgb(25, 9, 255);">Semanales</h4>
+                                    <p class="card-category">Registros de la última semana</p>
+                                </div>
+                                <h3 class="mb-0" style="text-align: center; font-weight: bold;">
+                                    {{ $sugerenciasUltimaSemana }}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4" id = "mensual-container">
+                        <div class="card card-bordered">
+                            <div class="card-body">
+                                <div class="card-header">
+                                    <h4 class="card-title" style="color: rgb(74, 233, 53);">Mensuales</h4>
+                                    <p class="card-category">Registros del último
+                                        mes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </p>
+                                </div>
+                                <h3 class="mb-0" style="text-align: center; font-weight: bold;">
+                                    {{ $sugerenciasUltimoMes }}
+                                </h3>
+                            </div>
+                        </div>
+                @endif
+            </div>
+            <div class="row mt-4">
+                <div class="card card-bordered">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <h4 class="card-title">Frecuencia de sugerencias</h4>
+                            <table class="table gs-7 gy-7 gx-7">
+                                <thead>
+                                    <tr class="fw-semibold fs-6 text-gray-800">
+                                        <th>
+                                            Sede
+                                            <select type="search" name="search_categoria" id="search_sede"
+                                                class="form-select" data-control="select2" data-placeholder="Todas">
+                                                <option value="0">Todos</option>
+                                                <option value="LPZ">
+                                                    La Paz</option>
+                                                <option value="SCZ">
+                                                    Santa Cruz</option>
+                                                <option value="CBB">
+                                                    Cochabamba</option>
+                                                <option value="EAT">
+                                                    El Alto</option>
+                                            </select>
+                                        </th>
+                                        <th>
+                                            Semestre
+                                            <select type="search" name="search_by" id="search_semestre" class="form-select"
+                                                data-control="select2" data-placeholder="Todas">
+                                                <option value="0">Todos</option>
+                                                <option value="1">
+                                                    1</option>
+                                                <option value="2">
+                                                    2</option>
+                                                <option value="3">
+                                                    3</option>
+                                                <option value="4">
+                                                    4</option>
+                                                <option value="5">
+                                                    5</option>
+                                                <option value="6">
+                                                    6</option>
+                                                <option value="7">
+                                                    7</option>
+                                                <option value="8">
+                                                    8</option>
+                                                <option value="9">
+                                                    9</option>
+                                                <option value="10">
+                                                    10</option>
+                                                <option value="11">
+                                                    11</option>
+                                            </select>
+                                        </th>
+                                        {{-- TODO: Hacer que esta columna ocupe el espacio de 2 --}}
+                                        <th>
+                                            Área
+                                            <select type="search" name="search_by" id="search_area" class="form-select"
+                                                data-control="select2" data-placeholder="Todas">
+                                                <option value="0">Todas las Áreas</option>
+                                                {{-- ! Solo areas activas --}}
+                                                @foreach ($areas as $area)
+                                                    @if ($area->deleted == 0)
+                                                        <option value="{{ $area->id }}">{{ $area->area }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </th>
+                                    </tr>
+                                    <tr class="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
+                                        <th>
+                                            Categoría
+                                            <select type="search" name="search_categoria" id="search_categoria"
+                                                class="form-select" data-control="select2" data-placeholder="Todas">
+                                                <option value="0">Todos</option>
+                                                <option value="Sugerencia">Sugerencia</option>
+                                                <option value="Reclamo">Reclamo</option>
+                                            </select>
+                                        </th>
+                                        <th>
+                                            Participantes
+                                            <select type="search" name="search_by" id="search_by" class="form-select"
+                                                data-control="select2" data-placeholder="Todas">
+                                                <option value="0">Todos</option>
+                                                <option value="Estudiante">Estudiante</option>
+                                                <option value="Docente">Docente</option>
+                                            </select>
+                                        </th>
+                                        <th>
+                                            <input class="form-control" type="text" name="datefilter" id="datefilter"
+                                                placeholder="Filtro por fechas" />
+                                        </th>
+                                        <th>
+                                            <button id="searchButtonDate" name="searchButtonDate" class="btn btn-primary"
+                                                type="submit">
+                                                <i class="fa-solid fa-magnifying-glass"></i> Buscar
+                                            </button>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div id="chartFechas" style="height: 350px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-xl-5 col-sm-6 mb-xl-0 mb-4">
                     <div class="card card-bordered">
                         <div class="card-body">
                             <div class="card-header">
-                                <h4 class="card-title" style="color: rgb(25, 9, 255);">Semanales</h4>
-                                <p class="card-category">Sugerencias de la última semana</p>
+                                <h4 class="card-title">Sugerencias por Sede</h4>
+                                <p class="card-category">Rendimiento de la última campaña</p>
                             </div>
-                            <h3 class="mb-0" style="text-align: center; font-weight: bold;">{{ $sugerenciasUltimaSemana }}
-                            </h3>
+                            <div id="chartSede" style="height: 350px;"></div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+                <div class="col-xl-7 col-sm-6 mb-xl-0 mb-4">
                     <div class="card card-bordered">
                         <div class="card-body">
                             <div class="card-header">
-                                <h4 class="card-title" style="color: rgb(74, 233, 53);">Mensuales</h4>
-                                <p class="card-category">Sugerencias del último mes</p>
+                                <h4 class="card-title">Sugerencias por Área</h4>
+                                <p class="card-category">Rendimiento de la última campaña</p>
                             </div>
-                            <h3 class="mb-0" style="text-align: center; font-weight: bold;">{{ $sugerenciasUltimoMes }}
-                            </h3>
+                            <div id="chartArea" style="height: 350px;"></div>
                         </div>
                     </div>
                 </div>
-                <div class="row mt-4">
+            </div>
+            <div class="row mt-3">
+                <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
                     <div class="card card-bordered">
                         <div class="card-body">
                             <div class="card-header">
-                                <h4 class="card-title">Frecuencia de sugerencias</h4>
-                                <table class="table gs-7 gy-7 gx-7">
-                                    <thead>
-                                        <tr class="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
-                                            <th>
-                                                Categoría
-                                                <select type="search" name="search_categoria" id="search_categoria"
-                                                    class="form-select" data-control="select2" data-placeholder="Todas">
-                                                    <option value="0">Todos</option>
-                                                    <option value="Sugerencia">Sugerencia</option>
-                                                    <option value="Reclamo">Reclamo</option>
-                                                </select>
-                                            </th>
-                                            <th>
-                                                Participantes
-                                                <select type="search" name="search_by" id="search_by" class="form-select"
-                                                    data-control="select2" data-placeholder="Todas">
-                                                    <option value="0">Todos</option>
-                                                    <option value="Estudiante">Estudiante</option>
-                                                    <option value="Docente">Docente</option>
-                                                </select>
-                                            </th>
-                                            <th>
-                                                <input class="form-control" type="text" name="datefilter" id="datefilter"
-                                                    placeholder="Filtro por fechas" />
-                                            </th>
-                                            <th>
-                                                <button id="searchButtonDate" name="searchButtonDate"
-                                                    class="btn btn-primary" type="submit"><i
-                                                        class="fa-solid fa-magnifying-glass"></i> Buscar</button>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                </table>
+                                <h4 class="card-title">Sugerencias por Carrera</h4>
+                                <p class="card-category">Rendimiento de la última campaña</p>
                             </div>
-                            <div id="chartFechas" style="height: 350px;"></div>
+                            <div id="chartCarrera" style="height: 350px;"></div>
                         </div>
                     </div>
                 </div>
-                <div class="row mt-4">
-                    <div class="col-xl-5 col-sm-6 mb-xl-0 mb-4">
-                        <div class="card card-bordered">
-                            <div class="card-body">
-                                <div class="card-header">
-                                    <h4 class="card-title">Sugerencias por Sede</h4>
-                                    <p class="card-category">Rendimiento de la última campaña</p>
-                                </div>
-                                <div id="chartSede" style="height: 350px;"></div>
+                <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card card-bordered">
+                        <div class="card-body">
+                            <div class="card-header">
+                                <h4 class="card-title">Sugerencias por Semestre</h4>
+                                <p class="card-category">Rendimiento de la última campaña</p>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-7 col-sm-6 mb-xl-0 mb-4">
-                        <div class="card card-bordered">
-                            <div class="card-body">
-                                <div class="card-header">
-                                    <h4 class="card-title">Sugerencias por Área</h4>
-                                    <p class="card-category">Rendimiento de la última campaña</p>
-                                </div>
-                                <div id="chartArea" style="height: 350px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
-                        <div class="card card-bordered">
-                            <div class="card-body">
-                                <div class="card-header">
-                                    <h4 class="card-title">Sugerencias por Carrera</h4>
-                                    <p class="card-category">Rendimiento de la última campaña</p>
-                                </div>
-                                <div id="chartCarrera" style="height: 350px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
-                        <div class="card card-bordered">
-                            <div class="card-body">
-                                <div class="card-header">
-                                    <h4 class="card-title">Sugerencias por Semestre</h4>
-                                    <p class="card-category">Rendimiento de la última campaña</p>
-                                </div>
-                                <div id="chartSemestre" style="height: 350px;"></div>
-                            </div>
+                            <div id="chartSemestre" style="height: 350px;"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
     </body>
 @endsection
-
+{{-- TODO: Guardar los nuevos valores de busqueda como cookies para mantener los valores al momento de recargar la pagina --}}
 @section('script')
     <script>
         $("#searchButtonDate").click(function() {
             var searchBy = $("#search_by").val();
             var searchCategoria = $("#search_categoria").val();
             var dateRange = $('input[name="datefilter"]').val();
-            var url = 'dashboard?datefilter=' + dateRange +
-                '&search_by=' + searchBy +
-                '&search_categoria=' + searchCategoria;
+
+            var searchSede = $('#search_sede').val();
+            var searchSemestre = $('#search_semestre').val();
+            var searchArea = $('#search_area').val();
+
+            //prettier-ignore
+            var url = 'dashboard?datefilter=' + dateRange + '&search_by=' + searchBy + '&search_categoria=' +
+                searchCategoria + '&search_sede=' + searchSede + '&search_semestre=' + searchSemestre +
+                '&search_area=' + searchArea;
             window.location.href = url;
         });
     </script>
@@ -177,9 +252,24 @@
         function setSelectValuesInCookies() {
             var searchCategoriaValue = $('#search_categoria').val();
             var searchByValue = $('#search_by').val();
+            var searchSedeValue = $('#search_sede').val();
+            var searchSemestreValue = $('#search_semestre').val();
+            var searchAreaValue = $('#search_area').val();
+
+
             document.cookie = 'searchCategoria=' + searchCategoriaValue + '; expires=' + new Date(Date.now() + 7 * 24 * 60 *
                 60 * 1000).toUTCString();
             document.cookie = 'searchBy=' + searchByValue + '; expires=' + new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+                .toUTCString();
+            document.cookie = 'searchSede=' + searchSedeValue + '; expires=' + new Date(Date.now() + 7 * 24 * 60 * 60 *
+                    1000)
+                .toUTCString();
+            document.cookie = 'searchSemestre=' + searchSemestreValue + '; expires=' + new Date(Date.now() + 7 * 24 * 60 *
+                    60 *
+                    1000)
+                .toUTCString();
+            document.cookie = 'searchArea=' + searchAreaValue + '; expires=' + new Date(Date.now() + 7 * 24 * 60 * 60 *
+                    1000)
                 .toUTCString();
         }
 
@@ -187,11 +277,26 @@
             var searchCategoriaCookie = document.cookie.replace(/(?:(?:^|.*;\s*)searchCategoria\s*=\s*([^;]*).*$)|^.*$/,
                 "$1");
             var searchByCookie = document.cookie.replace(/(?:(?:^|.*;\s*)searchBy\s*=\s*([^;]*).*$)|^.*$/, "$1");
+            var searchSedeCookie = document.cookie.replace(/(?:(?:^|.*;\s*)searchSede\s*=\s*([^;]*).*$)|^.*$/, "$1");;
+            var searchSemestreCookie = document.cookie.replace(/(?:(?:^|.*;\s*)searchSemestre\s*=\s*([^;]*).*$)|^.*$/,
+                "$1");;
+            var searchAreaCookie = document.cookie.replace(/(?:(?:^|.*;\s*)searchArea\s*=\s*([^;]*).*$)|^.*$/, "$1");;
+
+
             if (searchCategoriaCookie) {
                 $('#search_categoria').val(searchCategoriaCookie).trigger('change');
             }
             if (searchByCookie) {
                 $('#search_by').val(searchByCookie).trigger('change');
+            }
+            if (searchSedeCookie) {
+                $('#search_sede').val(searchSedeCookie).trigger('change');
+            }
+            if (searchSemestreCookie) {
+                $('#search_semestre').val(searchSemestreCookie).trigger('change');
+            }
+            if (searchAreaCookie) {
+                $('#search_area').val(searchAreaCookie).trigger('change');
             }
         }
         $(document).ready(function() {
@@ -208,6 +313,11 @@
             var savedStartDate = Cookies.get('savedStartDate');
             var savedEndDate = Cookies.get('savedEndDate');
             if (savedStartDate && savedEndDate) {
+
+                // ! si se utiliza el filtro por fechas, se prescinde del reporte mensual y semanal
+                // $("#semanal-container").css("display", "none");
+                // $("#mensual-container").css("display", "none");
+
                 $('input[name="datefilter"]').daterangepicker({
                     autoUpdateInput: false,
                     locale: {

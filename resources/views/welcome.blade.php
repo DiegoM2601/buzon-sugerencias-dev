@@ -1,4 +1,3 @@
-@if ($accessGranted)
     <!DOCTYPE html>
     <html>
 
@@ -17,6 +16,7 @@
         <link rel="stylesheet" type="text/css" href="assets/css/style.css?ver=1.0.1">
         <link rel="stylesheet" type="text/css" href="assets/css/responsive.css?ver=1.0.1">
         <link rel="stylesheet" type="text/css" href="assets/css/animation.css?ver=1.0.1">
+        <link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 
         <meta name="description"
             content="Plataforma diseñada para que los estudiantes de UNIFRANZ puedan hacer sugerencias o reclamos de forma anónima, proporcionando un espacio seguro para compartir opiniones y mejorar la experiencia universitaria.">
@@ -55,17 +55,54 @@
                                         directa que tienes con la Universidad. Está pensado para que puedas hacernos
                                         llegar tus sugerencias de manera anónima. Queremos conocer tus ideas.</p>
                                     <p class="text-center mt-3">Gracias por dedicarnos tu tiempo.</p>
+                                    <div class = "mt-5 recordatorio-geo">
+                                        <p><i class="fas fa-map-marker-alt icono-geo"></i>
+                                        </p>
+                                        <div class = "txt-recordatorio-geo">
+                                            <p>Recuerda que durante el
+                                                llenado del
+                                                siguiente formulario el GPS de tu dispositivo debe
+                                                permanecer siempre activado.</p>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="container">
                                     <div class="row">
                                         <div class="col text-center">
-                                            <!-- <button class="btn btn-default">Centered button</button> -->
                                             <div class="form-buttons-center text-center">
                                                 <button type="button" class="next"
                                                     id="btnContinuar">Continuar</i></button>
                                             </div>
+                                            <div class="form-buttons-center text-center">
+                                                <button class = "prev" id = "btnAyuda">¿Necesitas ayuda?</button>
+                                            </div>
                                         </div>
                                     </div>
+                                </div>
+                                <!-- next-prev-btn -->
+                            </div>
+                        </section>
+                        <section class="steps-inner pop-slide" id="geo-load">
+                            <div class="wrapper">
+                                <div class="step-heading">
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <img src="./assets/images/logo.png" alt="">
+                                            <h2 class="mt-5">Buzón de Sugerencias</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row col-12 text-center">
+                                    {{-- <h4>SEDE LA PAZ DETECTADA</h4> --}}
+                                    <h4 id = "geo-sede-detectada"></h4>
+                                </div>
+                                <div class="video-container" id = "geo-animacion">
+                                    {{-- <img src="{{ asset('gifs/check-list.gif') }}" width="200px"> --}}
+                                    <img src="{{ asset('gifs/cargando-geolocalizacion.gif') }}" width = "300px">
+                                </div>
+                                <div class="step-heading mt-4">
+                                    <p class="text-center" id = "geo-load-msj">Por favor, aguarda mientras detectamos tu
+                                        ubicación.</p>
                                 </div>
                                 <!-- next-prev-btn -->
                             </div>
@@ -105,7 +142,8 @@
                                         </div>
                                         <div class="col-6"style="text-align: center;">
                                             <label class="form-input" for="by_">
-                                                <input type="radio" name="by_" value="Docente" autocomplete="off">
+                                                <input type="radio" name="by_" value="Docente"
+                                                    autocomplete="off">
                                                 Docente
                                             </label>
                                         </div>
@@ -514,8 +552,6 @@
         </section>
 
 
-
-
         <!-- bootstrap JS -->
         <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
 
@@ -524,6 +560,10 @@
 
         <!-- custom JS -->
         <script type="text/javascript" src="assets/js/custom.js?ver=1.0.1"></script>
+        {{-- <script src="{{ asset('js/sedes.js') }}" type="module"></script> --}}
+        <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+        <script src="{{ asset('js/sedesUnifranz.js') }}"></script>
+        <script src="{{ asset('js/geolocalizacion.js') }}"></script>
 
         <script>
             $.ajaxSetup({
@@ -536,172 +576,3 @@
     </body>
 
     </html>
-@else
-    <!DOCTYPE html>
-    <html lang="es">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Buzón de Sugerencias - UNIFRANZ</title>
-
-        <meta name="description"
-            content="Plataforma diseñada para que los estudiantes de UNIFRANZ puedan hacer sugerencias o reclamos de forma anónima, proporcionando un espacio seguro para compartir opiniones y mejorar la experiencia universitaria.">
-
-        <meta property="og:title" content="Buzón de Sugerencias - UNIFRANZ" />
-        <meta property="og:description"
-            content="Plataforma diseñada para que los estudiantes de UNIFRANZ puedan hacer sugerencias o reclamos de forma anónima, proporcionando un espacio seguro para compartir opiniones y mejorar la experiencia universitaria." />
-
-        <meta name="twitter:title" content="Buzón de Sugerencias - UNIFRANZ">
-        <meta name="twitter:description"
-            content="Plataforma diseñada para que los estudiantes de UNIFRANZ puedan hacer sugerencias o reclamos de forma anónima, proporcionando un espacio seguro para compartir opiniones y mejorar la experiencia universitaria.">
-
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css"
-            href="https://buzon-de-sugerencias.unifranz.edu.bo/assets/css/style.css?ver=1.0.1">
-
-        <style>
-            .error-container {
-                min-height: 100vh;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                background-color: #fff;
-            }
-
-            .error-container h1 {
-                color: #fa4729;
-                font-size: 2.5rem;
-                margin-bottom: 0.5rem;
-                font-weight: 600;
-            }
-
-            .error-container p {
-                margin-bottom: 0;
-                font-size: 22px;
-                font-weight: 600;
-            }
-
-            .btn-primary {
-                background-color: #fa4729;
-                border: none;
-                padding: 0.5rem 2rem;
-                font-size: 1.3rem;
-                border-radius: 1rem;
-                font-weight: 600;
-            }
-
-            .btn-check:active+.btn-primary,
-            .btn-check:checked+.btn-primary,
-            .btn-primary.active,
-            .btn-primary:active,
-            .show>.btn-primary.dropdown-toggle {
-                color: #fff;
-                background-color: #fa4729;
-                border-color: #fa4729;
-            }
-
-            .btn-check:focus+.btn-primary,
-            .btn-primary:focus {
-                color: #fff;
-                background-color: #F44336;
-                border-color: #F44336;
-                box-shadow: 0 0 0 0.2rem rgb(224 65 33 / 50%);
-            }
-
-            .btn-check:active+.btn-primary:focus,
-            .btn-check:checked+.btn-primary:focus,
-            .btn-primary.active:focus,
-            .btn-primary:active:focus,
-            .show>.btn-primary.dropdown-toggle:focus {
-                box-shadow: 0 0 0 0.2rem rgb(244 67 54 / 50%);
-            }
-
-            .btn-primary:hover {
-                background-color: #e04121;
-            }
-
-            .error-content {
-                max-width: 400px;
-                margin: auto;
-            }
-
-            .error-image {
-                max-width: 100%;
-                height: auto;
-            }
-
-            @media (min-width: 1400px) {
-                .container {
-                    max-width: 1140px;
-                }
-            }
-
-            /* Centrar texto en dispositivos móviles */
-            @media (max-width: 768px) {
-                .error-content {
-                    text-align: center;
-                }
-
-                .error-image {
-                    width: 80%;
-                    padding-bottom: 20px;
-                }
-
-                .error-container p {
-                    font-size: 20px;
-                }
-
-                .error-container h1 {
-                    font-size: 2.1rem;
-                }
-
-                .btn-primary {
-                    background-color: #fa4729;
-                    border: none;
-                    padding: 0.5rem 2rem;
-                    font-size: 1.15rem;
-                    border-radius: 1rem;
-                    font-weight: 600;
-                }
-
-            }
-
-            @media (max-width: 768px) {
-                .error-content {
-                    text-align: center;
-                    order: 2;
-                }
-
-                .error-image-container {
-                    order: 1;
-                }
-            }
-        </style>
-    </head>
-
-    <body>
-        <div class="container error-container">
-            <div class="row">
-                <div class="col-12 col-md-6 error-image-container order-md-2 text-center">
-                    <img src="https://img001.prntscr.com/file/img001/ahRrXmoCSZe_wg6gieoB4A.png" alt="Error de Acceso"
-                        class="error-image">
-                </div>
-                <div class="col-12 col-md-6 error-content order-md-1">
-                    <h1>Acceso Restringido</h1>
-                    <div class="mb-4">
-                        <p>Por favor, conéctate al WiFi</p>
-                        <p>de la universidad para utilizar</p>
-                        <p>esta plataforma.</p>
-                    </div>
-                    <a href="{{ request()->url() }}" class="btn btn-primary">Intentar nuevamente</a>
-                </div>
-            </div>
-        </div>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.bundle.min.js"></script>
-    </body>
-
-    </html>
-
-
-@endif
